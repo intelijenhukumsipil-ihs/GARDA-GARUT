@@ -51,52 +51,52 @@ export const InteractiveMap: React.FC<InteractiveMapProps> = ({
   // 42 Kecamatan di Kabupaten Garut berdasarkan Peta Wilayah Administratif BAPPEDA Kab. Garut
   const garutDistricts: GarutDistrict[] = [
     // Garut Utara
-    { id: 'KEC-01', name: 'Balubur Limbangan', region: 'Utara', x: 72, y: 14, assetsCount: 4, simbgCount: 3, supervisor: 'Ahmad Sofyan, ST', phone: '+62 812-2235-5822' },
-    { id: 'KEC-02', name: 'Selaawi', region: 'Utara', x: 80, y: 16, assetsCount: 3, simbgCount: 2, supervisor: 'Ahmad Sofyan, ST', phone: '+62 812-2235-5822' },
-    { id: 'KEC-03', name: 'Malangbong', region: 'Utara', x: 90, y: 20, assetsCount: 5, simbgCount: 4, supervisor: 'Dedi Kurnia, ST', phone: '+62 812-2235-5822' },
-    { id: 'KEC-04', name: 'Leles', region: 'Utara', x: 60, y: 28, assetsCount: 6, simbgCount: 5, supervisor: 'Heri Susanto, MT', phone: '+62 812-2235-5822' },
-    { id: 'KEC-05', name: 'Kadungora', region: 'Utara', x: 66, y: 23, assetsCount: 5, simbgCount: 4, supervisor: 'Heri Susanto, MT', phone: '+62 812-2235-5822' },
-    { id: 'KEC-06', name: 'Kersamanah', region: 'Utara', x: 82, y: 22, assetsCount: 2, simbgCount: 2, supervisor: 'Ahmad Sofyan, ST', phone: '+62 812-2235-5822' },
-    { id: 'KEC-07', name: 'Leuwigoong', region: 'Utara', x: 74, y: 26, assetsCount: 4, simbgCount: 3, supervisor: 'Ahmad Sofyan, ST', phone: '+62 812-2235-5822' },
-    { id: 'KEC-08', name: 'Cibatu', region: 'Utara', x: 80, y: 28, assetsCount: 5, simbgCount: 4, supervisor: 'Dedi Kurnia, ST', phone: '+62 812-2235-5822' },
+    { id: 'KEC-01', name: 'Balubur Limbangan', region: 'Utara', x: 72, y: 14, assetsCount: 4, simbgCount: 3, supervisor: 'Ahmad Sofyan, ST', phone: '+62 813-1640-3160' },
+    { id: 'KEC-02', name: 'Selaawi', region: 'Utara', x: 80, y: 16, assetsCount: 3, simbgCount: 2, supervisor: 'Ahmad Sofyan, ST', phone: '+62 813-1640-3160' },
+    { id: 'KEC-03', name: 'Malangbong', region: 'Utara', x: 90, y: 20, assetsCount: 5, simbgCount: 4, supervisor: 'Dedi Kurnia, ST', phone: '+62 813-1640-3160' },
+    { id: 'KEC-04', name: 'Leles', region: 'Utara', x: 60, y: 28, assetsCount: 6, simbgCount: 5, supervisor: 'Heri Susanto, MT', phone: '+62 813-1640-3160' },
+    { id: 'KEC-05', name: 'Kadungora', region: 'Utara', x: 66, y: 23, assetsCount: 5, simbgCount: 4, supervisor: 'Heri Susanto, MT', phone: '+62 813-1640-3160' },
+    { id: 'KEC-06', name: 'Kersamanah', region: 'Utara', x: 82, y: 22, assetsCount: 2, simbgCount: 2, supervisor: 'Ahmad Sofyan, ST', phone: '+62 813-1640-3160' },
+    { id: 'KEC-07', name: 'Leuwigoong', region: 'Utara', x: 74, y: 26, assetsCount: 4, simbgCount: 3, supervisor: 'Ahmad Sofyan, ST', phone: '+62 813-1640-3160' },
+    { id: 'KEC-08', name: 'Cibatu', region: 'Utara', x: 80, y: 28, assetsCount: 5, simbgCount: 4, supervisor: 'Dedi Kurnia, ST', phone: '+62 813-1640-3160' },
 
     // Garut Tengah / Metropolitan
-    { id: 'KEC-09', name: 'Garut Kota', region: 'Tengah', x: 73, y: 44, assetsCount: 12, simbgCount: 15, supervisor: 'Ir. Hendra Wijaya, MT', phone: '+62 812-2235-5822' },
-    { id: 'KEC-10', name: 'Tarogong Kaler', region: 'Tengah', x: 63, y: 35, assetsCount: 9, simbgCount: 11, supervisor: 'Ir. Hendra Wijaya, MT', phone: '+62 812-2235-5822' },
-    { id: 'KEC-11', name: 'Tarogong Kidul', region: 'Tengah', x: 66, y: 40, assetsCount: 14, simbgCount: 18, supervisor: 'Ir. Hendra Wijaya, MT', phone: '+62 812-2235-5822' },
-    { id: 'KEC-12', name: 'Banyuresmi', region: 'Tengah', x: 72, y: 35, assetsCount: 7, simbgCount: 6, supervisor: 'Yudi Rahadian, ST', phone: '+62 812-2235-5822' },
-    { id: 'KEC-13', name: 'Karangpawitan', region: 'Tengah', x: 74, y: 40, assetsCount: 8, simbgCount: 9, supervisor: 'Yudi Rahadian, ST', phone: '+62 812-2235-5822' },
-    { id: 'KEC-14', name: 'Sukawening', region: 'Tengah', x: 82, y: 32, assetsCount: 4, simbgCount: 3, supervisor: 'Dedi Kurnia, ST', phone: '+62 812-2235-5822' },
-    { id: 'KEC-15', name: 'Karangtengah', region: 'Tengah', x: 88, y: 34, assetsCount: 3, simbgCount: 2, supervisor: 'Dedi Kurnia, ST', phone: '+62 812-2235-5822' },
-    { id: 'KEC-16', name: 'Pangatikan', region: 'Tengah', x: 83, y: 37, assetsCount: 3, simbgCount: 2, supervisor: 'Yudi Rahadian, ST', phone: '+62 812-2235-5822' },
-    { id: 'KEC-17', name: 'Wanaraja', region: 'Tengah', x: 82, y: 40, assetsCount: 5, simbgCount: 4, supervisor: 'Yudi Rahadian, ST', phone: '+62 812-2235-5822' },
-    { id: 'KEC-18', name: 'Sucinaraja', region: 'Tengah', x: 82, y: 43, assetsCount: 3, simbgCount: 2, supervisor: 'Yudi Rahadian, ST', phone: '+62 812-2235-5822' },
-    { id: 'KEC-19', name: 'Samarang', region: 'Tengah', x: 52, y: 35, assetsCount: 6, simbgCount: 5, supervisor: 'Budi Santoso, ST', phone: '+62 812-2235-5822' },
-    { id: 'KEC-20', name: 'Pasirwangi', region: 'Tengah', x: 50, y: 39, assetsCount: 5, simbgCount: 3, supervisor: 'Budi Santoso, ST', phone: '+62 812-2235-5822' },
-    { id: 'KEC-21', name: 'Sukaresmi', region: 'Tengah', x: 48, y: 43, assetsCount: 4, simbgCount: 2, supervisor: 'Budi Santoso, ST', phone: '+62 812-2235-5822' },
-    { id: 'KEC-22', name: 'Bayongbong', region: 'Tengah', x: 58, y: 46, assetsCount: 7, simbgCount: 6, supervisor: 'Budi Santoso, ST', phone: '+62 812-2235-5822' },
-    { id: 'KEC-23', name: 'Cisurupan', region: 'Tengah', x: 52, y: 48, assetsCount: 6, simbgCount: 4, supervisor: 'Budi Santoso, ST', phone: '+62 812-2235-5822' },
-    { id: 'KEC-24', name: 'Cigedug', region: 'Tengah', x: 57, y: 52, assetsCount: 3, simbgCount: 2, supervisor: 'Budi Santoso, ST', phone: '+62 812-2235-5822' },
-    { id: 'KEC-25', name: 'Cilawu', region: 'Tengah', x: 66, y: 49, assetsCount: 8, simbgCount: 7, supervisor: 'Ir. Hendra Wijaya, MT', phone: '+62 812-2235-5822' },
+    { id: 'KEC-09', name: 'Garut Kota', region: 'Tengah', x: 73, y: 44, assetsCount: 12, simbgCount: 15, supervisor: 'Ir. Hendra Wijaya, MT', phone: '+62 813-1640-3160' },
+    { id: 'KEC-10', name: 'Tarogong Kaler', region: 'Tengah', x: 63, y: 35, assetsCount: 9, simbgCount: 11, supervisor: 'Ir. Hendra Wijaya, MT', phone: '+62 813-1640-3160' },
+    { id: 'KEC-11', name: 'Tarogong Kidul', region: 'Tengah', x: 66, y: 40, assetsCount: 14, simbgCount: 18, supervisor: 'Ir. Hendra Wijaya, MT', phone: '+62 813-1640-3160' },
+    { id: 'KEC-12', name: 'Banyuresmi', region: 'Tengah', x: 72, y: 35, assetsCount: 7, simbgCount: 6, supervisor: 'Yudi Rahadian, ST', phone: '+62 813-1640-3160' },
+    { id: 'KEC-13', name: 'Karangpawitan', region: 'Tengah', x: 74, y: 40, assetsCount: 8, simbgCount: 9, supervisor: 'Yudi Rahadian, ST', phone: '+62 813-1640-3160' },
+    { id: 'KEC-14', name: 'Sukawening', region: 'Tengah', x: 82, y: 32, assetsCount: 4, simbgCount: 3, supervisor: 'Dedi Kurnia, ST', phone: '+62 813-1640-3160' },
+    { id: 'KEC-15', name: 'Karangtengah', region: 'Tengah', x: 88, y: 34, assetsCount: 3, simbgCount: 2, supervisor: 'Dedi Kurnia, ST', phone: '+62 813-1640-3160' },
+    { id: 'KEC-16', name: 'Pangatikan', region: 'Tengah', x: 83, y: 37, assetsCount: 3, simbgCount: 2, supervisor: 'Yudi Rahadian, ST', phone: '+62 813-1640-3160' },
+    { id: 'KEC-17', name: 'Wanaraja', region: 'Tengah', x: 82, y: 40, assetsCount: 5, simbgCount: 4, supervisor: 'Yudi Rahadian, ST', phone: '+62 813-1640-3160' },
+    { id: 'KEC-18', name: 'Sucinaraja', region: 'Tengah', x: 82, y: 43, assetsCount: 3, simbgCount: 2, supervisor: 'Yudi Rahadian, ST', phone: '+62 813-1640-3160' },
+    { id: 'KEC-19', name: 'Samarang', region: 'Tengah', x: 52, y: 35, assetsCount: 6, simbgCount: 5, supervisor: 'Budi Santoso, ST', phone: '+62 813-1640-3160' },
+    { id: 'KEC-20', name: 'Pasirwangi', region: 'Tengah', x: 50, y: 39, assetsCount: 5, simbgCount: 3, supervisor: 'Budi Santoso, ST', phone: '+62 813-1640-3160' },
+    { id: 'KEC-21', name: 'Sukaresmi', region: 'Tengah', x: 48, y: 43, assetsCount: 4, simbgCount: 2, supervisor: 'Budi Santoso, ST', phone: '+62 813-1640-3160' },
+    { id: 'KEC-22', name: 'Bayongbong', region: 'Tengah', x: 58, y: 46, assetsCount: 7, simbgCount: 6, supervisor: 'Budi Santoso, ST', phone: '+62 813-1640-3160' },
+    { id: 'KEC-23', name: 'Cisurupan', region: 'Tengah', x: 52, y: 48, assetsCount: 6, simbgCount: 4, supervisor: 'Budi Santoso, ST', phone: '+62 813-1640-3160' },
+    { id: 'KEC-24', name: 'Cigedug', region: 'Tengah', x: 57, y: 52, assetsCount: 3, simbgCount: 2, supervisor: 'Budi Santoso, ST', phone: '+62 813-1640-3160' },
+    { id: 'KEC-25', name: 'Cilawu', region: 'Tengah', x: 66, y: 49, assetsCount: 8, simbgCount: 7, supervisor: 'Ir. Hendra Wijaya, MT', phone: '+62 813-1640-3160' },
 
     // Garut Selatan
-    { id: 'KEC-26', name: 'Talegong', region: 'Selatan', x: 20, y: 46, assetsCount: 4, simbgCount: 2, supervisor: 'Rahmat Hidayat, ST', phone: '+62 812-2235-5822' },
-    { id: 'KEC-27', name: 'Cisewu', region: 'Selatan', x: 20, y: 56, assetsCount: 5, simbgCount: 3, supervisor: 'Rahmat Hidayat, ST', phone: '+62 812-2235-5822' },
-    { id: 'KEC-28', name: 'Caringin', region: 'Selatan', x: 14, y: 66, assetsCount: 4, simbgCount: 2, supervisor: 'Rahmat Hidayat, ST', phone: '+62 812-2235-5822' },
-    { id: 'KEC-29', name: 'Pamulihan', region: 'Selatan', x: 40, y: 54, assetsCount: 3, simbgCount: 2, supervisor: 'Agus Setiawan, ST', phone: '+62 812-2235-5822' },
-    { id: 'KEC-30', name: 'Bungbulang', region: 'Selatan', x: 28, y: 65, assetsCount: 7, simbgCount: 5, supervisor: 'Agus Setiawan, ST', phone: '+62 812-2235-5822' },
-    { id: 'KEC-31', name: 'Mekarmukti', region: 'Selatan', x: 23, y: 74, assetsCount: 3, simbgCount: 1, supervisor: 'Agus Setiawan, ST', phone: '+62 812-2235-5822' },
-    { id: 'KEC-32', name: 'Pakejeng', region: 'Selatan', x: 37, y: 67, assetsCount: 4, simbgCount: 2, supervisor: 'Agus Setiawan, ST', phone: '+62 812-2235-5822' },
-    { id: 'KEC-33', name: 'Cikajang', region: 'Selatan', x: 53, y: 58, assetsCount: 8, simbgCount: 6, supervisor: 'Taufik Hidayat, ST', phone: '+62 812-2235-5822' },
-    { id: 'KEC-34', name: 'Banjarwangi', region: 'Selatan', x: 63, y: 59, assetsCount: 5, simbgCount: 3, supervisor: 'Taufik Hidayat, ST', phone: '+62 812-2235-5822' },
-    { id: 'KEC-35', name: 'Singajaya', region: 'Selatan', x: 68, y: 68, assetsCount: 4, simbgCount: 2, supervisor: 'Taufik Hidayat, ST', phone: '+62 812-2235-5822' },
-    { id: 'KEC-36', name: 'Peundeuy', region: 'Selatan', x: 68, y: 75, assetsCount: 3, simbgCount: 1, supervisor: 'Taufik Hidayat, ST', phone: '+62 812-2235-5822' },
-    { id: 'KEC-37', name: 'Cihurip', region: 'Selatan', x: 60, y: 70, assetsCount: 3, simbgCount: 1, supervisor: 'Taufik Hidayat, ST', phone: '+62 812-2235-5822' },
-    { id: 'KEC-38', name: 'Cisompet', region: 'Selatan', x: 55, y: 77, assetsCount: 5, simbgCount: 3, supervisor: 'Iman Supriadi, ST', phone: '+62 812-2235-5822' },
-    { id: 'KEC-39', name: 'Cikelet', region: 'Selatan', x: 39, y: 77, assetsCount: 5, simbgCount: 3, supervisor: 'Iman Supriadi, ST', phone: '+62 812-2235-5822' },
-    { id: 'KEC-40', name: 'Pameungpeuk', region: 'Selatan', x: 44, y: 85, assetsCount: 9, simbgCount: 8, supervisor: 'Iman Supriadi, ST', phone: '+62 812-2235-5822' },
-    { id: 'KEC-41', name: 'Cibalong', region: 'Selatan', x: 60, y: 88, assetsCount: 6, simbgCount: 4, supervisor: 'Iman Supriadi, ST', phone: '+62 812-2235-5822' },
-    { id: 'KEC-42', name: 'Kadungora (Perbatasan)', region: 'Utara', x: 65, y: 19, assetsCount: 3, simbgCount: 2, supervisor: 'Heri Susanto, MT', phone: '+62 812-2235-5822' }
+    { id: 'KEC-26', name: 'Talegong', region: 'Selatan', x: 20, y: 46, assetsCount: 4, simbgCount: 2, supervisor: 'Rahmat Hidayat, ST', phone: '+62 813-1640-3160' },
+    { id: 'KEC-27', name: 'Cisewu', region: 'Selatan', x: 20, y: 56, assetsCount: 5, simbgCount: 3, supervisor: 'Rahmat Hidayat, ST', phone: '+62 813-1640-3160' },
+    { id: 'KEC-28', name: 'Caringin', region: 'Selatan', x: 14, y: 66, assetsCount: 4, simbgCount: 2, supervisor: 'Rahmat Hidayat, ST', phone: '+62 813-1640-3160' },
+    { id: 'KEC-29', name: 'Pamulihan', region: 'Selatan', x: 40, y: 54, assetsCount: 3, simbgCount: 2, supervisor: 'Agus Setiawan, ST', phone: '+62 813-1640-3160' },
+    { id: 'KEC-30', name: 'Bungbulang', region: 'Selatan', x: 28, y: 65, assetsCount: 7, simbgCount: 5, supervisor: 'Agus Setiawan, ST', phone: '+62 813-1640-3160' },
+    { id: 'KEC-31', name: 'Mekarmukti', region: 'Selatan', x: 23, y: 74, assetsCount: 3, simbgCount: 1, supervisor: 'Agus Setiawan, ST', phone: '+62 813-1640-3160' },
+    { id: 'KEC-32', name: 'Pakejeng', region: 'Selatan', x: 37, y: 67, assetsCount: 4, simbgCount: 2, supervisor: 'Agus Setiawan, ST', phone: '+62 813-1640-3160' },
+    { id: 'KEC-33', name: 'Cikajang', region: 'Selatan', x: 53, y: 58, assetsCount: 8, simbgCount: 6, supervisor: 'Taufik Hidayat, ST', phone: '+62 813-1640-3160' },
+    { id: 'KEC-34', name: 'Banjarwangi', region: 'Selatan', x: 63, y: 59, assetsCount: 5, simbgCount: 3, supervisor: 'Taufik Hidayat, ST', phone: '+62 813-1640-3160' },
+    { id: 'KEC-35', name: 'Singajaya', region: 'Selatan', x: 68, y: 68, assetsCount: 4, simbgCount: 2, supervisor: 'Taufik Hidayat, ST', phone: '+62 813-1640-3160' },
+    { id: 'KEC-36', name: 'Peundeuy', region: 'Selatan', x: 68, y: 75, assetsCount: 3, simbgCount: 1, supervisor: 'Taufik Hidayat, ST', phone: '+62 813-1640-3160' },
+    { id: 'KEC-37', name: 'Cihurip', region: 'Selatan', x: 60, y: 70, assetsCount: 3, simbgCount: 1, supervisor: 'Taufik Hidayat, ST', phone: '+62 813-1640-3160' },
+    { id: 'KEC-38', name: 'Cisompet', region: 'Selatan', x: 55, y: 77, assetsCount: 5, simbgCount: 3, supervisor: 'Iman Supriadi, ST', phone: '+62 813-1640-3160' },
+    { id: 'KEC-39', name: 'Cikelet', region: 'Selatan', x: 39, y: 77, assetsCount: 5, simbgCount: 3, supervisor: 'Iman Supriadi, ST', phone: '+62 813-1640-3160' },
+    { id: 'KEC-40', name: 'Pameungpeuk', region: 'Selatan', x: 44, y: 85, assetsCount: 9, simbgCount: 8, supervisor: 'Iman Supriadi, ST', phone: '+62 813-1640-3160' },
+    { id: 'KEC-41', name: 'Cibalong', region: 'Selatan', x: 60, y: 88, assetsCount: 6, simbgCount: 4, supervisor: 'Iman Supriadi, ST', phone: '+62 813-1640-3160' },
+    { id: 'KEC-42', name: 'Kadungora (Perbatasan)', region: 'Utara', x: 65, y: 19, assetsCount: 3, simbgCount: 2, supervisor: 'Heri Susanto, MT', phone: '+62 813-1640-3160' }
   ];
 
   // Filtered districts list
@@ -404,12 +404,12 @@ export const InteractiveMap: React.FC<InteractiveMapProps> = ({
 
                 <div className="pt-1">
                   <a
-                    href={`https://wa.me/6281222355822?text=${encodeURIComponent(`Halo Pengawas PUPR Kecamatan ${selectedDistrict.name}, mohon koordinasi data lapangan aset dan SIMBG.`)}`}
+                    href={`https://wa.me/6281316403160?text=${encodeURIComponent(`Halo Pengawas PUPR Kecamatan ${selectedDistrict.name}, mohon koordinasi data lapangan aset dan SIMBG.`)}`}
                     target="_blank"
                     rel="noreferrer"
                     className="w-full bg-slate-900 hover:bg-slate-800 text-emerald-400 font-black text-xs uppercase tracking-wider py-2.5 rounded-xl transition cursor-pointer flex items-center justify-center space-x-2"
                   >
-                    <span>Hubungi Pengawas via WA Server (+62 812-2235-5822)</span>
+                    <span>Hubungi Pengawas via WA Server (+62 813-1640-3160)</span>
                     <ExternalLink className="w-3.5 h-3.5" />
                   </a>
                 </div>

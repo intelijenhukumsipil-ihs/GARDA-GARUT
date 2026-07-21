@@ -63,7 +63,7 @@ export const GatewayDashboard: React.FC<GatewayDashboardProps> = ({
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          recipientPhone: '+62 812-2235-5822',
+          recipientPhone: '+62 813-1640-3160',
           messageType: 'SYSTEM_ALERT',
           data: {
             message: 'Uji Koneksi Gateway Server WhatsApp GARDA GARUT Berhasil Aktif.'
@@ -93,7 +93,7 @@ export const GatewayDashboard: React.FC<GatewayDashboardProps> = ({
             </span>
           </div>
           <p className="text-xs text-slate-300 max-w-2xl font-medium">
-            Arsitektur penghubung antara perangkat lapangan/pengguna, Pusat Data Garut, Gateway WhatsApp (+62 812-2235-5822), dan sistem resmi KemenPUPR (SIMBG). Pemilik & Pengembang Inovasi: <strong>Ir. Risa Kristalia N., ST., MT.</strong>
+            Arsitektur penghubung antara perangkat lapangan/pengguna, Pusat Data Garut, Gateway WhatsApp (+62 813-1640-3160), dan sistem resmi KemenPUPR (SIMBG). Pemilik & Pengembang Inovasi: <strong>Ir. Risa Kristalia N., ST., MT.</strong>
           </p>
         </div>
 
@@ -101,7 +101,7 @@ export const GatewayDashboard: React.FC<GatewayDashboardProps> = ({
           <Activity className="w-5 h-5 text-emerald-400 animate-pulse shrink-0" />
           <div>
             <div className="text-slate-400 text-[10px] font-black uppercase tracking-widest">Gateway WhatsApp Server</div>
-            <div className="font-black text-emerald-400 text-sm">+62 812-2235-5822 (ONLINE)</div>
+            <div className="font-black text-emerald-400 text-sm">+62 813-1640-3160 (ONLINE)</div>
           </div>
         </div>
       </div>
@@ -110,7 +110,7 @@ export const GatewayDashboard: React.FC<GatewayDashboardProps> = ({
       <div className="flex bg-white p-1.5 sm:p-2 rounded-2xl border border-slate-200 gap-1.5 overflow-x-auto shadow-sm scrollbar-none">
         {[
           { id: 'status', label: 'Status Server & Endpoint', icon: Server },
-          { id: 'whatsapp', label: 'WhatsApp Gateway (+62 812-2235-5822)', icon: MessageSquare },
+          { id: 'whatsapp', label: 'WhatsApp Gateway (+62 813-1640-3160)', icon: MessageSquare },
           { id: 'translator', label: 'Penerjemah SIMBG v3', icon: FileCode },
           { id: 'queue', label: 'Antrean Cadangan Data', icon: Database },
           { id: 'security', label: 'Keamanan & Cyber Log', icon: Lock }
@@ -183,7 +183,7 @@ export const GatewayDashboard: React.FC<GatewayDashboardProps> = ({
             <div>
               <div className="inline-flex items-center space-x-2 bg-emerald-100 text-emerald-800 text-[10px] font-black uppercase px-3 py-1 rounded-full mb-1">
                 <MessageSquare className="w-3.5 h-3.5" />
-                <span>Terhubung ke Server WhatsApp +62 812-2235-5822</span>
+                <span>Terhubung ke Server WhatsApp +62 813-1640-3160</span>
               </div>
               <h2 className="text-lg font-black text-slate-800 uppercase italic">
                 Pusat Kendali Gateway WhatsApp GARDA GARUT
@@ -199,7 +199,7 @@ export const GatewayDashboard: React.FC<GatewayDashboardProps> = ({
               className="bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-black text-xs uppercase tracking-wider px-5 py-3 rounded-2xl shadow transition flex items-center space-x-2 cursor-pointer shrink-0"
             >
               <Send className="w-4 h-4" />
-              <span>{waSending ? 'Mengirim Sinyal...' : 'Uji Kirim Notifikasi WA (+62 812-2235-5822)'}</span>
+              <span>{waSending ? 'Mengirim Sinyal...' : 'Uji Kirim Notifikasi WA (+62 813-1640-3160)'}</span>
             </button>
           </div>
 
@@ -207,7 +207,7 @@ export const GatewayDashboard: React.FC<GatewayDashboardProps> = ({
             
             <div className="bg-slate-50 p-5 rounded-2xl border border-slate-200 space-y-2">
               <span className="font-black text-slate-400 text-[10px] uppercase tracking-widest block">Nomor Gateway Utama</span>
-              <div className="text-lg font-black text-slate-900 font-mono">+62 812-2235-5822</div>
+              <div className="text-lg font-black text-slate-900 font-mono">+62 813-1640-3160</div>
               <span className="text-[10px] font-black uppercase text-emerald-700 bg-emerald-100 px-2.5 py-0.5 rounded-full inline-block">
                 Status: ACTIVE RUNNING
               </span>
@@ -247,7 +247,7 @@ export const GatewayDashboard: React.FC<GatewayDashboardProps> = ({
                   rel="noreferrer"
                   className="inline-flex items-center space-x-2 bg-emerald-500 text-slate-950 font-black px-4 py-2 rounded-xl hover:bg-emerald-400 transition"
                 >
-                  <span>Buka Chat Langsung di WhatsApp (+62 812-2235-5822)</span>
+                  <span>Buka Chat Langsung di WhatsApp (+62 813-1640-3160)</span>
                   <ExternalLink className="w-3.5 h-3.5" />
                 </a>
               </div>

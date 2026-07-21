@@ -42,6 +42,7 @@ import { ReportsAnalytics } from './components/Reports/ReportsAnalytics';
 import { AuditTrailView } from './components/Audit/AuditTrailView';
 import { TechnicalSpecDoc } from './components/Docs/TechnicalSpecDoc';
 import { QuickSearchModal } from './components/Search/QuickSearchModal';
+import { GardaMascot } from './components/Mascot/GardaMascot';
 
 export default function App() {
   const [currentUser, setCurrentUserProfile] = useState<UserProfile>(getCurrentUser());
@@ -230,11 +231,14 @@ export default function App() {
           <span className="hidden md:inline text-slate-300 font-semibold">Pemilik & Pengembang Inovasi: Ir. Risa Kristalia N., ST., MT.</span>
         </div>
         <div className="text-slate-400 font-bold uppercase flex items-center space-x-3">
-          <span className="text-emerald-400 font-mono">WhatsApp Server: +62 812-2235-5822</span>
+          <span className="text-emerald-400 font-mono">WhatsApp Server: +62 813-1640-3160</span>
           <span>|</span>
           <span>© 2026 Dinas PUPR Kab. Garut</span>
         </div>
       </footer>
+
+      {/* Floating Interactive Mascot Si GARDA */}
+      <GardaMascot onNavigateTab={(tab) => setActiveTab(tab as any)} />
 
       {/* Quick Search Modal */}
       <QuickSearchModal

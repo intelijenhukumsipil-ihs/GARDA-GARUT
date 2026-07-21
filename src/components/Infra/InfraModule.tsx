@@ -122,12 +122,12 @@ export const InfraModule: React.FC<InfraModuleProps> = ({
     onSaveReport(newReport);
     onUpdateAssetCondition(asset.id, score >= 85 ? 'darurat' : 'rusak_berat');
 
-    // Trigger WhatsApp Notification to +62 812-2235-5822
+    // Trigger WhatsApp Notification to +62 813-1640-3160
     fetch('/api/gateway/whatsapp-send', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        recipientPhone: '+62 812-2235-5822',
+        recipientPhone: '+62 813-1640-3160',
         messageType: 'DAMAGE_REPORT',
         data: {
           assetName: asset.name,

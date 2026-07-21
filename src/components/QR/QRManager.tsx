@@ -210,7 +210,7 @@ export const QRManager: React.FC<QRManagerProps> = ({
     }
   };
 
-  // Send WhatsApp Verification Alert to Gateway (+62 812-2235-5822)
+  // Send WhatsApp Verification Alert to Gateway (+62 813-1640-3160)
   const handleSendWaAlert = async () => {
     if (!scanResult) return;
     setWaSending(true);
@@ -219,7 +219,7 @@ export const QRManager: React.FC<QRManagerProps> = ({
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          recipientPhone: '+62 812-2235-5822',
+          recipientPhone: '+62 813-1640-3160',
           messageType: 'QR_VERIFY',
           data: {
             title: scanResult.title,
@@ -254,7 +254,7 @@ export const QRManager: React.FC<QRManagerProps> = ({
             </span>
           </div>
           <p className="text-xs text-slate-300 max-w-2xl font-medium">
-            Seluruh aset fisik infrastruktur daerah & dokumen rekomendasi terpadu dilengkapi Kode QR unik terverifikasi untuk mencegah pemalsuan di lapangan. Terhubung langsung ke WhatsApp Gateway Server (+62 812-2235-5822).
+            Seluruh aset fisik infrastruktur daerah & dokumen rekomendasi terpadu dilengkapi Kode QR unik terverifikasi untuk mencegah pemalsuan di lapangan. Terhubung langsung ke WhatsApp Gateway Server (+62 813-1640-3160).
           </p>
         </div>
 
@@ -590,7 +590,7 @@ export const QRManager: React.FC<QRManagerProps> = ({
                   className="bg-emerald-600 hover:bg-emerald-700 text-white font-black text-[11px] uppercase tracking-wider px-3.5 py-2 rounded-xl transition cursor-pointer flex items-center space-x-1.5"
                 >
                   <Send className="w-3.5 h-3.5" />
-                  <span>Kirim ke WhatsApp (+62 812-2235-5822)</span>
+                  <span>Kirim ke WhatsApp (+62 813-1640-3160)</span>
                 </button>
                 <button
                   onClick={() => window.print()}
@@ -611,7 +611,7 @@ export const QRManager: React.FC<QRManagerProps> = ({
                     rel="noreferrer"
                     className="inline-flex items-center space-x-1.5 bg-emerald-500 text-slate-950 font-black px-3 py-1.5 rounded-lg hover:bg-emerald-400 transition"
                   >
-                    <span>Buka WhatsApp Server (+62 812-2235-5822)</span>
+                    <span>Buka WhatsApp Server (+62 813-1640-3160)</span>
                     <ExternalLink className="w-3.5 h-3.5" />
                   </a>
                 </div>

@@ -9,7 +9,10 @@ import {
   CheckCircle2, 
   TrendingUp, 
   ArrowUpRight, 
-  Zap
+  Zap,
+  Sparkles,
+  MessageSquare,
+  Bot
 } from 'lucide-react';
 import { 
   InfraAsset, 
@@ -94,6 +97,44 @@ export const OverviewDashboard: React.FC<OverviewDashboardProps> = ({
           </span>
           GARDA GARUT <strong>BUKAN PENGGANTI SISTEM RESMI SIMBG</strong>. SIMBG (KemenPUPR/Kemendagri) tetap satu-satunya sistem yang menerbitkan izin PBG/SLF/SBKBG/RTB secara sah. GARDA GARUT berfungsi sebagai pusat koordinasi, pemantau aset, dan pencatat bukti lapangan.
         </div>
+      </div>
+
+      {/* Mascot Si GARDA Showcase Widget */}
+      <div className="bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 border border-slate-800 rounded-3xl p-5 sm:p-6 text-white shadow-xl flex flex-col md:flex-row items-center justify-between gap-6 relative overflow-hidden">
+        <div className="flex items-center space-x-4 z-10">
+          <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-gradient-to-br from-amber-400 to-emerald-400 p-0.5 shadow-lg shrink-0 flex items-center justify-center">
+            <div className="w-full h-full bg-slate-950 rounded-[14px] flex items-center justify-center relative">
+              <HardHat className="w-8 h-8 sm:w-9 sm:h-9 text-amber-400" />
+              <Sparkles className="w-4 h-4 text-emerald-400 absolute top-1 right-1 animate-pulse" />
+            </div>
+          </div>
+          <div className="space-y-1">
+            <div className="flex items-center space-x-2">
+              <span className="font-black text-base sm:text-lg text-white uppercase italic tracking-tight">MASKOT "SI GARDA"</span>
+              <span className="bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-[10px] font-black px-2.5 py-0.5 rounded-full uppercase tracking-wider">
+                Asisten AI Real-Time
+              </span>
+            </div>
+            <p className="text-xs text-slate-300 max-w-xl">
+              Punya pertanyaan seputar perizinan SIMBG, laporan jalan rusak, atau pengawas PUPR di kecamatan Anda? Tanya langsung kepada <strong>Si GARDA</strong> kapan saja!
+            </p>
+          </div>
+        </div>
+
+        <div className="flex items-center gap-3 z-10 shrink-0 w-full md:w-auto">
+          <a
+            href="https://wa.me/6281316403160"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex-1 md:flex-none text-center bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black px-4 py-3 rounded-2xl text-xs uppercase tracking-wider transition shadow cursor-pointer flex items-center justify-center space-x-2"
+          >
+            <MessageSquare className="w-4 h-4" />
+            <span>WA Server (+62 813-1640-3160)</span>
+          </a>
+        </div>
+
+        {/* Ambient background accent */}
+        <div className="absolute right-0 bottom-0 w-64 h-64 bg-emerald-500/5 rounded-full blur-3xl pointer-events-none"></div>
       </div>
 
       {/* Core Summary Metrics Grid */}
