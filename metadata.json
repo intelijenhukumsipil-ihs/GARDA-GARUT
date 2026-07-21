@@ -1,0 +1,6 @@
+{
+  "name": "GARDA GARUT",
+  "description": "Gerbang Administrasi, Rekomendasi, dan Data Terpadu Kabupaten Garut - Pusat Kendali Koordinasi Infrastruktur dan Bangunan Gedung Dinas PUPR Kab. Garut.",
+  "requestFramePermissions": ["camera", "geolocation"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
