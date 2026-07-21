@@ -129,15 +129,28 @@ export const Sidebar: React.FC<SidebarProps> = ({
       <div>
         {/* Brand Header */}
         <div className="p-5 sm:p-6 border-b border-slate-800/80 flex items-center justify-between">
-          <div>
-            <div className="text-emerald-400 font-black text-2xl sm:text-3xl leading-none tracking-tighter mb-1">
-              GARDA
+          <div className="flex items-center space-x-3.5">
+            {/* Official Logo Image */}
+            <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-white p-1 shadow-lg shrink-0 border border-slate-700 overflow-hidden flex items-center justify-center">
+              <img 
+                src="/garda-logo.jpg" 
+                alt="Logo Official GARDA GARUT" 
+                className="w-full h-full object-contain" 
+                referrerPolicy="no-referrer"
+              />
             </div>
-            <div className="text-white font-black text-2xl sm:text-3xl leading-none tracking-tighter">
-              GARUT
-            </div>
-            <div className="text-slate-400 text-[10px] uppercase tracking-widest mt-2 font-bold">
-              Layanan Cerdas & Terpadu PUPR
+            <div>
+              <div className="flex items-center space-x-1">
+                <span className="text-emerald-400 font-black text-2xl sm:text-3xl leading-none tracking-tighter">
+                  GARDA
+                </span>
+                <span className="text-white font-black text-2xl sm:text-3xl leading-none tracking-tighter">
+                  GARUT
+                </span>
+              </div>
+              <div className="text-slate-400 text-[10px] uppercase tracking-widest mt-1.5 font-bold">
+                Layanan Cerdas & Terpadu PUPR
+              </div>
             </div>
           </div>
 

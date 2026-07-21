@@ -44,17 +44,27 @@ export const Navbar: React.FC<NavbarProps> = ({
           <Menu className="w-5 h-5 text-slate-800" />
         </button>
 
-        {/* Title & Subtitle */}
-        <div className="min-w-0">
-          <div className="flex items-center space-x-2">
-            <span className="text-emerald-600 font-black text-sm lg:hidden uppercase tracking-wider">GARDA GARUT</span>
-            <h1 className="hidden lg:block text-lg xl:text-xl font-black text-slate-800 tracking-tight uppercase truncate">
-              DASHBOARD KOORDINASI TERPADU
-            </h1>
+        {/* Title & Subtitle with Logo */}
+        <div className="flex items-center space-x-3 min-w-0">
+          <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-white p-0.5 border border-slate-200 shadow-sm shrink-0 flex items-center justify-center overflow-hidden">
+            <img 
+              src="/garda-logo.jpg" 
+              alt="Logo GARDA GARUT" 
+              className="w-full h-full object-contain" 
+              referrerPolicy="no-referrer"
+            />
           </div>
-          <p className="text-slate-500 text-[10px] sm:text-xs font-semibold truncate">
-            Dinas PUPR Kabupaten Garut
-          </p>
+          <div className="min-w-0">
+            <div className="flex items-center space-x-2">
+              <span className="text-emerald-700 font-black text-sm sm:text-base lg:hidden uppercase tracking-tight">GARDA GARUT</span>
+              <h1 className="hidden lg:block text-base xl:text-lg font-black text-slate-800 tracking-tight uppercase truncate">
+                DASHBOARD KOORDINASI TERPADU SPBE
+              </h1>
+            </div>
+            <p className="text-slate-500 text-[10px] sm:text-xs font-semibold truncate">
+              Dinas PUPR Kabupaten Garut
+            </p>
+          </div>
         </div>
       </div>
 

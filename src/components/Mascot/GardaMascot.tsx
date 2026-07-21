@@ -144,13 +144,18 @@ export const GardaMascot: React.FC<GardaMascotProps> = ({ onNavigateTab }) => {
 
           <button
             onClick={() => setIsOpen(true)}
-            className="group relative bg-emerald-500 hover:bg-emerald-400 text-slate-950 p-3.5 sm:p-4 rounded-full shadow-2xl transition-all transform hover:scale-110 active:scale-95 cursor-pointer ring-4 ring-emerald-400/30 flex items-center justify-center"
+            className="group relative bg-slate-900 hover:bg-slate-800 text-white p-2.5 sm:p-3 rounded-2xl shadow-2xl transition-all transform hover:scale-110 active:scale-95 cursor-pointer ring-4 ring-emerald-400/40 flex items-center justify-center border border-slate-700"
             aria-label="Buka Maskot Si GARDA"
           >
-            {/* Mascot SVG Face Badge */}
-            <div className="relative w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center">
-              <HardHat className="w-8 h-8 sm:w-10 sm:h-10 text-slate-950" />
-              <Sparkles className="w-4 h-4 text-amber-300 absolute -top-1 -right-1 animate-pulse" />
+            {/* Mascot Official Logo Avatar */}
+            <div className="relative w-9 h-9 sm:w-11 sm:h-11 bg-white p-0.5 rounded-xl flex items-center justify-center overflow-hidden">
+              <img 
+                src="/garda-logo.jpg" 
+                alt="Logo GARDA GARUT" 
+                className="w-full h-full object-contain" 
+                referrerPolicy="no-referrer"
+              />
+              <Sparkles className="w-4 h-4 text-amber-400 absolute -top-1 -right-1 animate-pulse" />
             </div>
             <span className="absolute -top-1 -right-1 bg-amber-400 text-slate-950 text-[9px] font-black px-1.5 py-0.5 rounded-full border border-slate-900 uppercase">
               AI
@@ -166,12 +171,15 @@ export const GardaMascot: React.FC<GardaMascotProps> = ({ onNavigateTab }) => {
           {/* Header Banner */}
           <div className="bg-slate-900 text-white p-4 flex items-center justify-between border-b border-slate-800 shrink-0">
             <div className="flex items-center space-x-3">
-              {/* Mascot Avatar Box */}
-              <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-emerald-400 to-amber-400 p-0.5 shadow-md flex items-center justify-center shrink-0">
-                <div className="w-full h-full bg-slate-950 rounded-[14px] flex items-center justify-center relative">
-                  <HardHat className="w-6 h-6 text-amber-400" />
-                  <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 border-2 border-slate-950 absolute bottom-0 right-0 animate-pulse"></span>
-                </div>
+              {/* Mascot Logo Avatar Box */}
+              <div className="w-11 h-11 rounded-2xl bg-white p-0.5 shadow-md flex items-center justify-center shrink-0 border border-slate-700 overflow-hidden relative">
+                <img 
+                  src="/garda-logo.jpg" 
+                  alt="Logo GARDA GARUT" 
+                  className="w-full h-full object-contain" 
+                  referrerPolicy="no-referrer"
+                />
+                <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 border-2 border-slate-950 absolute bottom-0 right-0 animate-pulse"></span>
               </div>
 
               <div>

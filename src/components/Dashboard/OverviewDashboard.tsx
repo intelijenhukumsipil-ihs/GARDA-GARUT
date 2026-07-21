@@ -53,17 +53,27 @@ export const OverviewDashboard: React.FC<OverviewDashboardProps> = ({
       {/* Banner Welcome */}
       <div className="bg-slate-900 text-white p-6 sm:p-8 rounded-3xl border border-slate-800 shadow-xl relative overflow-hidden">
         <div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
-          <div className="space-y-2">
-            <div className="inline-flex items-center space-x-2 bg-emerald-500/10 text-emerald-400 text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full border border-emerald-500/20">
-              <Zap className="w-3.5 h-3.5 text-emerald-400" />
-              <span>Pusat Kendali Koordinasi Terpadu PUPR</span>
+          <div className="flex items-start sm:items-center space-x-4">
+            <div className="w-16 h-16 sm:w-20 sm:h-20 bg-white p-1.5 rounded-2xl border border-slate-700 shadow-lg shrink-0 overflow-hidden flex items-center justify-center">
+              <img 
+                src="/garda-logo.jpg" 
+                alt="Official Logo GARDA GARUT" 
+                className="w-full h-full object-contain" 
+                referrerPolicy="no-referrer"
+              />
             </div>
-            <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-white uppercase italic">
-              Layanan Cerdas, Data Terjaga, Garut Lebih Maju
-            </h1>
-            <p className="text-xs sm:text-sm text-slate-300 max-w-2xl font-medium">
-              Selamat datang, <strong>{currentUser.name}</strong> ({currentUser.agency}). GARDA GARUT menyatukan rekomendasi teknis antar-dinas, memantau aset daerah, dan mempercepat perizinan tanpa menggantikan wewenang SIMBG.
-            </p>
+            <div className="space-y-1.5">
+              <div className="inline-flex items-center space-x-2 bg-emerald-500/10 text-emerald-400 text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full border border-emerald-500/20">
+                <Zap className="w-3.5 h-3.5 text-emerald-400" />
+                <span>Pusat Kendali Koordinasi Terpadu PUPR</span>
+              </div>
+              <h1 className="text-xl sm:text-2xl lg:text-3xl font-black tracking-tight text-white uppercase italic">
+                Layanan Cerdas, Data Terjaga, Garut Lebih Maju
+              </h1>
+              <p className="text-xs sm:text-sm text-slate-300 max-w-2xl font-medium">
+                Selamat datang, <strong>{currentUser.name}</strong> ({currentUser.agency}). GARDA GARUT menyatukan rekomendasi teknis antar-dinas, memantau aset daerah, dan mempercepat perizinan tanpa menggantikan wewenang SIMBG.
+              </p>
+            </div>
           </div>
 
           <div className="flex flex-wrap gap-3">
