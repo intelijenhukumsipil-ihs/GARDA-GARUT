@@ -244,11 +244,11 @@ export const QRManager: React.FC<QRManagerProps> = ({
     <div className="space-y-6">
       
       {/* Header Banner */}
-      <div className="bg-slate-900 border border-slate-800 p-6 sm:p-8 rounded-3xl text-white shadow-xl flex flex-col md:flex-row md:items-center justify-between gap-6">
+      <div className="bg-slate-900 border border-slate-800 p-4 sm:p-6 lg:p-8 rounded-3xl text-white shadow-xl flex flex-col md:flex-row md:items-center justify-between gap-4 sm:gap-6">
         <div className="space-y-2">
-          <div className="flex items-center space-x-2">
-            <QrCode className="w-6 h-6 text-emerald-400" />
-            <h1 className="text-xl font-black tracking-tight uppercase italic text-white">Generator & Pemindai Kode QR Unik GARDA</h1>
+          <div className="flex flex-wrap items-center gap-2">
+            <QrCode className="w-5 h-5 sm:w-6 sm:h-6 text-emerald-400 shrink-0" />
+            <h1 className="text-base sm:text-xl font-black tracking-tight uppercase italic text-white">Generator & Pemindai Kode QR Unik GARDA</h1>
             <span className="text-[10px] font-black uppercase tracking-widest px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
               BSrE Certified
             </span>
@@ -258,16 +258,16 @@ export const QRManager: React.FC<QRManagerProps> = ({
           </p>
         </div>
 
-        <div className="bg-white/10 px-4 py-3 rounded-2xl border border-white/15 text-xs text-emerald-300 font-black uppercase tracking-wider shrink-0 shadow-sm flex items-center space-x-2">
-          <ShieldCheck className="w-4 h-4 text-emerald-400" />
-          <span>Pengembang & Pemilik: Ir. Risa Kristalia N., ST., MT.</span>
+        <div className="bg-white/10 px-3.5 py-2.5 rounded-2xl border border-white/15 text-xs text-emerald-300 font-black uppercase tracking-wider shrink-0 shadow-sm flex items-center space-x-2">
+          <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" />
+          <span className="text-[11px] sm:text-xs">Pengembang & Pemilik: Ir. Risa Kristalia N., ST., MT.</span>
         </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         
         {/* Generator Panel */}
-        <div className="bg-white border border-slate-200 rounded-3xl p-6 shadow-sm space-y-4">
+        <div className="bg-white border border-slate-200 rounded-3xl p-4 sm:p-6 shadow-sm space-y-4">
           <h2 className="text-xs font-black text-slate-400 uppercase tracking-widest flex items-center space-x-2">
             <QrCode className="w-4 h-4 text-emerald-600" />
             <span>Generator Kode QR Fisik & Dokumen</span>
@@ -275,13 +275,13 @@ export const QRManager: React.FC<QRManagerProps> = ({
 
           <div className="space-y-4 text-xs">
             {/* Generate Asset QR */}
-            <div className="bg-slate-50 p-5 rounded-2xl border border-slate-200 space-y-3">
+            <div className="bg-slate-50 p-4 sm:p-5 rounded-2xl border border-slate-200 space-y-3">
               <span className="font-black text-slate-800 uppercase block">1. Cetak Plat Kode QR Aset Lapangan (GARDA INFRA)</span>
-              <div className="flex gap-2">
+              <div className="flex flex-col sm:flex-row gap-2">
                 <select
                   value={selectedAssetId}
                   onChange={(e) => setSelectedAssetId(e.target.value)}
-                  className="w-full bg-white border border-slate-300 text-slate-800 p-2.5 rounded-xl font-bold focus:outline-none focus:border-slate-800"
+                  className="w-full bg-white border border-slate-300 text-slate-800 p-2.5 rounded-xl font-bold focus:outline-none focus:border-slate-800 text-xs"
                 >
                   {assets.map(a => (
                     <option key={a.id} value={a.id}>{a.name} ({a.id})</option>
@@ -289,7 +289,7 @@ export const QRManager: React.FC<QRManagerProps> = ({
                 </select>
                 <button
                   onClick={handleGenerateAssetQr}
-                  className="bg-amber-400 hover:bg-amber-500 text-slate-950 font-black px-4 py-2.5 rounded-xl transition shrink-0 cursor-pointer uppercase tracking-wider shadow-sm"
+                  className="bg-amber-400 hover:bg-amber-500 text-slate-950 font-black px-4 py-2.5 rounded-xl transition shrink-0 cursor-pointer uppercase tracking-wider shadow-sm text-xs"
                 >
                   Buat QR
                 </button>
@@ -297,11 +297,11 @@ export const QRManager: React.FC<QRManagerProps> = ({
 
               {generatedAssetQr && (
                 <div className="text-center pt-2 space-y-3">
-                  <img src={generatedAssetQr} className="w-36 h-36 mx-auto bg-white p-2 rounded-2xl shadow border border-slate-200" alt="QR Aset" />
+                  <img src={generatedAssetQr} className="w-32 h-32 sm:w-36 sm:h-36 mx-auto bg-white p-2 rounded-2xl shadow border border-slate-200" alt="QR Aset" />
                   <div className="flex justify-center space-x-2">
                     <button
                       onClick={() => executeScanProcess('asset', selectedAssetId)}
-                      className="bg-slate-900 text-emerald-400 hover:bg-slate-800 px-3 py-1.5 rounded-xl text-[10px] font-black uppercase cursor-pointer"
+                      className="bg-slate-900 text-emerald-400 hover:bg-slate-800 px-3 py-2 rounded-xl text-[10px] font-black uppercase cursor-pointer"
                     >
                       Uji Verifikasi QR Ini
                     </button>
@@ -311,13 +311,13 @@ export const QRManager: React.FC<QRManagerProps> = ({
             </div>
 
             {/* Generate Case QR */}
-            <div className="bg-slate-50 p-5 rounded-2xl border border-slate-200 space-y-3">
+            <div className="bg-slate-50 p-4 sm:p-5 rounded-2xl border border-slate-200 space-y-3">
               <span className="font-black text-slate-800 uppercase block">2. Cetak Kode QR Surat Rekomendasi (GARDA BANGUNAN)</span>
-              <div className="flex gap-2">
+              <div className="flex flex-col sm:flex-row gap-2">
                 <select
                   value={selectedCaseId}
                   onChange={(e) => setSelectedCaseId(e.target.value)}
-                  className="w-full bg-white border border-slate-300 text-slate-800 p-2.5 rounded-xl font-bold focus:outline-none focus:border-slate-800"
+                  className="w-full bg-white border border-slate-300 text-slate-800 p-2.5 rounded-xl font-bold focus:outline-none focus:border-slate-800 text-xs"
                 >
                   {buildingCases.map(c => (
                     <option key={c.id} value={c.id}>{c.buildingName} ({c.simbgReferenceNo})</option>
@@ -325,7 +325,7 @@ export const QRManager: React.FC<QRManagerProps> = ({
                 </select>
                 <button
                   onClick={handleGenerateCaseQr}
-                  className="bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-black px-4 py-2.5 rounded-xl transition shrink-0 cursor-pointer uppercase tracking-wider shadow-sm"
+                  className="bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-black px-4 py-2.5 rounded-xl transition shrink-0 cursor-pointer uppercase tracking-wider shadow-sm text-xs"
                 >
                   Buat QR
                 </button>
@@ -333,11 +333,11 @@ export const QRManager: React.FC<QRManagerProps> = ({
 
               {generatedCaseQr && (
                 <div className="text-center pt-2 space-y-3">
-                  <img src={generatedCaseQr} className="w-36 h-36 mx-auto bg-white p-2 rounded-2xl shadow border border-slate-200" alt="QR Case" />
+                  <img src={generatedCaseQr} className="w-32 h-32 sm:w-36 sm:h-36 mx-auto bg-white p-2 rounded-2xl shadow border border-slate-200" alt="QR Case" />
                   <div className="flex justify-center space-x-2">
                     <button
                       onClick={() => executeScanProcess('case', selectedCaseId)}
-                      className="bg-slate-900 text-emerald-400 hover:bg-slate-800 px-3 py-1.5 rounded-xl text-[10px] font-black uppercase cursor-pointer"
+                      className="bg-slate-900 text-emerald-400 hover:bg-slate-800 px-3 py-2 rounded-xl text-[10px] font-black uppercase cursor-pointer"
                     >
                       Uji Verifikasi QR Ini
                     </button>
@@ -349,18 +349,18 @@ export const QRManager: React.FC<QRManagerProps> = ({
         </div>
 
         {/* Scanner & Interactive Verification Panel */}
-        <div className="bg-white border border-slate-200 rounded-3xl p-6 shadow-sm space-y-5">
-          <div className="flex items-center justify-between">
+        <div className="bg-white border border-slate-200 rounded-3xl p-4 sm:p-6 shadow-sm space-y-5">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <h2 className="text-xs font-black text-slate-400 uppercase tracking-widest flex items-center space-x-2">
               <Scan className="w-4 h-4 text-emerald-600" />
               <span>Pemindai Kode QR Interaktif</span>
             </h2>
 
             {/* Mode Switcher */}
-            <div className="flex bg-slate-100 p-1 rounded-xl gap-1">
+            <div className="flex bg-slate-100 p-1 rounded-xl gap-1 shrink-0 overflow-x-auto">
               <button
                 onClick={() => { setActiveScanMode('quick'); setIsCameraActive(false); }}
-                className={`px-3 py-1 rounded-lg text-[10px] font-black uppercase transition cursor-pointer ${
+                className={`px-3 py-1.5 rounded-lg text-[10px] font-black uppercase transition cursor-pointer ${
                   activeScanMode === 'quick' ? 'bg-slate-900 text-emerald-400 shadow' : 'text-slate-600 hover:text-slate-900'
                 }`}
               >
@@ -368,7 +368,7 @@ export const QRManager: React.FC<QRManagerProps> = ({
               </button>
               <button
                 onClick={() => { setActiveScanMode('camera'); setIsCameraActive(true); }}
-                className={`px-3 py-1 rounded-lg text-[10px] font-black uppercase transition cursor-pointer ${
+                className={`px-3 py-1.5 rounded-lg text-[10px] font-black uppercase transition cursor-pointer ${
                   activeScanMode === 'camera' ? 'bg-slate-900 text-emerald-400 shadow' : 'text-slate-600 hover:text-slate-900'
                 }`}
               >
@@ -376,7 +376,7 @@ export const QRManager: React.FC<QRManagerProps> = ({
               </button>
               <button
                 onClick={() => { setActiveScanMode('upload'); setIsCameraActive(false); }}
-                className={`px-3 py-1 rounded-lg text-[10px] font-black uppercase transition cursor-pointer ${
+                className={`px-3 py-1.5 rounded-lg text-[10px] font-black uppercase transition cursor-pointer ${
                   activeScanMode === 'upload' ? 'bg-slate-900 text-emerald-400 shadow' : 'text-slate-600 hover:text-slate-900'
                 }`}
               >

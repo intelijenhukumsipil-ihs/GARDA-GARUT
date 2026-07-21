@@ -83,11 +83,11 @@ export const GatewayDashboard: React.FC<GatewayDashboardProps> = ({
     <div className="space-y-6">
       
       {/* Header Banner */}
-      <div className="bg-slate-900 border border-slate-800 p-6 sm:p-8 rounded-3xl text-white shadow-xl flex flex-col md:flex-row md:items-center justify-between gap-6">
+      <div className="bg-slate-900 border border-slate-800 p-4 sm:p-6 lg:p-8 rounded-3xl text-white shadow-xl flex flex-col md:flex-row md:items-center justify-between gap-4 sm:gap-6">
         <div className="space-y-2">
-          <div className="flex items-center space-x-2">
-            <Server className="w-6 h-6 text-emerald-400" />
-            <h1 className="text-xl font-black tracking-tight uppercase italic text-white">Gateway Server Cerdas GARDA</h1>
+          <div className="flex flex-wrap items-center gap-2">
+            <Server className="w-5 h-5 sm:w-6 sm:h-6 text-emerald-400 shrink-0" />
+            <h1 className="text-base sm:text-xl font-black tracking-tight uppercase italic text-white">Gateway Server Cerdas GARDA</h1>
             <span className="text-[10px] font-black uppercase tracking-widest px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
               Lapisan SPBE
             </span>
@@ -97,8 +97,8 @@ export const GatewayDashboard: React.FC<GatewayDashboardProps> = ({
           </p>
         </div>
 
-        <div className="flex items-center space-x-3 bg-white/5 p-4 rounded-2xl border border-white/10 text-xs shrink-0">
-          <Activity className="w-5 h-5 text-emerald-400 animate-pulse" />
+        <div className="flex items-center space-x-3 bg-white/5 p-3.5 rounded-2xl border border-white/10 text-xs shrink-0">
+          <Activity className="w-5 h-5 text-emerald-400 animate-pulse shrink-0" />
           <div>
             <div className="text-slate-400 text-[10px] font-black uppercase tracking-widest">Gateway WhatsApp Server</div>
             <div className="font-black text-emerald-400 text-sm">+62 812-2235-5822 (ONLINE)</div>
@@ -107,13 +107,13 @@ export const GatewayDashboard: React.FC<GatewayDashboardProps> = ({
       </div>
 
       {/* Module Navigation Tabs */}
-      <div className="flex bg-white p-2 rounded-2xl border border-slate-200 gap-2 overflow-x-auto shadow-sm">
+      <div className="flex bg-white p-1.5 sm:p-2 rounded-2xl border border-slate-200 gap-1.5 overflow-x-auto shadow-sm scrollbar-none">
         {[
           { id: 'status', label: 'Status Server & Endpoint', icon: Server },
-          { id: 'whatsapp', label: 'WhatsApp Gateway Server (+62 812-2235-5822)', icon: MessageSquare },
-          { id: 'translator', label: 'Penerjemah Skema SIMBG v3', icon: FileCode },
-          { id: 'queue', label: 'Antrean Cadangan (Zero Data Loss)', icon: Database },
-          { id: 'security', label: 'Keamanan Cyber & Log Akses', icon: Lock }
+          { id: 'whatsapp', label: 'WhatsApp Gateway (+62 812-2235-5822)', icon: MessageSquare },
+          { id: 'translator', label: 'Penerjemah SIMBG v3', icon: FileCode },
+          { id: 'queue', label: 'Antrean Cadangan Data', icon: Database },
+          { id: 'security', label: 'Keamanan & Cyber Log', icon: Lock }
         ].map((t) => {
           const Icon = t.icon;
           const isActive = activeTab === t.id;
@@ -121,13 +121,13 @@ export const GatewayDashboard: React.FC<GatewayDashboardProps> = ({
             <button
               key={t.id}
               onClick={() => setActiveTab(t.id as any)}
-              className={`flex items-center space-x-2 py-2.5 px-4 rounded-xl text-xs font-black uppercase tracking-wider transition-all cursor-pointer whitespace-nowrap ${
+              className={`flex items-center space-x-2 py-2.5 px-3.5 sm:px-4 rounded-xl text-xs font-black uppercase tracking-wider transition-all cursor-pointer whitespace-nowrap shrink-0 ${
                 isActive
                   ? 'bg-slate-900 text-emerald-400 shadow'
                   : 'text-slate-600 hover:bg-slate-100'
               }`}
             >
-              <Icon className="w-4 h-4" />
+              <Icon className="w-4 h-4 shrink-0" />
               <span>{t.label}</span>
             </button>
           );

@@ -9,7 +9,7 @@ import {
   BarChart3, 
   ShieldAlert, 
   BookOpen,
-  Info
+  X
 } from 'lucide-react';
 
 export type TabType = 
@@ -29,6 +29,8 @@ interface SidebarProps {
   reportCount: number;
   caseCount: number;
   queueCount: number;
+  isMobileOpen?: boolean;
+  setIsMobileOpen?: (open: boolean) => void;
 }
 
 export const Sidebar: React.FC<SidebarProps> = ({
@@ -36,13 +38,15 @@ export const Sidebar: React.FC<SidebarProps> = ({
   setActiveTab,
   reportCount,
   caseCount,
-  queueCount
+  queueCount,
+  isMobileOpen = false,
+  setIsMobileOpen
 }) => {
   const navItems = [
     {
       id: 'dashboard',
       label: 'Command Center',
-      sublabel: 'Dasbor Utama',
+      sublabel: 'Dasbor Utama SPBE',
       icon: LayoutDashboard,
       badge: null,
       badgeColor: ''
@@ -50,7 +54,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
     {
       id: 'gateway',
       label: 'Gateway Server',
-      sublabel: 'Server Gateway Cerdas',
+      sublabel: 'Server WhatsApp & API',
       icon: Server,
       badge: queueCount > 0 ? queueCount : null,
       badgeColor: 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30'
@@ -58,7 +62,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
     {
       id: 'infra',
       label: 'GARDA INFRA',
-      sublabel: 'Aset & Pemeliharaan',
+      sublabel: 'Aset Jalan & Jembatan',
       icon: HardHat,
       badge: reportCount > 0 ? reportCount : null,
       badgeColor: 'bg-amber-500/20 text-amber-400 border-amber-500/30'
@@ -74,7 +78,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
     {
       id: 'map',
       label: 'Peta Interaktif',
-      sublabel: 'GIS & Heatmap',
+      sublabel: '42 Kecamatan Garut',
       icon: MapPin,
       badge: null,
       badgeColor: ''
@@ -82,7 +86,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
     {
       id: 'qr',
       label: 'Generator & Scan QR',
-      sublabel: 'Verifikasi Unik',
+      sublabel: 'Kamera HP & Verifikasi',
       icon: QrCode,
       badge: null,
       badgeColor: ''
@@ -90,15 +94,15 @@ export const Sidebar: React.FC<SidebarProps> = ({
     {
       id: 'reports',
       label: 'Laporan & Ekspor',
-      sublabel: 'Analytics PUPR',
+      sublabel: 'Analytics SPBE PUPR',
       icon: BarChart3,
       badge: null,
       badgeColor: ''
     },
     {
       id: 'audit',
-      label: 'Audit Log & SPBE',
-      sublabel: 'Keamanan System',
+      label: 'Audit Log & Security',
+      sublabel: 'Keamanan Data System',
       icon: ShieldAlert,
       badge: null,
       badgeColor: ''
@@ -113,27 +117,46 @@ export const Sidebar: React.FC<SidebarProps> = ({
     }
   ];
 
-  return (
-    <aside className="w-64 bg-slate-900 border-r border-slate-800 text-slate-300 flex flex-col justify-between shrink-0 min-h-[calc(100vh-5rem)] select-none">
-      
+  const handleNavClick = (tab: TabType) => {
+    setActiveTab(tab);
+    if (setIsMobileOpen) {
+      setIsMobileOpen(false);
+    }
+  };
+
+  const sidebarContent = (
+    <div className="h-full flex flex-col justify-between overflow-y-auto select-none">
       <div>
         {/* Brand Header */}
-        <div className="p-6 border-b border-slate-800/80">
-          <div className="text-emerald-400 font-black text-3xl leading-none tracking-tighter mb-1">
-            GARDA
+        <div className="p-5 sm:p-6 border-b border-slate-800/80 flex items-center justify-between">
+          <div>
+            <div className="text-emerald-400 font-black text-2xl sm:text-3xl leading-none tracking-tighter mb-1">
+              GARDA
+            </div>
+            <div className="text-white font-black text-2xl sm:text-3xl leading-none tracking-tighter">
+              GARUT
+            </div>
+            <div className="text-slate-400 text-[10px] uppercase tracking-widest mt-2 font-bold">
+              Layanan Cerdas & Terpadu PUPR
+            </div>
           </div>
-          <div className="text-white font-black text-3xl leading-none tracking-tighter">
-            GARUT
-          </div>
-          <div className="text-slate-400 text-[10px] uppercase tracking-widest mt-3 font-bold">
-            Layanan Cerdas & Terpadu PUPR
-          </div>
+
+          {/* Close button on mobile drawer */}
+          {setIsMobileOpen && (
+            <button
+              onClick={() => setIsMobileOpen(false)}
+              className="lg:hidden p-2 text-slate-400 hover:text-white rounded-xl bg-slate-800/80"
+              aria-label="Close Sidebar"
+            >
+              <X className="w-5 h-5" />
+            </button>
+          )}
         </div>
 
         {/* Navigation Items */}
-        <nav className="p-3 space-y-1.5 mt-2">
-          <div className="px-3 py-1.5 text-[10px] font-black tracking-widest text-slate-500 uppercase">
-            Menu Utama
+        <nav className="p-3 space-y-1 mt-2">
+          <div className="px-3 py-1 text-[10px] font-black tracking-widest text-slate-500 uppercase">
+            Menu Navigasi
           </div>
 
           {navItems.map((item) => {
@@ -143,8 +166,8 @@ export const Sidebar: React.FC<SidebarProps> = ({
             return (
               <button
                 key={item.id}
-                onClick={() => setActiveTab(item.id as TabType)}
-                className={`w-full flex items-center justify-between px-3.5 py-3 rounded-xl transition-all cursor-pointer ${
+                onClick={() => handleNavClick(item.id as TabType)}
+                className={`w-full flex items-center justify-between px-3.5 py-2.5 sm:py-3 rounded-xl transition-all cursor-pointer text-left ${
                   isActive
                     ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-bold shadow-sm'
                     : 'text-slate-400 hover:text-white hover:bg-white/5 font-semibold'
@@ -174,19 +197,43 @@ export const Sidebar: React.FC<SidebarProps> = ({
       </div>
 
       {/* Footer Info Box */}
-      <div className="p-5 border-t border-slate-800 bg-slate-950/60">
-        <div className="text-slate-500 text-[10px] mb-1 font-bold uppercase tracking-widest">
-          Pengembang
+      <div className="p-4 sm:p-5 border-t border-slate-800 bg-slate-950/80">
+        <div className="text-slate-500 text-[9px] mb-0.5 font-bold uppercase tracking-widest">
+          Pengembang Inovasi
         </div>
-        <div className="text-white font-bold text-xs uppercase truncate">
-          PT Cakrawala Dzikra Teknologi
+        <div className="text-emerald-400 font-black text-xs uppercase truncate">
+          Ir. Risa Kristalia N., ST., MT.
         </div>
-        <div className="text-slate-400 text-[10px] mt-1 italic">
-          Pemilik: Ir. Risa Kristalia N., ST., MT.
+        <div className="text-slate-400 text-[10px] mt-0.5 font-medium">
+          Dinas PUPR Kabupaten Garut
         </div>
       </div>
+    </div>
+  );
 
-    </aside>
+  return (
+    <>
+      {/* Desktop Sidebar */}
+      <aside className="hidden lg:flex w-64 bg-slate-900 border-r border-slate-800 text-slate-300 flex-col shrink-0 min-h-[calc(100vh-5rem)]">
+        {sidebarContent}
+      </aside>
+
+      {/* Mobile Slide-over Drawer Overlay */}
+      {isMobileOpen && (
+        <div className="fixed inset-0 z-50 lg:hidden flex">
+          {/* Backdrop */}
+          <div 
+            className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm transition-opacity"
+            onClick={() => setIsMobileOpen && setIsMobileOpen(false)}
+          />
+
+          {/* Slide-in Drawer */}
+          <div className="relative w-72 max-w-[85vw] bg-slate-900 text-slate-300 h-full shadow-2xl flex flex-col z-10 animate-in slide-in-from-left duration-200">
+            {sidebarContent}
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 

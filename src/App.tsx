@@ -47,6 +47,7 @@ export default function App() {
   const [currentUser, setCurrentUserProfile] = useState<UserProfile>(getCurrentUser());
   const [activeTab, setActiveTab] = useState<TabType>('dashboard');
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isMobileOpen, setIsMobileOpen] = useState(false);
 
   // App States
   const [assets, setAssets] = useState<InfraAsset[]>([]);
@@ -123,10 +124,11 @@ export default function App() {
         currentUser={currentUser}
         onRoleChange={handleRoleChange}
         onOpenQuickSearch={() => setIsSearchOpen(true)}
+        onToggleMobileMenu={() => setIsMobileOpen(!isMobileOpen)}
       />
 
       {/* Main Layout */}
-      <div className="flex-1 flex max-w-[1440px] w-full mx-auto">
+      <div className="flex-1 flex max-w-[1440px] w-full mx-auto relative">
         
         {/* Left Sidebar */}
         <Sidebar
@@ -135,10 +137,12 @@ export default function App() {
           reportCount={reports.length}
           caseCount={buildingCases.length}
           queueCount={queue.filter(q => q.status !== 'completed').length}
+          isMobileOpen={isMobileOpen}
+          setIsMobileOpen={setIsMobileOpen}
         />
 
         {/* Content View Container */}
-        <main className="flex-1 p-6 lg:p-8 min-w-0 overflow-y-auto">
+        <main className="flex-1 p-3.5 sm:p-6 lg:p-8 min-w-0 overflow-y-auto">
           
           {activeTab === 'dashboard' && (
             <OverviewDashboard

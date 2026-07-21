@@ -110,11 +110,11 @@ export const InteractiveMap: React.FC<InteractiveMapProps> = ({
     <div className="space-y-6">
       
       {/* Header Banner */}
-      <div className="bg-slate-900 border border-slate-800 p-6 sm:p-8 rounded-3xl text-white shadow-xl flex flex-col md:flex-row md:items-center justify-between gap-6">
+      <div className="bg-slate-900 border border-slate-800 p-4 sm:p-6 lg:p-8 rounded-3xl text-white shadow-xl flex flex-col md:flex-row md:items-center justify-between gap-4 sm:gap-6">
         <div className="space-y-2">
-          <div className="flex items-center space-x-2">
-            <Compass className="w-6 h-6 text-emerald-400" />
-            <h1 className="text-xl font-black tracking-tight uppercase italic text-white">
+          <div className="flex flex-wrap items-center gap-2">
+            <Compass className="w-5 h-5 sm:w-6 sm:h-6 text-emerald-400 shrink-0" />
+            <h1 className="text-base sm:text-xl font-black tracking-tight uppercase italic text-white">
               Peta Wilayah Administratif & GIS Kabupaten Garut
             </h1>
             <span className="text-[10px] font-black uppercase tracking-widest px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
@@ -126,11 +126,11 @@ export const InteractiveMap: React.FC<InteractiveMapProps> = ({
           </p>
         </div>
 
-        {/* View Mode Switcher */}
-        <div className="flex bg-white/10 p-1.5 rounded-2xl border border-white/15 shrink-0 gap-1">
+        {/* View Mode Switcher - Mobile Scrollable */}
+        <div className="flex bg-white/10 p-1.5 rounded-2xl border border-white/15 shrink-0 gap-1 overflow-x-auto scrollbar-none">
           <button
             onClick={() => setMapMode('administrative')}
-            className={`text-xs font-black uppercase tracking-wider px-3.5 py-2 rounded-xl transition cursor-pointer flex items-center space-x-1.5 ${
+            className={`text-xs font-black uppercase tracking-wider px-3 py-2 rounded-xl transition cursor-pointer flex items-center space-x-1.5 shrink-0 ${
               mapMode === 'administrative' ? 'bg-emerald-400 text-slate-950 shadow' : 'text-slate-300 hover:text-white'
             }`}
           >
@@ -140,7 +140,7 @@ export const InteractiveMap: React.FC<InteractiveMapProps> = ({
 
           <button
             onClick={() => setMapMode('gis')}
-            className={`text-xs font-black uppercase tracking-wider px-3.5 py-2 rounded-xl transition cursor-pointer flex items-center space-x-1.5 ${
+            className={`text-xs font-black uppercase tracking-wider px-3 py-2 rounded-xl transition cursor-pointer flex items-center space-x-1.5 shrink-0 ${
               mapMode === 'gis' ? 'bg-amber-400 text-slate-950 shadow' : 'text-slate-300 hover:text-white'
             }`}
           >
@@ -150,7 +150,7 @@ export const InteractiveMap: React.FC<InteractiveMapProps> = ({
 
           <button
             onClick={() => setMapMode('heatmap')}
-            className={`text-xs font-black uppercase tracking-wider px-3.5 py-2 rounded-xl transition cursor-pointer flex items-center space-x-1.5 ${
+            className={`text-xs font-black uppercase tracking-wider px-3 py-2 rounded-xl transition cursor-pointer flex items-center space-x-1.5 shrink-0 ${
               mapMode === 'heatmap' ? 'bg-red-500 text-white shadow animate-pulse' : 'text-slate-300 hover:text-white'
             }`}
           >
@@ -164,25 +164,25 @@ export const InteractiveMap: React.FC<InteractiveMapProps> = ({
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         
         {/* Map Canvas Frame */}
-        <div className="lg:col-span-2 bg-slate-950 border border-slate-800 rounded-3xl p-5 relative min-h-[580px] flex flex-col justify-between shadow-2xl overflow-hidden">
+        <div className="lg:col-span-2 bg-slate-950 border border-slate-800 rounded-3xl p-3 sm:p-5 relative min-h-[480px] sm:min-h-[580px] flex flex-col justify-between shadow-2xl overflow-hidden">
           
           {/* Top Canvas Bar & Legend */}
-          <div className="flex flex-wrap items-center justify-between gap-2 z-10 bg-slate-900/90 p-3 rounded-2xl border border-slate-800/80 backdrop-blur-md">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 z-10 bg-slate-900/90 p-3 rounded-2xl border border-slate-800/80 backdrop-blur-md">
             <div className="space-y-0.5">
               <span className="font-black text-emerald-400 text-xs uppercase tracking-widest block flex items-center space-x-1.5">
                 <MapPin className="w-3.5 h-3.5 text-emerald-400" />
-                <span>PETA WILAYAH ADMINISTRATIF KABUPATEN GARUT LENGKAP</span>
+                <span>PETA WILAYAH ADMINISTRATIF GARUT</span>
               </span>
-              <span className="text-[10px] text-slate-400 font-mono">Sumber: BAPPEDA & Dinas PUPR Kabupaten Garut • Sistem Koordinat WGS 84</span>
+              <span className="text-[10px] text-slate-400 font-mono">BAPPEDA & PUPR Garut • WGS 84</span>
             </div>
 
             {/* Region Filter Buttons */}
-            <div className="flex bg-slate-950 p-1 rounded-xl border border-slate-800 gap-1 text-[10px] font-black uppercase">
+            <div className="flex bg-slate-950 p-1 rounded-xl border border-slate-800 gap-1 text-[10px] font-black uppercase overflow-x-auto">
               {(['Semua', 'Utara', 'Tengah', 'Selatan'] as const).map(r => (
                 <button
                   key={r}
                   onClick={() => setSelectedRegionFilter(r)}
-                  className={`px-2.5 py-1 rounded-lg transition cursor-pointer ${
+                  className={`px-2.5 py-1 rounded-lg transition cursor-pointer shrink-0 ${
                     selectedRegionFilter === r ? 'bg-emerald-500 text-slate-950 font-black' : 'text-slate-400 hover:text-slate-200'
                   }`}
                 >
@@ -193,7 +193,7 @@ export const InteractiveMap: React.FC<InteractiveMapProps> = ({
           </div>
 
           {/* SVG & Vector Canvas Base representing Garut Administrative Map */}
-          <div className="relative w-full h-[480px] my-3 bg-[#0a121d] rounded-2xl border border-slate-800/80 overflow-hidden flex items-center justify-center">
+          <div className="relative w-full h-[380px] sm:h-[480px] my-3 bg-[#0a121d] rounded-2xl border border-slate-800/80 overflow-hidden flex items-center justify-center">
             
             {/* Top Regional Borders Labels */}
             <div className="absolute top-2 left-1/2 -translate-x-1/2 text-[11px] font-black font-serif italic text-emerald-300/60 uppercase tracking-widest pointer-events-none z-10">
