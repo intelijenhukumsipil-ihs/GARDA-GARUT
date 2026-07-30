@@ -13,7 +13,9 @@ import {
   ShieldCheck,
   Building2,
   MapPin,
-  FileCheck
+  FileCheck,
+  Bell,
+  Radio
 } from 'lucide-react';
 
 interface GardaMascotProps {
@@ -33,6 +35,8 @@ export const GardaMascot: React.FC<GardaMascotProps> = ({ onNavigateTab }) => {
   const [inputQuestion, setInputQuestion] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [isSpeaking, setIsSpeaking] = useState(false);
+  const [soundEnabled, setSoundEnabled] = useState(true);
+  const [notificationToast, setNotificationToast] = useState<string | null>(null);
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
       id: 'msg-1',
@@ -43,6 +47,100 @@ export const GardaMascot: React.FC<GardaMascotProps> = ({ onNavigateTab }) => {
   ]);
 
   const chatEndRef = useRef<HTMLDivElement>(null);
+
+  // Web Audio Synthesizer for Chime & Sound Notifications
+  const playAudioChime = (type: 'open' | 'send' | 'reply' | 'toggle') => {
+    if (!soundEnabled && type !== 'toggle') return;
+    try {
+      const AudioCtx = window.AudioContext || (window as any).webkitAudioContext;
+      if (!AudioCtx) return;
+      const ctx = new AudioCtx();
+
+      if (type === 'open') {
+        // Bright 3-note ascending chime (C5 -> E5 -> G5)
+        const notes = [523.25, 659.25, 783.99];
+        notes.forEach((freq, idx) => {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          const startTime = ctx.currentTime + idx * 0.08;
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(freq, startTime);
+          gain.gain.setValueAtTime(0.18, startTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, startTime + 0.32);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start(startTime);
+          osc.stop(startTime + 0.32);
+        });
+      } else if (type === 'reply') {
+        // Cheerful double melody (G5 -> C6)
+        const notes = [783.99, 1046.50];
+        notes.forEach((freq, idx) => {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          const startTime = ctx.currentTime + idx * 0.1;
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(freq, startTime);
+          gain.gain.setValueAtTime(0.22, startTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, startTime + 0.38);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start(startTime);
+          osc.stop(startTime + 0.38);
+        });
+      } else if (type === 'send') {
+        // Soft pop/swish audio tone
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        const now = ctx.currentTime;
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(440, now);
+        osc.frequency.exponentialRampToValueAtTime(880, now + 0.09);
+        gain.gain.setValueAtTime(0.12, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.1);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(now);
+        osc.stop(now + 0.1);
+      } else if (type === 'toggle') {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        const now = ctx.currentTime;
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(600, now);
+        gain.gain.setValueAtTime(0.15, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.12);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(now);
+        osc.stop(now + 0.12);
+      }
+    } catch (err) {
+      console.warn('Audio chime notice:', err);
+    }
+  };
+
+  const handleOpenMascot = () => {
+    setIsOpen(true);
+    playAudioChime('open');
+    triggerNotification('🔔 Suara Notifikasi GAGA Aktif! Ada yang bisa GAGA bantu?');
+  };
+
+  const triggerNotification = (text: string) => {
+    setNotificationToast(text);
+    setTimeout(() => {
+      setNotificationToast(null);
+    }, 4000);
+  };
+
+  // Listen to custom global trigger for Tanya GAGA
+  useEffect(() => {
+    const handleCustomOpen = () => {
+      handleOpenMascot();
+    };
+    window.addEventListener('open-gaga-mascot', handleCustomOpen);
+    return () => window.removeEventListener('open-gaga-mascot', handleCustomOpen);
+  }, [soundEnabled]);
 
   useEffect(() => {
     if (isOpen) {
@@ -75,6 +173,8 @@ export const GardaMascot: React.FC<GardaMascotProps> = ({ onNavigateTab }) => {
     const q = questionText || inputQuestion;
     if (!q.trim() || isLoading) return;
 
+    playAudioChime('send');
+
     const userMsg: ChatMessage = {
       id: `usr-${Date.now()}`,
       sender: 'user',
@@ -97,26 +197,32 @@ export const GardaMascot: React.FC<GardaMascotProps> = ({ onNavigateTab }) => {
       });
 
       const data = await res.json();
+      const replyContent = data.reply || getGagaFallbackAnswer(q);
       const mascotMsg: ChatMessage = {
         id: `mascot-${Date.now()}`,
         sender: 'mascot',
-        text: data.reply || getGagaFallbackAnswer(q),
+        text: replyContent,
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
         isSimulated: data.isSimulated
       };
 
       setMessages(prev => [...prev, mascotMsg]);
+      playAudioChime('reply');
+      triggerNotification('📢 GAGA Menjawab! Silakan cek balasan.');
     } catch (err) {
       console.error(err);
+      const fallbackReply = getGagaFallbackAnswer(q);
       setMessages(prev => [
         ...prev,
         {
           id: `mascot-err-${Date.now()}`,
           sender: 'mascot',
-          text: getGagaFallbackAnswer(q),
+          text: fallbackReply,
           timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
         }
       ]);
+      playAudioChime('reply');
+      triggerNotification('📢 GAGA Menjawab! (Respon fallback aktif)');
     } finally {
       setIsLoading(false);
     }
@@ -154,13 +260,16 @@ export const GardaMascot: React.FC<GardaMascotProps> = ({ onNavigateTab }) => {
       {!isOpen && (
         <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-40 flex flex-col items-end gap-2">
           {/* Animated Hint Bubble */}
-          <div className="hidden sm:flex items-center space-x-2 bg-slate-900/95 backdrop-blur text-white text-xs font-bold px-3.5 py-2 rounded-2xl shadow-xl border border-slate-700/80 animate-bounce">
+          <div 
+            onClick={handleOpenMascot}
+            className="hidden sm:flex items-center space-x-2 bg-slate-900/95 hover:bg-slate-800 backdrop-blur text-white text-xs font-bold px-3.5 py-2 rounded-2xl shadow-xl border border-slate-700/80 animate-bounce cursor-pointer"
+          >
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
-            <span>Tanya GAGA (Maskot PUPR) 🤖</span>
+            <span>Tanya GAGA (Maskot PUPR) 🤖 🔊</span>
           </div>
 
           <button
-            onClick={() => setIsOpen(true)}
+            onClick={handleOpenMascot}
             className="group relative bg-slate-900 hover:bg-slate-800 text-white p-1.5 sm:p-2 rounded-2xl shadow-2xl transition-all transform hover:scale-110 active:scale-95 cursor-pointer ring-4 ring-emerald-400/40 flex items-center justify-center border border-slate-700"
             aria-label="Buka Maskot GAGA"
           >
@@ -212,14 +321,31 @@ export const GardaMascot: React.FC<GardaMascotProps> = ({ onNavigateTab }) => {
               </div>
             </div>
 
-            <div className="flex items-center space-x-1">
+            <div className="flex items-center space-x-1.5">
+              {/* Sound Toggle Button */}
+              <button
+                onClick={() => {
+                  const newSound = !soundEnabled;
+                  setSoundEnabled(newSound);
+                  playAudioChime('toggle');
+                  triggerNotification(newSound ? '🔊 Suara Notifikasi Diaktifkan' : '🔇 Suara Notifikasi Dimatikan');
+                }}
+                className={`px-2 py-1 rounded-xl transition cursor-pointer flex items-center gap-1.5 ${
+                  soundEnabled ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40' : 'bg-slate-800 text-slate-400'
+                }`}
+                title={soundEnabled ? 'Suara Notifikasi Aktif (Klik untuk Matikan)' : 'Suara Notifikasi Mati (Klik untuk Aktifkan)'}
+              >
+                {soundEnabled ? <Radio className="w-3.5 h-3.5 text-emerald-400 animate-pulse" /> : <VolumeX className="w-3.5 h-3.5" />}
+                <span className="text-[9px] font-bold uppercase">{soundEnabled ? 'Suara ON' : 'OFF'}</span>
+              </button>
+
               {/* Voice Button */}
               <button
                 onClick={() => messages.length > 0 && speakText(messages[messages.length - 1].text)}
                 className={`p-2 rounded-xl transition cursor-pointer ${
                   isSpeaking ? 'bg-amber-400 text-slate-950' : 'text-slate-400 hover:text-white hover:bg-slate-800'
                 }`}
-                title="Dengarkan Suara GAGA"
+                title="Dengarkan Suara GAGA (TTS)"
               >
                 {isSpeaking ? <VolumeX className="w-4 h-4 animate-pulse" /> : <Volume2 className="w-4 h-4" />}
               </button>
@@ -233,6 +359,19 @@ export const GardaMascot: React.FC<GardaMascotProps> = ({ onNavigateTab }) => {
               </button>
             </div>
           </div>
+
+          {/* Toast Notification Alert Banner */}
+          {notificationToast && (
+            <div className="bg-gradient-to-r from-amber-400 via-amber-300 to-amber-400 text-slate-950 font-bold text-[10px] px-3.5 py-1.5 flex items-center justify-between shadow-inner animate-in fade-in slide-in-from-top-1">
+              <div className="flex items-center space-x-1.5">
+                <Bell className="w-3.5 h-3.5 text-slate-950 animate-bounce shrink-0" />
+                <span>{notificationToast}</span>
+              </div>
+              <button onClick={() => setNotificationToast(null)} className="text-slate-950 hover:opacity-75 p-0.5">
+                <X className="w-3 h-3" />
+              </button>
+            </div>
+          )}
 
           {/* Subheader info */}
           <div className="bg-emerald-950/90 border-b border-emerald-900/50 px-4 py-2 flex items-center justify-between text-[10px] text-emerald-200">

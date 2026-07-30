@@ -231,7 +231,7 @@ export default function App() {
           <span className="hidden md:inline text-slate-300 font-semibold">Pemilik & Pengembang Inovasi: Ir. Risa Kristalia N., ST., MT.</span>
         </div>
         <div className="text-slate-400 font-bold uppercase flex items-center space-x-3">
-          <span className="text-emerald-400 font-mono">WhatsApp Server: +62 813-1640-3160</span>
+          <span className="text-emerald-400 font-mono">WhatsApp Server: 08212234446 (+62 821-2234-4446)</span>
           <span>|</span>
           <span>© 2026 Dinas PUPR Kab. Garut</span>
         </div>

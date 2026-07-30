@@ -164,7 +164,14 @@ export const OverviewDashboard: React.FC<OverviewDashboardProps> = ({
           </div>
         </div>
 
-        <div className="flex items-center gap-3 z-10 shrink-0 w-full md:w-auto">
+        <div className="flex flex-wrap items-center gap-3 z-10 shrink-0 w-full md:w-auto">
+          <button
+            onClick={() => window.dispatchEvent(new CustomEvent('open-gaga-mascot'))}
+            className="flex-1 md:flex-none text-center bg-amber-400 hover:bg-amber-300 text-slate-950 font-black px-5 py-3 rounded-2xl text-xs uppercase tracking-wider transition shadow-lg cursor-pointer flex items-center justify-center space-x-2 transform hover:scale-105 border border-amber-300"
+          >
+            <Bot className="w-4 h-4 text-slate-950" />
+            <span>Tanya GAGA Sekarang 🔊</span>
+          </button>
           <a
             href="https://wa.me/628212234446"
             target="_blank"
