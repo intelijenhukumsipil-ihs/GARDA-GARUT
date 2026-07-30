@@ -1,0 +1,73 @@
+{
+  "entities": {
+    "InfraReport": {
+      "title": "InfraReport",
+      "description": "Pelaporan kerusakan dan pemeliharaan jalan, jembatan, irigasi di 42 Kecamatan Kabupaten Garut",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "reportNo": { "type": "string" },
+        "title": { "type": "string" },
+        "kecamatan": { "type": "string" },
+        "infraType": { "type": "string" },
+        "damageLevel": { "type": "string" },
+        "status": { "type": "string" },
+        "reporterName": { "type": "string" },
+        "reporterContact": { "type": "string font-mono" },
+        "description": { "type": "string" },
+        "latitude": { "type": "number" },
+        "longitude": { "type": "number" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["id", "reportNo", "title", "kecamatan", "infraType", "damageLevel", "status"]
+    },
+    "BangunanRecommendation": {
+      "title": "BangunanRecommendation",
+      "description": "Dokumen Rekomendasi Teknis PBG/SLF PUPR Garut & Sinkronisasi SIMBG KemenPUPR",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "docNo": { "type": "string" },
+        "simbgReferenceNo": { "type": "string" },
+        "applicantName": { "type": "string" },
+        "buildingName": { "type": "string" },
+        "buildingType": { "type": "string" },
+        "kecamatan": { "type": "string" },
+        "status": { "type": "string" },
+        "issuedDate": { "type": "string" },
+        "signedBy": { "type": "string" },
+        "qrHash": { "type": "string" }
+      },
+      "required": ["id", "docNo", "applicantName", "buildingName", "kecamatan", "status"]
+    },
+    "ActivityLog": {
+      "title": "ActivityLog",
+      "description": "Log Aktivitas Audit & Rekam Jejak SPBE GARDA GARUT",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "timestamp": { "type": "string" },
+        "action": { "type": "string" },
+        "actorName": { "type": "string" },
+        "details": { "type": "string" },
+        "module": { "type": "string" }
+      },
+      "required": ["id", "timestamp", "action", "actorName", "details"]
+    }
+  },
+  "firestore": {
+    "/infra_reports/{reportId}": {
+      "schema": { "$ref": "#/entities/InfraReport" },
+      "description": "Koleksi laporan kerusakan infrastruktur jalan/jembatan/irigasi"
+    },
+    "/bangunan_recommendations/{docId}": {
+      "schema": { "$ref": "#/entities/BangunanRecommendation" },
+      "description": "Koleksi rekomendasi teknis PBG dan perizinan bangunan SIMBG"
+    },
+    "/activity_logs/{logId}": {
+      "schema": { "$ref": "#/entities/ActivityLog" },
+      "description": "Koleksi log aktivitas SPBE"
+    }
+  }
+}

@@ -1,0 +1,39 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Default Deny Catch-All
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Helper Functions
+    function isSignedIn() {
+      return request.auth != null;
+    }
+    
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    // Infra Reports collection
+    match /infra_reports/{reportId} {
+      allow read: if true; // Public view for infrastructure reports in 42 Kecamatan
+      allow create: if true; // Allow citizens and officers to submit reports
+      allow update, delete: if isSignedIn(); // Restricted to authenticated PUPR officers
+    }
+
+    // Bangunan Recommendations collection
+    match /bangunan_recommendations/{docId} {
+      allow read: if true; // Public verification of recommendation & PBG documents
+      allow write: if isSignedIn(); // Restricted to authenticated PUPR officers
+    }
+
+    // Activity Logs collection
+    match /activity_logs/{logId} {
+      allow read: if true; // Transparent SPBE audit log viewing
+      allow create: if true; // Allow logging system events
+      allow update, delete: if isSignedIn();
+    }
+  }
+}
