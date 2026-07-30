@@ -210,7 +210,7 @@ export const QRManager: React.FC<QRManagerProps> = ({
     }
   };
 
-  // Send WhatsApp Verification Alert to Gateway (+62 813-1640-3160)
+  // Send WhatsApp Verification Alert to Gateway (08212234446)
   const handleSendWaAlert = async () => {
     if (!scanResult) return;
     setWaSending(true);
@@ -219,7 +219,7 @@ export const QRManager: React.FC<QRManagerProps> = ({
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          recipientPhone: '+62 813-1640-3160',
+          recipientPhone: '+62 821-2234-4446',
           messageType: 'QR_VERIFY',
           data: {
             title: scanResult.title,
@@ -254,7 +254,7 @@ export const QRManager: React.FC<QRManagerProps> = ({
             </span>
           </div>
           <p className="text-xs text-slate-300 max-w-2xl font-medium">
-            Seluruh aset fisik infrastruktur daerah & dokumen rekomendasi terpadu dilengkapi Kode QR unik terverifikasi untuk mencegah pemalsuan di lapangan. Terhubung langsung ke WhatsApp Gateway Server (+62 813-1640-3160).
+            Seluruh aset fisik infrastruktur daerah & dokumen rekomendasi terpadu dilengkapi Kode QR unik terverifikasi untuk mencegah pemalsuan di lapangan. Terhubung langsung ke WhatsApp Gateway Server (08212234446).
           </p>
         </div>
 

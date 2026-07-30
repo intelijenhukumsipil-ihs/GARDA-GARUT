@@ -125,18 +125,18 @@ export const GardaMascot: React.FC<GardaMascotProps> = ({ onNavigateTab }) => {
   const getGagaFallbackAnswer = (userQ: string): string => {
     const lq = (userQ || '').toLowerCase();
     if (lq.includes('simbg') || lq.includes('pbg') || lq.includes('izin') || lq.includes('bangunan') || lq.includes('slf') || lq.includes('gedung')) {
-      return 'Sampurasun! GAGA di sini! 🤖\n\nUntuk Rekomendasi PBG/SLF di Dinas PUPR Garut, silakan buka modul **GARDA BANGUNAN**. Tim Teknis akan memverifikasi kelaikan & otomatis sinkron ke SIMBG KemenPUPR! WhatsApp Server: +62 813-1640-3160.';
+      return 'Sampurasun! GAGA di sini! 🤖\n\nUntuk Rekomendasi PBG/SLF di Dinas PUPR Garut, silakan buka modul **GARDA BANGUNAN**. Tim Teknis akan memverifikasi kelaikan & otomatis sinkron ke SIMBG KemenPUPR! WhatsApp Server: 08212234446 (+62 821-2234-4446).';
     }
     if (lq.includes('jalan') || lq.includes('rusak') || lq.includes('jembatan') || lq.includes('lapor') || lq.includes('irigasi') || lq.includes('infra')) {
       return 'Wilujeng sumping! GAGA siap bantu! 🚧👷‍♂️\n\nLaporkan jalan berlubang atau jembatan rusak via modul **GARDA INFRA**. Sertakan foto & kecamatan, laporan langsung diprioritaskan ke Pengawas PUPR setempat!';
     }
     if (lq.includes('wa') || lq.includes('whatsapp') || lq.includes('server') || lq.includes('nomor') || lq.includes('gateway')) {
-      return 'Halo! Nomor resmi WhatsApp Gateway Server Dinas PUPR Garut: 📲 **+62 813-1640-3160**. Server mengirim konfirmasi SLA perizinan & laporan!';
+      return 'Halo! Nomor resmi WhatsApp Gateway Server Dinas PUPR Garut: 📲 **08212234446** (+62 821-2234-4446). Server mengirim konfirmasi SLA perizinan & laporan!';
     }
     if (lq.includes('kecamatan') || lq.includes('pengawas') || lq.includes('peta') || lq.includes('wilayah')) {
       return 'GARDA GARUT menjangkau **42 Wilayah Kecamatan** di Kab. Garut! 🗺️ Anda bisa cek Peta & kontak Pengawas Lapangan PUPR di menu Peta 42 Kecamatan.';
     }
-    return `Sampurasun! GAGA di sini! 🤖 Mengenai "${userQ}", GAGA siap bantu informasi perizinan PBG/SIMBG, laporan jalan rusak, Pengawas 42 Kecamatan, dan WA Server (+62 813-1640-3160).`;
+    return `Sampurasun! GAGA di sini! 🤖 Mengenai "${userQ}", GAGA siap bantu informasi perizinan PBG/SIMBG, laporan jalan rusak, Pengawas 42 Kecamatan, dan WA Server (08212234446).`;
   };
 
   const quickPrompts = [
@@ -236,7 +236,7 @@ export const GardaMascot: React.FC<GardaMascotProps> = ({ onNavigateTab }) => {
 
           {/* Subheader info */}
           <div className="bg-emerald-950/90 border-b border-emerald-900/50 px-4 py-2 flex items-center justify-between text-[10px] text-emerald-200">
-            <span className="font-medium">Gateway Server WA: +62 813-1640-3160</span>
+            <span className="font-medium">Gateway Server WA: 08212234446</span>
             <span className="font-bold text-amber-300 uppercase">Ir. Risa Kristalia N.</span>
           </div>
 

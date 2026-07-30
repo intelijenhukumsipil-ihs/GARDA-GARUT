@@ -62,13 +62,13 @@ export const OverviewDashboard: React.FC<OverviewDashboardProps> = ({
             <span>⚡ <strong>MASKOT GAGA 🤖</strong> SIAP MELAYANI PENJELASAN SPBE & SIMBG 24/7</span>
             <span>📍 <strong>42 KECAMATAN</strong> TERHUBUNG DENGAN PENGAWAS LAPANGAN PUPR & REKOMENDASI PBG</span>
             <span>💡 INOVASI RESMI: <strong>Ir. RISA KRISTALIA N., ST., MT.</strong></span>
-            <span>📲 WA GATEWAY SERVER: <strong>+62 813-1640-3160</strong></span>
+            <span>📲 WA GATEWAY SERVER: <strong>08212234446 (+62 821-2234-4446)</strong></span>
             {/* Repeat for continuous marquee smooth scroll */}
             <span>🏛️ <strong>GARDA GARUT</strong> — SISTEM KOORDINASI & PENGAWASAN TERPADU DINAS PUPR KABUPATEN GARUT</span>
             <span>⚡ <strong>MASKOT GAGA 🤖</strong> SIAP MELAYANI PENJELASAN SPBE & SIMBG 24/7</span>
             <span>📍 <strong>42 KECAMATAN</strong> TERHUBUNG DENGAN PENGAWAS LAPANGAN PUPR & REKOMENDASI PBG</span>
             <span>💡 INOVASI RESMI: <strong>Ir. RISA KRISTALIA N., ST., MT.</strong></span>
-            <span>📲 WA GATEWAY SERVER: <strong>+62 813-1640-3160</strong></span>
+            <span>📲 WA GATEWAY SERVER: <strong>08212234446 (+62 821-2234-4446)</strong></span>
           </div>
         </div>
       </div>
@@ -166,13 +166,13 @@ export const OverviewDashboard: React.FC<OverviewDashboardProps> = ({
 
         <div className="flex items-center gap-3 z-10 shrink-0 w-full md:w-auto">
           <a
-            href="https://wa.me/6281316403160"
+            href="https://wa.me/628212234446"
             target="_blank"
             rel="noopener noreferrer"
             className="flex-1 md:flex-none text-center bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black px-5 py-3 rounded-2xl text-xs uppercase tracking-wider transition shadow-lg cursor-pointer flex items-center justify-center space-x-2 transform hover:scale-105"
           >
             <MessageSquare className="w-4 h-4" />
-            <span>WA Server (+62 813-1640-3160)</span>
+            <span>WA Server (08212234446)</span>
           </a>
         </div>
 
