@@ -37,7 +37,7 @@ export const GardaMascot: React.FC<GardaMascotProps> = ({ onNavigateTab }) => {
     {
       id: 'msg-1',
       sender: 'mascot',
-      text: 'Sampurasun! 👷‍♂️ Wilujeng sumping di GARDA GARUT. Saya "Si GARDA", Maskot Pintar Dinas PUPR Kab. Garut. Ada yang bisa Si GARDA bantu mengenai layanan infrastruktur, perizinan SIMBG/PBG, atau WhatsApp Gateway Server?',
+      text: 'Sampurasun! 🤖 Wilujeng sumping di GARDA GARUT! Nama saya "GAGA", Maskot Pintar & Cerdas Dinas PUPR Kab. Garut. Ada yang bisa GAGA bantu mengenai layanan infrastruktur, perizinan SIMBG/PBG, atau WhatsApp Gateway Server?',
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
     }
   ]);
@@ -100,7 +100,7 @@ export const GardaMascot: React.FC<GardaMascotProps> = ({ onNavigateTab }) => {
       const mascotMsg: ChatMessage = {
         id: `mascot-${Date.now()}`,
         sender: 'mascot',
-        text: data.reply || 'Mohon maaf, Si GARDA sedang mengalami kendala jaringan. Silakan tanyakan kembali!',
+        text: data.reply || getGagaFallbackAnswer(q),
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
         isSimulated: data.isSimulated
       };
@@ -113,13 +113,30 @@ export const GardaMascot: React.FC<GardaMascotProps> = ({ onNavigateTab }) => {
         {
           id: `mascot-err-${Date.now()}`,
           sender: 'mascot',
-          text: 'Sampurasun! Si GARDA merekomendasikan Anda untuk langsung berkonsultasi via WhatsApp Gateway Server kami di +62 813-1640-3160.',
+          text: getGagaFallbackAnswer(q),
           timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
         }
       ]);
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const getGagaFallbackAnswer = (userQ: string): string => {
+    const lq = (userQ || '').toLowerCase();
+    if (lq.includes('simbg') || lq.includes('pbg') || lq.includes('izin') || lq.includes('bangunan') || lq.includes('slf') || lq.includes('gedung')) {
+      return 'Sampurasun! GAGA di sini! 🤖\n\nUntuk Rekomendasi PBG/SLF di Dinas PUPR Garut, silakan buka modul **GARDA BANGUNAN**. Tim Teknis akan memverifikasi kelaikan & otomatis sinkron ke SIMBG KemenPUPR! WhatsApp Server: +62 813-1640-3160.';
+    }
+    if (lq.includes('jalan') || lq.includes('rusak') || lq.includes('jembatan') || lq.includes('lapor') || lq.includes('irigasi') || lq.includes('infra')) {
+      return 'Wilujeng sumping! GAGA siap bantu! 🚧👷‍♂️\n\nLaporkan jalan berlubang atau jembatan rusak via modul **GARDA INFRA**. Sertakan foto & kecamatan, laporan langsung diprioritaskan ke Pengawas PUPR setempat!';
+    }
+    if (lq.includes('wa') || lq.includes('whatsapp') || lq.includes('server') || lq.includes('nomor') || lq.includes('gateway')) {
+      return 'Halo! Nomor resmi WhatsApp Gateway Server Dinas PUPR Garut: 📲 **+62 813-1640-3160**. Server mengirim konfirmasi SLA perizinan & laporan!';
+    }
+    if (lq.includes('kecamatan') || lq.includes('pengawas') || lq.includes('peta') || lq.includes('wilayah')) {
+      return 'GARDA GARUT menjangkau **42 Wilayah Kecamatan** di Kab. Garut! 🗺️ Anda bisa cek Peta & kontak Pengawas Lapangan PUPR di menu Peta 42 Kecamatan.';
+    }
+    return `Sampurasun! GAGA di sini! 🤖 Mengenai "${userQ}", GAGA siap bantu informasi perizinan PBG/SIMBG, laporan jalan rusak, Pengawas 42 Kecamatan, dan WA Server (+62 813-1640-3160).`;
   };
 
   const quickPrompts = [
@@ -137,28 +154,28 @@ export const GardaMascot: React.FC<GardaMascotProps> = ({ onNavigateTab }) => {
       {!isOpen && (
         <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-40 flex flex-col items-end gap-2">
           {/* Animated Hint Bubble */}
-          <div className="hidden sm:flex items-center space-x-2 bg-slate-900 text-white text-xs font-bold px-3.5 py-2 rounded-2xl shadow-xl border border-slate-800 animate-bounce">
+          <div className="hidden sm:flex items-center space-x-2 bg-slate-900/95 backdrop-blur text-white text-xs font-bold px-3.5 py-2 rounded-2xl shadow-xl border border-slate-700/80 animate-bounce">
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
-            <span>Tanya Si GARDA (Maskot PUPR)</span>
+            <span>Tanya GAGA (Maskot PUPR) 🤖</span>
           </div>
 
           <button
             onClick={() => setIsOpen(true)}
-            className="group relative bg-slate-900 hover:bg-slate-800 text-white p-2.5 sm:p-3 rounded-2xl shadow-2xl transition-all transform hover:scale-110 active:scale-95 cursor-pointer ring-4 ring-emerald-400/40 flex items-center justify-center border border-slate-700"
-            aria-label="Buka Maskot Si GARDA"
+            className="group relative bg-slate-900 hover:bg-slate-800 text-white p-1.5 sm:p-2 rounded-2xl shadow-2xl transition-all transform hover:scale-110 active:scale-95 cursor-pointer ring-4 ring-emerald-400/40 flex items-center justify-center border border-slate-700"
+            aria-label="Buka Maskot GAGA"
           >
-            {/* Mascot Official Logo Avatar */}
-            <div className="relative w-9 h-9 sm:w-11 sm:h-11 bg-white p-0.5 rounded-xl flex items-center justify-center overflow-hidden">
+            {/* GAGA Mascot Avatar Icon */}
+            <div className="relative w-11 h-11 sm:w-13 sm:h-13 bg-slate-950 p-0.5 rounded-xl flex items-center justify-center overflow-hidden border border-emerald-500/50">
               <img 
-                src="/garda-logo.jpg" 
-                alt="Logo GARDA GARUT" 
-                className="w-full h-full object-contain" 
+                src="/gaga-mascot.jpg" 
+                alt="Maskot GAGA PUPR" 
+                className="w-full h-full object-cover rounded-lg group-hover:scale-110 transition duration-300" 
                 referrerPolicy="no-referrer"
               />
-              <Sparkles className="w-4 h-4 text-amber-400 absolute -top-1 -right-1 animate-pulse" />
+              <Sparkles className="w-4 h-4 text-amber-400 absolute -top-0.5 -right-0.5 animate-pulse drop-shadow" />
             </div>
-            <span className="absolute -top-1 -right-1 bg-amber-400 text-slate-950 text-[9px] font-black px-1.5 py-0.5 rounded-full border border-slate-900 uppercase">
-              AI
+            <span className="absolute -top-1.5 -right-1.5 bg-gradient-to-r from-amber-400 to-emerald-400 text-slate-950 text-[9px] font-black px-2 py-0.5 rounded-full border border-slate-900 uppercase shadow">
+              GAGA
             </span>
           </button>
         </div>
@@ -171,12 +188,12 @@ export const GardaMascot: React.FC<GardaMascotProps> = ({ onNavigateTab }) => {
           {/* Header Banner */}
           <div className="bg-slate-900 text-white p-4 flex items-center justify-between border-b border-slate-800 shrink-0">
             <div className="flex items-center space-x-3">
-              {/* Mascot Logo Avatar Box */}
-              <div className="w-11 h-11 rounded-2xl bg-white p-0.5 shadow-md flex items-center justify-center shrink-0 border border-slate-700 overflow-hidden relative">
+              {/* GAGA Mascot Logo Avatar Box */}
+              <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-amber-400 to-emerald-400 p-0.5 shadow-md flex items-center justify-center shrink-0 border border-slate-700 overflow-hidden relative">
                 <img 
-                  src="/garda-logo.jpg" 
-                  alt="Logo GARDA GARUT" 
-                  className="w-full h-full object-contain" 
+                  src="/gaga-mascot.jpg" 
+                  alt="Maskot GAGA PUPR" 
+                  className="w-full h-full object-cover rounded-xl" 
                   referrerPolicy="no-referrer"
                 />
                 <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 border-2 border-slate-950 absolute bottom-0 right-0 animate-pulse"></span>
@@ -184,12 +201,14 @@ export const GardaMascot: React.FC<GardaMascotProps> = ({ onNavigateTab }) => {
 
               <div>
                 <div className="flex items-center space-x-1.5">
-                  <h3 className="font-black text-sm uppercase tracking-tight text-white">SI GARDA</h3>
+                  <h3 className="font-black text-base uppercase tracking-tight text-white flex items-center gap-1">
+                    GAGA <span className="text-amber-400 text-xs">🤖</span>
+                  </h3>
                   <span className="text-[9px] font-black uppercase px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
-                    Maskot PUPR
+                    Maskot PUPR Garut
                   </span>
                 </div>
-                <p className="text-[10px] text-slate-300 font-medium">Asisten Tanya-Jawab Cerdas Real-Time</p>
+                <p className="text-[10px] text-slate-300 font-medium">Asisten Pintar SPBE & Infrastruktur Cerdas</p>
               </div>
             </div>
 
@@ -200,7 +219,7 @@ export const GardaMascot: React.FC<GardaMascotProps> = ({ onNavigateTab }) => {
                 className={`p-2 rounded-xl transition cursor-pointer ${
                   isSpeaking ? 'bg-amber-400 text-slate-950' : 'text-slate-400 hover:text-white hover:bg-slate-800'
                 }`}
-                title="Dengarkan Suara Si GARDA"
+                title="Dengarkan Suara GAGA"
               >
                 {isSpeaking ? <VolumeX className="w-4 h-4 animate-pulse" /> : <Volume2 className="w-4 h-4" />}
               </button>
@@ -231,8 +250,13 @@ export const GardaMascot: React.FC<GardaMascotProps> = ({ onNavigateTab }) => {
                   className={`flex items-start gap-2.5 ${isMascot ? '' : 'flex-row-reverse'}`}
                 >
                   {isMascot && (
-                    <div className="w-7 h-7 rounded-xl bg-slate-900 text-amber-400 border border-slate-800 flex items-center justify-center shrink-0 shadow-sm mt-0.5">
-                      <HardHat className="w-4 h-4" />
+                    <div className="w-8 h-8 rounded-xl bg-slate-900 text-amber-400 border border-slate-700 overflow-hidden flex items-center justify-center shrink-0 shadow-sm mt-0.5">
+                      <img 
+                        src="/gaga-mascot.jpg" 
+                        alt="GAGA" 
+                        className="w-full h-full object-cover" 
+                        referrerPolicy="no-referrer"
+                      />
                     </div>
                   )}
 
@@ -260,7 +284,7 @@ export const GardaMascot: React.FC<GardaMascotProps> = ({ onNavigateTab }) => {
             {isLoading && (
               <div className="flex items-center space-x-2 text-slate-500 text-xs font-bold italic bg-white p-3 rounded-2xl border border-slate-200 w-fit">
                 <RefreshCw className="w-4 h-4 animate-spin text-emerald-600" />
-                <span>Si GARDA sedang berpikir...</span>
+                <span>GAGA sedang berpikir...</span>
               </div>
             )}
 
@@ -293,7 +317,7 @@ export const GardaMascot: React.FC<GardaMascotProps> = ({ onNavigateTab }) => {
           <div className="p-3 bg-white border-t border-slate-200 flex items-center space-x-2 shrink-0">
             <input
               type="text"
-              placeholder="Tanya Si GARDA seputar PUPR, SIMBG, jalan..."
+              placeholder="Tanya GAGA seputar PUPR, SIMBG, jalan..."
               value={inputQuestion}
               onChange={(e) => setInputQuestion(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && handleSendMessage()}

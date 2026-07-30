@@ -141,15 +141,12 @@ export const Sidebar: React.FC<SidebarProps> = ({
             </div>
             <div>
               <div className="flex items-center space-x-1">
-                <span className="text-emerald-400 font-black text-2xl sm:text-3xl leading-none tracking-tighter">
-                  GARDA
-                </span>
-                <span className="text-white font-black text-2xl sm:text-3xl leading-none tracking-tighter">
-                  GARUT
+                <span className="animate-shimmer-text font-black text-2xl sm:text-3xl leading-none tracking-tighter">
+                  GARDA GARUT
                 </span>
               </div>
-              <div className="text-slate-400 text-[10px] uppercase tracking-widest mt-1.5 font-bold">
-                Layanan Cerdas & Terpadu PUPR
+              <div className="text-slate-400 text-[10px] uppercase tracking-widest mt-1.5 font-bold flex items-center gap-1">
+                <span>Layanan Cerdas & Terpadu PUPR</span>
               </div>
             </div>
           </div>

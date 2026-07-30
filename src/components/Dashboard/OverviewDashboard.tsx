@@ -50,11 +50,34 @@ export const OverviewDashboard: React.FC<OverviewDashboardProps> = ({
   return (
     <div className="space-y-6">
       
+      {/* Running Marquee Text Bar for GARDA GARUT */}
+      <div className="bg-gradient-to-r from-emerald-950 via-slate-900 to-emerald-950 border border-emerald-500/30 rounded-2xl overflow-hidden shadow-md text-emerald-300 py-2 px-4 flex items-center space-x-3 text-xs">
+        <span className="bg-emerald-500 text-slate-950 font-black text-[10px] px-2.5 py-1 rounded-lg uppercase tracking-wider shrink-0 shadow animate-pulse flex items-center gap-1">
+          <Zap className="w-3 h-3 fill-slate-950" />
+          <span>GARDA GARUT INFO</span>
+        </span>
+        <div className="overflow-hidden whitespace-nowrap flex-1 relative">
+          <div className="animate-marquee font-bold tracking-wide flex items-center space-x-8 text-slate-100">
+            <span>🏛️ <strong>GARDA GARUT</strong> — SISTEM KOORDINASI & PENGAWASAN TERPADU DINAS PUPR KABUPATEN GARUT</span>
+            <span>⚡ <strong>MASKOT GAGA 🤖</strong> SIAP MELAYANI PENJELASAN SPBE & SIMBG 24/7</span>
+            <span>📍 <strong>42 KECAMATAN</strong> TERHUBUNG DENGAN PENGAWAS LAPANGAN PUPR & REKOMENDASI PBG</span>
+            <span>💡 INOVASI RESMI: <strong>Ir. RISA KRISTALIA N., ST., MT.</strong></span>
+            <span>📲 WA GATEWAY SERVER: <strong>+62 813-1640-3160</strong></span>
+            {/* Repeat for continuous marquee smooth scroll */}
+            <span>🏛️ <strong>GARDA GARUT</strong> — SISTEM KOORDINASI & PENGAWASAN TERPADU DINAS PUPR KABUPATEN GARUT</span>
+            <span>⚡ <strong>MASKOT GAGA 🤖</strong> SIAP MELAYANI PENJELASAN SPBE & SIMBG 24/7</span>
+            <span>📍 <strong>42 KECAMATAN</strong> TERHUBUNG DENGAN PENGAWAS LAPANGAN PUPR & REKOMENDASI PBG</span>
+            <span>💡 INOVASI RESMI: <strong>Ir. RISA KRISTALIA N., ST., MT.</strong></span>
+            <span>📲 WA GATEWAY SERVER: <strong>+62 813-1640-3160</strong></span>
+          </div>
+        </div>
+      </div>
+
       {/* Banner Welcome */}
       <div className="bg-slate-900 text-white p-6 sm:p-8 rounded-3xl border border-slate-800 shadow-xl relative overflow-hidden">
         <div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
           <div className="flex items-start sm:items-center space-x-4">
-            <div className="w-16 h-16 sm:w-20 sm:h-20 bg-white p-1.5 rounded-2xl border border-slate-700 shadow-lg shrink-0 overflow-hidden flex items-center justify-center">
+            <div className="w-16 h-16 sm:w-20 sm:h-20 bg-white p-1.5 rounded-2xl border border-slate-700 shadow-lg shrink-0 overflow-hidden flex items-center justify-center transform hover:scale-105 transition duration-300">
               <img 
                 src="/garda-logo.jpg" 
                 alt="Official Logo GARDA GARUT" 
@@ -64,14 +87,19 @@ export const OverviewDashboard: React.FC<OverviewDashboardProps> = ({
             </div>
             <div className="space-y-1.5">
               <div className="inline-flex items-center space-x-2 bg-emerald-500/10 text-emerald-400 text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full border border-emerald-500/20">
-                <Zap className="w-3.5 h-3.5 text-emerald-400" />
-                <span>Pusat Kendali Koordinasi Terpadu PUPR</span>
+                <Zap className="w-3.5 h-3.5 text-emerald-400 animate-spin" />
+                <span className="animate-shimmer-text">Pusat Kendali Koordinasi Terpadu PUPR</span>
               </div>
-              <h1 className="text-xl sm:text-2xl lg:text-3xl font-black tracking-tight text-white uppercase italic">
-                Layanan Cerdas, Data Terjaga, Garut Lebih Maju
-              </h1>
+              <div className="flex flex-wrap items-baseline gap-2">
+                <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black tracking-tight uppercase italic animate-shimmer-text animate-float-garda drop-shadow-lg">
+                  GARDA GARUT
+                </h1>
+                <span className="text-slate-300 font-bold text-sm sm:text-base italic">
+                  — Layanan Cerdas, Data Terjaga, Garut Lebih Maju
+                </span>
+              </div>
               <p className="text-xs sm:text-sm text-slate-300 max-w-2xl font-medium">
-                Selamat datang, <strong>{currentUser.name}</strong> ({currentUser.agency}). GARDA GARUT menyatukan rekomendasi teknis antar-dinas, memantau aset daerah, dan mempercepat perizinan tanpa menggantikan wewenang SIMBG.
+                Selamat datang di <strong>GARDA GARUT</strong> ({currentUser.agency}). GARDA GARUT menyatukan rekomendasi teknis antar-dinas, memantau aset daerah, dan mempercepat perizinan tanpa menggantikan wewenang SIMBG.
               </p>
             </div>
           </div>
@@ -79,13 +107,13 @@ export const OverviewDashboard: React.FC<OverviewDashboardProps> = ({
           <div className="flex flex-wrap gap-3">
             <button
               onClick={() => setActiveTab('infra')}
-              className="bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-black text-xs uppercase tracking-widest px-5 py-3 rounded-2xl shadow-lg transition-all cursor-pointer"
+              className="bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-black text-xs uppercase tracking-widest px-5 py-3 rounded-2xl shadow-lg transition-all cursor-pointer transform hover:-translate-y-0.5"
             >
               Kelola GARDA INFRA
             </button>
             <button
               onClick={() => setActiveTab('bangunan')}
-              className="bg-slate-800 hover:bg-slate-700 text-white font-black text-xs uppercase tracking-widest px-5 py-3 rounded-2xl border border-slate-700 transition-all cursor-pointer"
+              className="bg-slate-800 hover:bg-slate-700 text-white font-black text-xs uppercase tracking-widest px-5 py-3 rounded-2xl border border-slate-700 transition-all cursor-pointer transform hover:-translate-y-0.5"
             >
               Koordinasi SIMBG
             </button>
@@ -93,7 +121,7 @@ export const OverviewDashboard: React.FC<OverviewDashboardProps> = ({
         </div>
 
         {/* Decorative Grid Accent */}
-        <div className="absolute top-0 right-0 p-8 opacity-10 font-black text-9xl text-emerald-400 pointer-events-none select-none">
+        <div className="absolute top-0 right-0 p-8 opacity-10 font-black text-9xl text-emerald-400 pointer-events-none select-none animate-pulse">
           GG
         </div>
       </div>
@@ -109,24 +137,29 @@ export const OverviewDashboard: React.FC<OverviewDashboardProps> = ({
         </div>
       </div>
 
-      {/* Mascot Si GARDA Showcase Widget */}
+      {/* Mascot GAGA Showcase Widget */}
       <div className="bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 border border-slate-800 rounded-3xl p-5 sm:p-6 text-white shadow-xl flex flex-col md:flex-row items-center justify-between gap-6 relative overflow-hidden">
         <div className="flex items-center space-x-4 z-10">
-          <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-gradient-to-br from-amber-400 to-emerald-400 p-0.5 shadow-lg shrink-0 flex items-center justify-center">
-            <div className="w-full h-full bg-slate-950 rounded-[14px] flex items-center justify-center relative">
-              <HardHat className="w-8 h-8 sm:w-9 sm:h-9 text-amber-400" />
-              <Sparkles className="w-4 h-4 text-emerald-400 absolute top-1 right-1 animate-pulse" />
-            </div>
+          <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-gradient-to-br from-amber-400 to-emerald-400 p-0.5 shadow-xl shrink-0 flex items-center justify-center overflow-hidden relative">
+            <img 
+              src="/gaga-mascot.jpg" 
+              alt="Maskot GAGA PUPR" 
+              className="w-full h-full object-cover rounded-[14px]" 
+              referrerPolicy="no-referrer"
+            />
+            <Sparkles className="w-5 h-5 text-amber-300 absolute top-1 right-1 animate-pulse drop-shadow" />
           </div>
           <div className="space-y-1">
             <div className="flex items-center space-x-2">
-              <span className="font-black text-base sm:text-lg text-white uppercase italic tracking-tight">MASKOT "SI GARDA"</span>
-              <span className="bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-[10px] font-black px-2.5 py-0.5 rounded-full uppercase tracking-wider">
+              <span className="font-black text-lg sm:text-xl text-white uppercase italic tracking-tight flex items-center gap-1.5">
+                MASKOT "GAGA" <span className="text-amber-400">🤖</span>
+              </span>
+              <span className="bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-[10px] font-black px-2.5 py-0.5 rounded-full uppercase tracking-wider animate-pulse">
                 Asisten AI Real-Time
               </span>
             </div>
-            <p className="text-xs text-slate-300 max-w-xl">
-              Punya pertanyaan seputar perizinan SIMBG, laporan jalan rusak, atau pengawas PUPR di kecamatan Anda? Tanya langsung kepada <strong>Si GARDA</strong> kapan saja!
+            <p className="text-xs text-slate-300 max-w-xl font-medium">
+              Punya pertanyaan seputar perizinan SIMBG, laporan jalan rusak, atau pengawas PUPR di kecamatan Anda? Tanya langsung kepada Maskot <strong>GAGA</strong> kapan saja!
             </p>
           </div>
         </div>
@@ -136,7 +169,7 @@ export const OverviewDashboard: React.FC<OverviewDashboardProps> = ({
             href="https://wa.me/6281316403160"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex-1 md:flex-none text-center bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black px-4 py-3 rounded-2xl text-xs uppercase tracking-wider transition shadow cursor-pointer flex items-center justify-center space-x-2"
+            className="flex-1 md:flex-none text-center bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black px-5 py-3 rounded-2xl text-xs uppercase tracking-wider transition shadow-lg cursor-pointer flex items-center justify-center space-x-2 transform hover:scale-105"
           >
             <MessageSquare className="w-4 h-4" />
             <span>WA Server (+62 813-1640-3160)</span>
@@ -144,7 +177,7 @@ export const OverviewDashboard: React.FC<OverviewDashboardProps> = ({
         </div>
 
         {/* Ambient background accent */}
-        <div className="absolute right-0 bottom-0 w-64 h-64 bg-emerald-500/5 rounded-full blur-3xl pointer-events-none"></div>
+        <div className="absolute right-0 bottom-0 w-64 h-64 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
       </div>
 
       {/* Core Summary Metrics Grid */}

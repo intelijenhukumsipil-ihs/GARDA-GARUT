@@ -3,10 +3,14 @@ import {
   Bell, 
   ChevronDown, 
   Search,
-  Menu
+  Menu,
+  Lock,
+  ShieldCheck,
+  UserCheck
 } from 'lucide-react';
 import { UserProfile } from '../types';
 import { INITIAL_USERS } from '../data/mockData';
+import { OfficerLoginModal } from './Auth/OfficerLoginModal';
 
 interface NavbarProps {
   currentUser: UserProfile;
@@ -23,6 +27,8 @@ export const Navbar: React.FC<NavbarProps> = ({
 }) => {
   const [isRoleMenuOpen, setIsRoleMenuOpen] = useState(false);
   const [isNotifOpen, setIsNotifOpen] = useState(false);
+  const [isOfficerModalOpen, setIsOfficerModalOpen] = useState(false);
+  const [targetOfficer, setTargetOfficer] = useState<UserProfile | undefined>(undefined);
 
   const notifications = [
     { id: 1, title: 'Laporan Kerusakan Baru', time: '10m lalu', text: 'Drainase Jl. Cimanuk jebol dilaporkan oleh warga.', type: 'urgent' },
@@ -158,8 +164,9 @@ export const Navbar: React.FC<NavbarProps> = ({
               <div className="text-xs font-black text-slate-800 truncate max-w-[120px] lg:max-w-[140px]">
                 {currentUser.name}
               </div>
-              <div className="text-[10px] text-emerald-600 font-bold uppercase truncate max-w-[120px] lg:max-w-[140px]">
-                {currentUser.agency}
+              <div className="text-[10px] text-emerald-600 font-bold uppercase truncate max-w-[120px] lg:max-w-[140px] flex items-center gap-1">
+                {currentUser.role !== 'pemohon' && <Lock className="w-2.5 h-2.5 text-amber-500 inline" />}
+                <span>{currentUser.agency}</span>
               </div>
             </div>
             <ChevronDown className="w-3.5 h-3.5 text-slate-500" />
@@ -168,37 +175,92 @@ export const Navbar: React.FC<NavbarProps> = ({
           {/* Role Switcher Dropdown */}
           {isRoleMenuOpen && (
             <div className="absolute right-0 mt-2 w-64 sm:w-72 bg-white border border-slate-200 rounded-2xl shadow-2xl z-50 p-3 space-y-2">
-              <div className="px-3 py-2 border-b border-slate-100">
-                <p className="text-[10px] font-black uppercase tracking-widest text-slate-400">Simulasi Role SPBE:</p>
-                <p className="text-xs font-black text-slate-800">Pilih Peran Pengguna</p>
+              <div className="px-3 py-2 border-b border-slate-100 flex items-center justify-between">
+                <div>
+                  <p className="text-[10px] font-black uppercase tracking-widest text-slate-400">Pilih Akses Pengguna:</p>
+                  <p className="text-xs font-black text-slate-800">Peran & Akun SPBE</p>
+                </div>
+                {currentUser.role !== 'pemohon' && (
+                  <span className="text-[9px] font-black uppercase bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full border border-emerald-200">
+                    Akses Petugas
+                  </span>
+                )}
               </div>
+
+              {/* Login Petugas Shortcut Button */}
+              <button
+                onClick={() => {
+                  setTargetOfficer(INITIAL_USERS.find(u => u.role === 'admin_layanan') || INITIAL_USERS[0]);
+                  setIsOfficerModalOpen(true);
+                  setIsRoleMenuOpen(false);
+                }}
+                className="w-full flex items-center justify-center space-x-2 bg-slate-900 hover:bg-slate-800 text-white py-2 px-3 rounded-xl text-xs font-black uppercase tracking-wider shadow transition cursor-pointer"
+              >
+                <Lock className="w-3.5 h-3.5 text-amber-400" />
+                <span>Login Akses Petugas</span>
+              </button>
+
               <div className="py-1 space-y-1 max-h-64 overflow-y-auto">
-                {INITIAL_USERS.map((user) => (
-                  <button
-                    key={user.id}
-                    onClick={() => {
-                      onRoleChange(user);
-                      setIsRoleMenuOpen(false);
-                    }}
-                    className={`w-full flex items-center space-x-3 text-left px-3 py-2 rounded-xl text-xs transition-colors cursor-pointer ${
-                      user.id === currentUser.id 
-                        ? 'bg-emerald-50 text-emerald-700 font-bold border border-emerald-200' 
-                        : 'text-slate-700 hover:bg-slate-50'
-                    }`}
-                  >
-                    <img src={user.avatar} className="w-6 h-6 rounded-full" alt="" />
-                    <div className="truncate">
-                      <p className="font-bold text-slate-800 truncate">{user.name}</p>
-                      <p className="text-[10px] text-slate-500 truncate">{user.agency}</p>
-                    </div>
-                  </button>
-                ))}
+                {INITIAL_USERS.map((user) => {
+                  const isOfficer = user.role !== 'pemohon';
+                  return (
+                    <button
+                      key={user.id}
+                      onClick={() => {
+                        if (isOfficer) {
+                          // Prompt Officer Password Modal
+                          setTargetOfficer(user);
+                          setIsOfficerModalOpen(true);
+                        } else {
+                          // Switch directly for public users
+                          onRoleChange(user);
+                        }
+                        setIsRoleMenuOpen(false);
+                      }}
+                      className={`w-full flex items-center justify-between text-left px-3 py-2 rounded-xl text-xs transition-colors cursor-pointer ${
+                        user.id === currentUser.id 
+                          ? 'bg-emerald-50 text-emerald-700 font-bold border border-emerald-200' 
+                          : 'text-slate-700 hover:bg-slate-50'
+                      }`}
+                    >
+                      <div className="flex items-center space-x-2.5 truncate">
+                        <img src={user.avatar} className="w-6 h-6 rounded-full" alt="" />
+                        <div className="truncate">
+                          <p className="font-bold text-slate-800 truncate flex items-center gap-1">
+                            <span>{user.name}</span>
+                          </p>
+                          <p className="text-[10px] text-slate-500 truncate">{user.agency}</p>
+                        </div>
+                      </div>
+                      {isOfficer ? (
+                        <span className="text-[9px] font-bold text-slate-400 bg-slate-100 px-1.5 py-0.5 rounded flex items-center gap-0.5 shrink-0" title="Memerlukan Kata Sandi Petugas">
+                          <Lock className="w-2.5 h-2.5 text-slate-500" />
+                          <span>Pass</span>
+                        </span>
+                      ) : (
+                        <span className="text-[9px] font-bold text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded shrink-0">
+                          Publik
+                        </span>
+                      )}
+                    </button>
+                  );
+                })}
               </div>
             </div>
           )}
         </div>
 
       </div>
+
+      {/* Officer Password Login Modal */}
+      <OfficerLoginModal
+        isOpen={isOfficerModalOpen}
+        onClose={() => setIsOfficerModalOpen(false)}
+        targetUser={targetOfficer}
+        onSuccessLogin={(authenticatedUser) => {
+          onRoleChange(authenticatedUser);
+        }}
+      />
 
     </header>
   );
