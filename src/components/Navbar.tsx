@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import gardaLogo from '../assets/garda-logo.jpg';
+import { GARDA_LOGO_IMAGE } from '../assets/imagesData';
 import { 
   Bell, 
   ChevronDown, 
@@ -55,8 +55,7 @@ export const Navbar: React.FC<NavbarProps> = ({
         <div className="flex items-center space-x-3 min-w-0">
           <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-white p-0.5 border border-slate-200 shadow-sm shrink-0 flex items-center justify-center overflow-hidden">
             <img 
-              src={gardaLogo} 
-              onError={(e) => { e.currentTarget.src = '/garda-logo.jpg'; }}
+              src={GARDA_LOGO_IMAGE} 
               alt="Logo GARDA GARUT" 
               className="w-full h-full object-contain" 
               referrerPolicy="no-referrer"

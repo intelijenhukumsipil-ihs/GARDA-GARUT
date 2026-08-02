@@ -1,5 +1,5 @@
 import React from 'react';
-import gardaLogo from '../assets/garda-logo.jpg';
+import { GARDA_LOGO_IMAGE } from '../assets/imagesData';
 import { 
   LayoutDashboard, 
   Server, 
@@ -134,8 +134,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
             {/* Official Logo Image */}
             <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-white p-1 shadow-lg shrink-0 border border-slate-700 overflow-hidden flex items-center justify-center">
               <img 
-                src={gardaLogo} 
-                onError={(e) => { e.currentTarget.src = '/garda-logo.jpg'; }}
+                src={GARDA_LOGO_IMAGE} 
                 alt="Logo Official GARDA GARUT" 
                 className="w-full h-full object-contain" 
                 referrerPolicy="no-referrer"

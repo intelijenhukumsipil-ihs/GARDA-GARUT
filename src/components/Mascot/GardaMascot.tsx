@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import gagaMascot from '../../assets/gaga-mascot.jpg';
+import { GAGA_MASCOT_IMAGE } from '../../assets/imagesData';
 import { 
   Bot, 
   Send, 
@@ -277,8 +277,7 @@ export const GardaMascot: React.FC<GardaMascotProps> = ({ onNavigateTab }) => {
             {/* GAGA Mascot Avatar Icon */}
             <div className="relative w-11 h-11 sm:w-13 sm:h-13 bg-slate-950 p-0.5 rounded-xl flex items-center justify-center overflow-hidden border border-emerald-500/50">
               <img 
-                src={gagaMascot} 
-                onError={(e) => { e.currentTarget.src = '/gaga-mascot.jpg'; }}
+                src={GAGA_MASCOT_IMAGE} 
                 alt="Maskot GAGA PUPR" 
                 className="w-full h-full object-cover rounded-lg group-hover:scale-110 transition duration-300" 
                 referrerPolicy="no-referrer"
@@ -302,8 +301,7 @@ export const GardaMascot: React.FC<GardaMascotProps> = ({ onNavigateTab }) => {
               {/* GAGA Mascot Logo Avatar Box */}
               <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-amber-400 to-emerald-400 p-0.5 shadow-md flex items-center justify-center shrink-0 border border-slate-700 overflow-hidden relative">
                 <img 
-                  src={gagaMascot} 
-                  onError={(e) => { e.currentTarget.src = '/gaga-mascot.jpg'; }}
+                  src={GAGA_MASCOT_IMAGE} 
                   alt="Maskot GAGA PUPR" 
                   className="w-full h-full object-cover rounded-xl" 
                   referrerPolicy="no-referrer"
@@ -394,8 +392,7 @@ export const GardaMascot: React.FC<GardaMascotProps> = ({ onNavigateTab }) => {
                   {isMascot && (
                     <div className="w-8 h-8 rounded-xl bg-slate-900 text-amber-400 border border-slate-700 overflow-hidden flex items-center justify-center shrink-0 shadow-sm mt-0.5">
                       <img 
-                        src={gagaMascot} 
-                        onError={(e) => { e.currentTarget.src = '/gaga-mascot.jpg'; }}
+                        src={GAGA_MASCOT_IMAGE} 
                         alt="GAGA" 
                         className="w-full h-full object-cover" 
                         referrerPolicy="no-referrer"
