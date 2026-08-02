@@ -1,4 +1,6 @@
 import React from 'react';
+import gardaLogo from '../../assets/garda-logo.jpg';
+import gagaMascot from '../../assets/gaga-mascot.jpg';
 import { 
   ShieldCheck, 
   HardHat, 
@@ -79,7 +81,8 @@ export const OverviewDashboard: React.FC<OverviewDashboardProps> = ({
           <div className="flex items-start sm:items-center space-x-4">
             <div className="w-16 h-16 sm:w-20 sm:h-20 bg-white p-1.5 rounded-2xl border border-slate-700 shadow-lg shrink-0 overflow-hidden flex items-center justify-center transform hover:scale-105 transition duration-300">
               <img 
-                src="/garda-logo.jpg" 
+                src={gardaLogo} 
+                onError={(e) => { e.currentTarget.src = '/garda-logo.jpg'; }}
                 alt="Official Logo GARDA GARUT" 
                 className="w-full h-full object-contain" 
                 referrerPolicy="no-referrer"
@@ -142,7 +145,8 @@ export const OverviewDashboard: React.FC<OverviewDashboardProps> = ({
         <div className="flex items-center space-x-4 z-10">
           <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-gradient-to-br from-amber-400 to-emerald-400 p-0.5 shadow-xl shrink-0 flex items-center justify-center overflow-hidden relative">
             <img 
-              src="/gaga-mascot.jpg" 
+              src={gagaMascot} 
+              onError={(e) => { e.currentTarget.src = '/gaga-mascot.jpg'; }}
               alt="Maskot GAGA PUPR" 
               className="w-full h-full object-cover rounded-[14px]" 
               referrerPolicy="no-referrer"
