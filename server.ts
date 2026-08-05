@@ -140,7 +140,7 @@ app.post('/api/gemini/smart-analyze', async (req, res) => {
     }
 
     const response = await ai.models.generateContent({
-      model: 'gemini-2.5-flash',
+      model: 'gemini-3.6-flash',
       contents: prompt,
       config: {
         systemInstruction
@@ -198,28 +198,43 @@ function generateGagaSmartReply(userQuestion: string): string {
 
 // Mascot Chat QA Endpoint (GAGA - Maskot Pintar Dinas PUPR Garut)
 app.post('/api/gemini/mascot-chat', async (req, res) => {
-  const { userQuestion } = req.body;
+  const { userQuestion, chatHistory = [] } = req.body;
   const apiKey = process.env.GEMINI_API_KEY;
 
-  const systemPrompt = `Anda adalah "GAGA" (Maskot Pintar Cerdas Dinas PUPR Kabupaten Garut).
-Karakter Anda: Ramah, keren, tanggap, berwawasan teknik sipil, menguasai SPBE & SIMBG/PBG, serta siap membantu masyarakat dan ASN Garut.
-Nomor Server WhatsApp Gateway Resmi: +62 821-2234-4446 (08212234446).
+  const systemPrompt = `Anda adalah "GAGA" (Maskot Pintar & Cerdas AI dari Dinas PUPR Kabupaten Garut).
+Karakter Anda: Ramah, keren, tanggap, menguasai ilmu teknik sipil, tata ruang, SPBE, serta layanan SIMBG/PBG Dinas PUPR Kabupaten Garut.
+Pemilik & Pengembang Inovasi SPBE GARDA GARUT: Ir. Risa Kristalia N., ST., MT.
+Nomor Server WhatsApp Gateway Resmi PUPR Garut: +62 821-2234-4446 (08212234446).
 
-Informasi Utama yang Anda kuasai:
-1. GARDA INFRA: Pelaporan & pemantauan aset jalan, jembatan, irigasi di 42 Kecamatan Kabupaten Garut.
-2. GARDA BANGUNAN: Penerbitan Rekomendasi Terpadu PBG/SLF tersinkronisasi otomatis dengan aplikasi SIMBG Kementerian PUPR.
-3. GATEWAY SERVER: Layanan notifikasi otomatis & antrean cadangan zero data loss via WA (+62 821-2234-4446 / 08212234446).
-4. VERIFIKASI QR: Setiap dokumen rekomendasi & plat aset memiliki QR Code unik standar BSrE untuk cegah pemalsuan.
+Informasi Utama Layanan PUPR Garut & GARDA GARUT:
+1. GARDA INFRA: Pelaporan & pemantauan aset jalan, jembatan, irigasi di 42 Kecamatan Kabupaten Garut dengan penilaian skor prioritas otomatis.
+2. GARDA BANGUNAN: Penerbitan Rekomendasi Terpadu PBG/SLF tersinkronisasi otomatis dengan portal SIMBG Kementerian PUPR.
+3. WA GATEWAY SERVER (+62 821-2234-4446): Notifikasi otomatis status perizinan, verifikasi laporan kerusakan, dan tautan QR Code.
+4. VERIFIKASI QR BSrE: Setiap dokumen rekomendasi & plat fisik aset memiliki Kode QR Unik berstandar BSrE.
 
-Gaya Bicara: Gunakan Bahasa Indonesia yang ramah, keren, jelas, profesional, sesekali gunakan salam Sunda ("Wilujeng sumping!", "Sampurasun!").
-Sapa diri Anda sebagai "GAGA". Jawablah pertanyaan berikut dengan singkat, tepat, padat, dan informatif.`;
+Panduan Menjawab:
+- Jawablah SEMUA pertanyaan pengguna secara otomatis, cerdas, ramah, dan solutif.
+- Gunakan Bahasa Indonesia yang keren, ramah, dan profesional, diselingi salam hangat Sunda (seperti "Sampurasun!", "Wilujeng sumping!").
+- Sapa diri Anda selalu sebagai "GAGA".
+- Jika pertanyaan di luar konteks PUPR/Garut, tetap berikan jawaban AI yang cerdas, sopan, dan secara halus arahkan kembali ke layanan PUPR Garut bila relevan.`;
 
   if (apiKey) {
     try {
       const ai = new GoogleGenAI({ apiKey });
+
+      // Format conversation history for Gemini context
+      let promptText = `Pengguna bertanya: "${userQuestion}"`;
+      if (Array.isArray(chatHistory) && chatHistory.length > 0) {
+        const historyContext = chatHistory
+          .slice(-6)
+          .map((m: any) => `${m.role === 'user' ? 'Pengguna' : 'GAGA'}: ${m.text}`)
+          .join('\n');
+        promptText = `Riwayat Percakapan Sebelumnya:\n${historyContext}\n\nPengguna bertanya sekarang: "${userQuestion}"`;
+      }
+
       const response = await ai.models.generateContent({
-        model: 'gemini-2.5-flash',
-        contents: `Pengguna bertanya: "${userQuestion}"`,
+        model: 'gemini-3.6-flash',
+        contents: promptText,
         config: {
           systemInstruction: systemPrompt
         }

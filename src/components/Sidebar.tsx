@@ -10,11 +10,13 @@ import {
   BarChart3, 
   ShieldAlert, 
   BookOpen,
+  FolderKanban,
   X
 } from 'lucide-react';
 
 export type TabType = 
   | 'dashboard'
+  | 'pelayanan'
   | 'gateway'
   | 'infra'
   | 'bangunan'
@@ -51,6 +53,14 @@ export const Sidebar: React.FC<SidebarProps> = ({
       icon: LayoutDashboard,
       badge: null,
       badgeColor: ''
+    },
+    {
+      id: 'pelayanan',
+      label: 'PELAYANAN PUBLIK',
+      sublabel: '8 Layanan Drive PUPR',
+      icon: FolderKanban,
+      badge: '8 LINK',
+      badgeColor: 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30 font-extrabold'
     },
     {
       id: 'gateway',

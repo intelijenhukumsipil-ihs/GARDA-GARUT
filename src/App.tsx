@@ -41,6 +41,7 @@ import { QRManager } from './components/QR/QRManager';
 import { ReportsAnalytics } from './components/Reports/ReportsAnalytics';
 import { AuditTrailView } from './components/Audit/AuditTrailView';
 import { TechnicalSpecDoc } from './components/Docs/TechnicalSpecDoc';
+import { PelayananPublikModule } from './components/Pelayanan/PelayananPublikModule';
 import { QuickSearchModal } from './components/Search/QuickSearchModal';
 import { GardaMascot } from './components/Mascot/GardaMascot';
 
@@ -155,6 +156,10 @@ export default function App() {
               endpoints={endpoints}
               setActiveTab={setActiveTab}
             />
+          )}
+
+          {activeTab === 'pelayanan' && (
+            <PelayananPublikModule />
           )}
 
           {activeTab === 'gateway' && (

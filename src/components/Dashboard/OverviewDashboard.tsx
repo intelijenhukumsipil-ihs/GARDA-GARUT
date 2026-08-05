@@ -107,8 +107,14 @@ export const OverviewDashboard: React.FC<OverviewDashboardProps> = ({
 
           <div className="flex flex-wrap gap-3">
             <button
+              onClick={() => setActiveTab('pelayanan')}
+              className="bg-emerald-400 hover:bg-emerald-300 text-slate-950 font-black text-xs uppercase tracking-widest px-5 py-3 rounded-2xl shadow-lg transition-all cursor-pointer transform hover:-translate-y-0.5"
+            >
+              Pelayanan Publik PUPR
+            </button>
+            <button
               onClick={() => setActiveTab('infra')}
-              className="bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-black text-xs uppercase tracking-widest px-5 py-3 rounded-2xl shadow-lg transition-all cursor-pointer transform hover:-translate-y-0.5"
+              className="bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs uppercase tracking-widest px-5 py-3 rounded-2xl shadow-lg transition-all cursor-pointer transform hover:-translate-y-0.5"
             >
               Kelola GARDA INFRA
             </button>
