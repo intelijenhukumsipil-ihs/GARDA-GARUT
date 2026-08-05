@@ -39,7 +39,7 @@ export const InteractiveMap: React.FC<InteractiveMapProps> = ({
   buildingCases,
   reports
 }) => {
-  const [mapMode, setMapMode] = useState<'administrative' | 'gis' | 'heatmap'>('administrative');
+  const [mapMode, setMapMode] = useState<'peta_asli' | 'administrative' | 'gis' | 'heatmap'>('peta_asli');
   const [showAssets, setShowAssets] = useState(true);
   const [showCases, setShowCases] = useState(true);
   const [selectedRegionFilter, setSelectedRegionFilter] = useState<'Semua' | 'Utara' | 'Tengah' | 'Selatan'>('Semua');
@@ -51,52 +51,52 @@ export const InteractiveMap: React.FC<InteractiveMapProps> = ({
   // 42 Kecamatan di Kabupaten Garut berdasarkan Peta Wilayah Administratif BAPPEDA Kab. Garut
   const garutDistricts: GarutDistrict[] = [
     // Garut Utara
-    { id: 'KEC-01', name: 'Balubur Limbangan', region: 'Utara', x: 72, y: 14, assetsCount: 4, simbgCount: 3, supervisor: 'Ahmad Sofyan, ST', phone: '08212234446' },
-    { id: 'KEC-02', name: 'Selaawi', region: 'Utara', x: 80, y: 16, assetsCount: 3, simbgCount: 2, supervisor: 'Ahmad Sofyan, ST', phone: '08212234446' },
-    { id: 'KEC-03', name: 'Malangbong', region: 'Utara', x: 90, y: 20, assetsCount: 5, simbgCount: 4, supervisor: 'Dedi Kurnia, ST', phone: '08212234446' },
-    { id: 'KEC-04', name: 'Leles', region: 'Utara', x: 60, y: 28, assetsCount: 6, simbgCount: 5, supervisor: 'Heri Susanto, MT', phone: '08212234446' },
-    { id: 'KEC-05', name: 'Kadungora', region: 'Utara', x: 66, y: 23, assetsCount: 5, simbgCount: 4, supervisor: 'Heri Susanto, MT', phone: '08212234446' },
-    { id: 'KEC-06', name: 'Kersamanah', region: 'Utara', x: 82, y: 22, assetsCount: 2, simbgCount: 2, supervisor: 'Ahmad Sofyan, ST', phone: '08212234446' },
-    { id: 'KEC-07', name: 'Leuwigoong', region: 'Utara', x: 74, y: 26, assetsCount: 4, simbgCount: 3, supervisor: 'Ahmad Sofyan, ST', phone: '08212234446' },
-    { id: 'KEC-08', name: 'Cibatu', region: 'Utara', x: 80, y: 28, assetsCount: 5, simbgCount: 4, supervisor: 'Dedi Kurnia, ST', phone: '08212234446' },
+    { id: 'KEC-01', name: 'Balubur Limbangan', region: 'Utara', x: 74, y: 12, assetsCount: 4, simbgCount: 3, supervisor: 'Ahmad Sofyan, ST', phone: '08212234446' },
+    { id: 'KEC-02', name: 'Selaawi', region: 'Utara', x: 82, y: 11, assetsCount: 3, simbgCount: 2, supervisor: 'Ahmad Sofyan, ST', phone: '08212234446' },
+    { id: 'KEC-03', name: 'Malangbong', region: 'Utara', x: 90, y: 18, assetsCount: 5, simbgCount: 4, supervisor: 'Dedi Kurnia, ST', phone: '08212234446' },
+    { id: 'KEC-04', name: 'Leles', region: 'Utara', x: 62, y: 22, assetsCount: 6, simbgCount: 5, supervisor: 'Heri Susanto, MT', phone: '08212234446' },
+    { id: 'KEC-05', name: 'Kadungora', region: 'Utara', x: 68, y: 18, assetsCount: 5, simbgCount: 4, supervisor: 'Heri Susanto, MT', phone: '08212234446' },
+    { id: 'KEC-06', name: 'Kersamanah', region: 'Utara', x: 82, y: 18, assetsCount: 2, simbgCount: 2, supervisor: 'Ahmad Sofyan, ST', phone: '08212234446' },
+    { id: 'KEC-07', name: 'Leuwigoong', region: 'Utara', x: 75, y: 22, assetsCount: 4, simbgCount: 3, supervisor: 'Ahmad Sofyan, ST', phone: '08212234446' },
+    { id: 'KEC-08', name: 'Cibatu', region: 'Utara', x: 82, y: 22, assetsCount: 5, simbgCount: 4, supervisor: 'Dedi Kurnia, ST', phone: '08212234446' },
 
     // Garut Tengah / Metropolitan
-    { id: 'KEC-09', name: 'Garut Kota', region: 'Tengah', x: 73, y: 44, assetsCount: 12, simbgCount: 15, supervisor: 'Ir. Hendra Wijaya, MT', phone: '08212234446' },
-    { id: 'KEC-10', name: 'Tarogong Kaler', region: 'Tengah', x: 63, y: 35, assetsCount: 9, simbgCount: 11, supervisor: 'Ir. Hendra Wijaya, MT', phone: '08212234446' },
-    { id: 'KEC-11', name: 'Tarogong Kidul', region: 'Tengah', x: 66, y: 40, assetsCount: 14, simbgCount: 18, supervisor: 'Ir. Hendra Wijaya, MT', phone: '08212234446' },
-    { id: 'KEC-12', name: 'Banyuresmi', region: 'Tengah', x: 72, y: 35, assetsCount: 7, simbgCount: 6, supervisor: 'Yudi Rahadian, ST', phone: '08212234446' },
-    { id: 'KEC-13', name: 'Karangpawitan', region: 'Tengah', x: 74, y: 40, assetsCount: 8, simbgCount: 9, supervisor: 'Yudi Rahadian, ST', phone: '08212234446' },
-    { id: 'KEC-14', name: 'Sukawening', region: 'Tengah', x: 82, y: 32, assetsCount: 4, simbgCount: 3, supervisor: 'Dedi Kurnia, ST', phone: '08212234446' },
-    { id: 'KEC-15', name: 'Karangtengah', region: 'Tengah', x: 88, y: 34, assetsCount: 3, simbgCount: 2, supervisor: 'Dedi Kurnia, ST', phone: '08212234446' },
-    { id: 'KEC-16', name: 'Pangatikan', region: 'Tengah', x: 83, y: 37, assetsCount: 3, simbgCount: 2, supervisor: 'Yudi Rahadian, ST', phone: '08212234446' },
-    { id: 'KEC-17', name: 'Wanaraja', region: 'Tengah', x: 82, y: 40, assetsCount: 5, simbgCount: 4, supervisor: 'Yudi Rahadian, ST', phone: '08212234446' },
-    { id: 'KEC-18', name: 'Sucinaraja', region: 'Tengah', x: 82, y: 43, assetsCount: 3, simbgCount: 2, supervisor: 'Yudi Rahadian, ST', phone: '08212234446' },
-    { id: 'KEC-19', name: 'Samarang', region: 'Tengah', x: 52, y: 35, assetsCount: 6, simbgCount: 5, supervisor: 'Budi Santoso, ST', phone: '08212234446' },
-    { id: 'KEC-20', name: 'Pasirwangi', region: 'Tengah', x: 50, y: 39, assetsCount: 5, simbgCount: 3, supervisor: 'Budi Santoso, ST', phone: '08212234446' },
-    { id: 'KEC-21', name: 'Sukaresmi', region: 'Tengah', x: 48, y: 43, assetsCount: 4, simbgCount: 2, supervisor: 'Budi Santoso, ST', phone: '08212234446' },
-    { id: 'KEC-22', name: 'Bayongbong', region: 'Tengah', x: 58, y: 46, assetsCount: 7, simbgCount: 6, supervisor: 'Budi Santoso, ST', phone: '08212234446' },
-    { id: 'KEC-23', name: 'Cisurupan', region: 'Tengah', x: 52, y: 48, assetsCount: 6, simbgCount: 4, supervisor: 'Budi Santoso, ST', phone: '08212234446' },
-    { id: 'KEC-24', name: 'Cigedug', region: 'Tengah', x: 57, y: 52, assetsCount: 3, simbgCount: 2, supervisor: 'Budi Santoso, ST', phone: '08212234446' },
-    { id: 'KEC-25', name: 'Cilawu', region: 'Tengah', x: 66, y: 49, assetsCount: 8, simbgCount: 7, supervisor: 'Ir. Hendra Wijaya, MT', phone: '08212234446' },
+    { id: 'KEC-09', name: 'Garut Kota', region: 'Tengah', x: 73, y: 41, assetsCount: 12, simbgCount: 15, supervisor: 'Ir. Hendra Wijaya, MT', phone: '08212234446' },
+    { id: 'KEC-10', name: 'Tarogong Kaler', region: 'Tengah', x: 63, y: 34, assetsCount: 9, simbgCount: 11, supervisor: 'Ir. Hendra Wijaya, MT', phone: '08212234446' },
+    { id: 'KEC-11', name: 'Tarogong Kidul', region: 'Tengah', x: 65, y: 38, assetsCount: 14, simbgCount: 18, supervisor: 'Ir. Hendra Wijaya, MT', phone: '08212234446' },
+    { id: 'KEC-12', name: 'Banyuresmi', region: 'Tengah', x: 70, y: 30, assetsCount: 7, simbgCount: 6, supervisor: 'Yudi Rahadian, ST', phone: '08212234446' },
+    { id: 'KEC-13', name: 'Karangpawitan', region: 'Tengah', x: 74, y: 37, assetsCount: 8, simbgCount: 9, supervisor: 'Yudi Rahadian, ST', phone: '08212234446' },
+    { id: 'KEC-14', name: 'Sukawening', region: 'Tengah', x: 84, y: 28, assetsCount: 4, simbgCount: 3, supervisor: 'Dedi Kurnia, ST', phone: '08212234446' },
+    { id: 'KEC-15', name: 'Karangtengah', region: 'Tengah', x: 88, y: 32, assetsCount: 3, simbgCount: 2, supervisor: 'Dedi Kurnia, ST', phone: '08212234446' },
+    { id: 'KEC-16', name: 'Pangatikan', region: 'Tengah', x: 83, y: 35, assetsCount: 3, simbgCount: 2, supervisor: 'Yudi Rahadian, ST', phone: '08212234446' },
+    { id: 'KEC-17', name: 'Wanaraja', region: 'Tengah', x: 84, y: 38, assetsCount: 5, simbgCount: 4, supervisor: 'Yudi Rahadian, ST', phone: '08212234446' },
+    { id: 'KEC-18', name: 'Sucinaraja', region: 'Tengah', x: 84, y: 41, assetsCount: 3, simbgCount: 2, supervisor: 'Yudi Rahadian, ST', phone: '08212234446' },
+    { id: 'KEC-19', name: 'Samarang', region: 'Tengah', x: 53, y: 32, assetsCount: 6, simbgCount: 5, supervisor: 'Budi Santoso, ST', phone: '08212234446' },
+    { id: 'KEC-20', name: 'Pasirwangi', region: 'Tengah', x: 50, y: 36, assetsCount: 5, simbgCount: 3, supervisor: 'Budi Santoso, ST', phone: '08212234446' },
+    { id: 'KEC-21', name: 'Sukaresmi', region: 'Tengah', x: 48, y: 40, assetsCount: 4, simbgCount: 2, supervisor: 'Budi Santoso, ST', phone: '08212234446' },
+    { id: 'KEC-22', name: 'Bayongbong', region: 'Tengah', x: 58, y: 48, assetsCount: 7, simbgCount: 6, supervisor: 'Budi Santoso, ST', phone: '08212234446' },
+    { id: 'KEC-23', name: 'Cisurupan', region: 'Tengah', x: 51, y: 44, assetsCount: 6, simbgCount: 4, supervisor: 'Budi Santoso, ST', phone: '08212234446' },
+    { id: 'KEC-24', name: 'Cigedug', region: 'Tengah', x: 56, y: 52, assetsCount: 3, simbgCount: 2, supervisor: 'Budi Santoso, ST', phone: '08212234446' },
+    { id: 'KEC-25', name: 'Cilawu', region: 'Tengah', x: 67, y: 46, assetsCount: 8, simbgCount: 7, supervisor: 'Ir. Hendra Wijaya, MT', phone: '08212234446' },
 
     // Garut Selatan
-    { id: 'KEC-26', name: 'Talegong', region: 'Selatan', x: 20, y: 46, assetsCount: 4, simbgCount: 2, supervisor: 'Rahmat Hidayat, ST', phone: '08212234446' },
-    { id: 'KEC-27', name: 'Cisewu', region: 'Selatan', x: 20, y: 56, assetsCount: 5, simbgCount: 3, supervisor: 'Rahmat Hidayat, ST', phone: '08212234446' },
-    { id: 'KEC-28', name: 'Caringin', region: 'Selatan', x: 14, y: 66, assetsCount: 4, simbgCount: 2, supervisor: 'Rahmat Hidayat, ST', phone: '08212234446' },
-    { id: 'KEC-29', name: 'Pamulihan', region: 'Selatan', x: 40, y: 54, assetsCount: 3, simbgCount: 2, supervisor: 'Agus Setiawan, ST', phone: '08212234446' },
-    { id: 'KEC-30', name: 'Bungbulang', region: 'Selatan', x: 28, y: 65, assetsCount: 7, simbgCount: 5, supervisor: 'Agus Setiawan, ST', phone: '08212234446' },
-    { id: 'KEC-31', name: 'Mekarmukti', region: 'Selatan', x: 23, y: 74, assetsCount: 3, simbgCount: 1, supervisor: 'Agus Setiawan, ST', phone: '08212234446' },
-    { id: 'KEC-32', name: 'Pakejeng', region: 'Selatan', x: 37, y: 67, assetsCount: 4, simbgCount: 2, supervisor: 'Agus Setiawan, ST', phone: '08212234446' },
-    { id: 'KEC-33', name: 'Cikajang', region: 'Selatan', x: 53, y: 58, assetsCount: 8, simbgCount: 6, supervisor: 'Taufik Hidayat, ST', phone: '08212234446' },
-    { id: 'KEC-34', name: 'Banjarwangi', region: 'Selatan', x: 63, y: 59, assetsCount: 5, simbgCount: 3, supervisor: 'Taufik Hidayat, ST', phone: '08212234446' },
-    { id: 'KEC-35', name: 'Singajaya', region: 'Selatan', x: 68, y: 68, assetsCount: 4, simbgCount: 2, supervisor: 'Taufik Hidayat, ST', phone: '08212234446' },
-    { id: 'KEC-36', name: 'Peundeuy', region: 'Selatan', x: 68, y: 75, assetsCount: 3, simbgCount: 1, supervisor: 'Taufik Hidayat, ST', phone: '08212234446' },
-    { id: 'KEC-37', name: 'Cihurip', region: 'Selatan', x: 60, y: 70, assetsCount: 3, simbgCount: 1, supervisor: 'Taufik Hidayat, ST', phone: '08212234446' },
-    { id: 'KEC-38', name: 'Cisompet', region: 'Selatan', x: 55, y: 77, assetsCount: 5, simbgCount: 3, supervisor: 'Iman Supriadi, ST', phone: '08212234446' },
-    { id: 'KEC-39', name: 'Cikelet', region: 'Selatan', x: 39, y: 77, assetsCount: 5, simbgCount: 3, supervisor: 'Iman Supriadi, ST', phone: '08212234446' },
-    { id: 'KEC-40', name: 'Pameungpeuk', region: 'Selatan', x: 44, y: 85, assetsCount: 9, simbgCount: 8, supervisor: 'Iman Supriadi, ST', phone: '08212234446' },
-    { id: 'KEC-41', name: 'Cibalong', region: 'Selatan', x: 60, y: 88, assetsCount: 6, simbgCount: 4, supervisor: 'Iman Supriadi, ST', phone: '08212234446' },
-    { id: 'KEC-42', name: 'Kadungora (Perbatasan)', region: 'Utara', x: 65, y: 19, assetsCount: 3, simbgCount: 2, supervisor: 'Heri Susanto, MT', phone: '08212234446' }
+    { id: 'KEC-26', name: 'Talegong', region: 'Selatan', x: 23, y: 45, assetsCount: 4, simbgCount: 2, supervisor: 'Rahmat Hidayat, ST', phone: '08212234446' },
+    { id: 'KEC-27', name: 'Cisewu', region: 'Selatan', x: 22, y: 54, assetsCount: 5, simbgCount: 3, supervisor: 'Rahmat Hidayat, ST', phone: '08212234446' },
+    { id: 'KEC-28', name: 'Caringin', region: 'Selatan', x: 15, y: 64, assetsCount: 4, simbgCount: 2, supervisor: 'Rahmat Hidayat, ST', phone: '08212234446' },
+    { id: 'KEC-29', name: 'Pamulihan', region: 'Selatan', x: 38, y: 50, assetsCount: 3, simbgCount: 2, supervisor: 'Agus Setiawan, ST', phone: '08212234446' },
+    { id: 'KEC-30', name: 'Bungbulang', region: 'Selatan', x: 25, y: 68, assetsCount: 7, simbgCount: 5, supervisor: 'Agus Setiawan, ST', phone: '08212234446' },
+    { id: 'KEC-31', name: 'Mekarmukti', region: 'Selatan', x: 20, y: 76, assetsCount: 3, simbgCount: 1, supervisor: 'Agus Setiawan, ST', phone: '08212234446' },
+    { id: 'KEC-32', name: 'Pakenjeng', region: 'Selatan', x: 44, y: 60, assetsCount: 4, simbgCount: 2, supervisor: 'Agus Setiawan, ST', phone: '08212234446' },
+    { id: 'KEC-33', name: 'Cikajang', region: 'Selatan', x: 52, y: 55, assetsCount: 8, simbgCount: 6, supervisor: 'Taufik Hidayat, ST', phone: '08212234446' },
+    { id: 'KEC-34', name: 'Banjarwangi', region: 'Selatan', x: 62, y: 58, assetsCount: 5, simbgCount: 3, supervisor: 'Taufik Hidayat, ST', phone: '08212234446' },
+    { id: 'KEC-35', name: 'Singajaya', region: 'Selatan', x: 63, y: 68, assetsCount: 4, simbgCount: 2, supervisor: 'Taufik Hidayat, ST', phone: '08212234446' },
+    { id: 'KEC-36', name: 'Peundeuy', region: 'Selatan', x: 68, y: 73, assetsCount: 3, simbgCount: 1, supervisor: 'Taufik Hidayat, ST', phone: '08212234446' },
+    { id: 'KEC-37', name: 'Cihurip', region: 'Selatan', x: 58, y: 67, assetsCount: 3, simbgCount: 1, supervisor: 'Taufik Hidayat, ST', phone: '08212234446' },
+    { id: 'KEC-38', name: 'Cisompet', region: 'Selatan', x: 54, y: 75, assetsCount: 5, simbgCount: 3, supervisor: 'Iman Supriadi, ST', phone: '08212234446' },
+    { id: 'KEC-39', name: 'Cikelet', region: 'Selatan', x: 42, y: 74, assetsCount: 5, simbgCount: 3, supervisor: 'Iman Supriadi, ST', phone: '08212234446' },
+    { id: 'KEC-40', name: 'Pameungpeuk', region: 'Selatan', x: 58, y: 88, assetsCount: 9, simbgCount: 8, supervisor: 'Iman Supriadi, ST', phone: '08212234446' },
+    { id: 'KEC-41', name: 'Cibalong', region: 'Selatan', x: 46, y: 82, assetsCount: 6, simbgCount: 4, supervisor: 'Iman Supriadi, ST', phone: '08212234446' },
+    { id: 'KEC-42', name: 'Cibiuk', region: 'Utara', x: 74, y: 26, assetsCount: 3, simbgCount: 2, supervisor: 'Heri Susanto, MT', phone: '08212234446' }
   ];
 
   // Filtered districts list
@@ -129,23 +129,33 @@ export const InteractiveMap: React.FC<InteractiveMapProps> = ({
         {/* View Mode Switcher - Mobile Scrollable */}
         <div className="flex bg-white/10 p-1.5 rounded-2xl border border-white/15 shrink-0 gap-1 overflow-x-auto scrollbar-none">
           <button
+            onClick={() => setMapMode('peta_asli')}
+            className={`text-xs font-black uppercase tracking-wider px-3 py-2 rounded-xl transition cursor-pointer flex items-center space-x-1.5 shrink-0 ${
+              mapMode === 'peta_asli' ? 'bg-amber-400 text-slate-950 shadow font-black' : 'text-slate-300 hover:text-white'
+            }`}
+          >
+            <Compass className="w-3.5 h-3.5" />
+            <span>Peta Asli Teritori Garut</span>
+          </button>
+
+          <button
             onClick={() => setMapMode('administrative')}
             className={`text-xs font-black uppercase tracking-wider px-3 py-2 rounded-xl transition cursor-pointer flex items-center space-x-1.5 shrink-0 ${
               mapMode === 'administrative' ? 'bg-emerald-400 text-slate-950 shadow' : 'text-slate-300 hover:text-white'
             }`}
           >
             <Layers className="w-3.5 h-3.5" />
-            <span>Peta 42 Kecamatan</span>
+            <span>Plotter Vektor 42 Kecamatan</span>
           </button>
 
           <button
             onClick={() => setMapMode('gis')}
             className={`text-xs font-black uppercase tracking-wider px-3 py-2 rounded-xl transition cursor-pointer flex items-center space-x-1.5 shrink-0 ${
-              mapMode === 'gis' ? 'bg-amber-400 text-slate-950 shadow' : 'text-slate-300 hover:text-white'
+              mapMode === 'gis' ? 'bg-blue-400 text-slate-950 shadow' : 'text-slate-300 hover:text-white'
             }`}
           >
             <HardHat className="w-3.5 h-3.5" />
-            <span>GIS Plotter</span>
+            <span>GIS Plotter Aset</span>
           </button>
 
           <button
@@ -171,9 +181,17 @@ export const InteractiveMap: React.FC<InteractiveMapProps> = ({
             <div className="space-y-0.5">
               <span className="font-black text-emerald-400 text-xs uppercase tracking-widest block flex items-center space-x-1.5">
                 <MapPin className="w-3.5 h-3.5 text-emerald-400" />
-                <span>PETA WILAYAH ADMINISTRATIF GARUT</span>
+                <span>
+                  {mapMode === 'peta_asli' 
+                    ? 'PETA WILAYAH ADMINISTRATIF ASLI KABUPATEN GARUT' 
+                    : 'PETA GEOSPASIAL 42 KECAMATAN GARUT'}
+                </span>
               </span>
-              <span className="text-[10px] text-slate-400 font-mono">BAPPEDA & PUPR Garut • WGS 84</span>
+              <span className="text-[10px] text-slate-400 font-mono">
+                {mapMode === 'peta_asli' 
+                  ? 'Peta Teritori Resmi BAPPEDA & Dinas PUPR Garut (42 Kecamatan)' 
+                  : 'BAPPEDA & PUPR Garut • WGS 84 GIS Coordinates'}
+              </span>
             </div>
 
             {/* Region Filter Buttons */}
@@ -193,41 +211,59 @@ export const InteractiveMap: React.FC<InteractiveMapProps> = ({
           </div>
 
           {/* SVG & Vector Canvas Base representing Garut Administrative Map */}
-          <div className="relative w-full h-[380px] sm:h-[480px] my-3 bg-[#0a121d] rounded-2xl border border-slate-800/80 overflow-hidden flex items-center justify-center">
+          <div className="relative w-full h-[420px] sm:h-[520px] my-3 bg-[#0a121d] rounded-2xl border border-slate-800/80 overflow-hidden flex items-center justify-center">
             
+            {/* If Peta Asli mode, show official administrative map background */}
+            {mapMode === 'peta_asli' && (
+              <div className="absolute inset-0 flex items-center justify-center bg-slate-950 p-2">
+                <img
+                  src="/peta-garut-asli.jpg"
+                  alt="Peta Wilayah Administratif Asli Kabupaten Garut BAPPEDA PUPR"
+                  className="max-h-full max-w-full object-contain rounded-xl opacity-90 shadow-2xl transition duration-300 hover:opacity-100"
+                />
+                <div className="absolute top-2 right-2 bg-slate-900/90 text-amber-400 text-[10px] font-black px-3 py-1 rounded-full border border-amber-500/30 backdrop-blur shadow">
+                  Peta Resmi BAPPEDA (42 Kecamatan)
+                </div>
+              </div>
+            )}
+
             {/* Top Regional Borders Labels */}
-            <div className="absolute top-2 left-1/2 -translate-x-1/2 text-[11px] font-black font-serif italic text-emerald-300/60 uppercase tracking-widest pointer-events-none z-10">
-              KAB. SUMEDANG (UTARA)
-            </div>
-            <div className="absolute top-1/3 left-2 text-[10px] font-black font-serif italic text-emerald-300/60 uppercase tracking-widest pointer-events-none z-10 -rotate-90">
-              KAB. BANDUNG & CIANJUR (BARAT)
-            </div>
-            <div className="absolute top-1/3 right-2 text-[10px] font-black font-serif italic text-emerald-300/60 uppercase tracking-widest pointer-events-none z-10 rotate-90">
-              KAB. TASIKMALAYA (TIMUR)
-            </div>
-            <div className="absolute bottom-2 left-1/2 -translate-x-1/2 text-[11px] font-black font-serif italic text-cyan-300/80 uppercase tracking-widest pointer-events-none z-10">
-              🌊 SAMUDERA INDONESIA (Pesisir Pantai Selatan Garut)
-            </div>
+            {mapMode !== 'peta_asli' && (
+              <>
+                <div className="absolute top-2 left-1/2 -translate-x-1/2 text-[11px] font-black font-serif italic text-emerald-300/60 uppercase tracking-widest pointer-events-none z-10">
+                  KAB. SUMEDANG (UTARA)
+                </div>
+                <div className="absolute top-1/3 left-2 text-[10px] font-black font-serif italic text-emerald-300/60 uppercase tracking-widest pointer-events-none z-10 -rotate-90">
+                  KAB. BANDUNG & CIANJUR (BARAT)
+                </div>
+                <div className="absolute top-1/3 right-2 text-[10px] font-black font-serif italic text-emerald-300/60 uppercase tracking-widest pointer-events-none z-10 rotate-90">
+                  KAB. TASIKMALAYA (TIMUR)
+                </div>
+                <div className="absolute bottom-2 left-1/2 -translate-x-1/2 text-[11px] font-black font-serif italic text-cyan-300/80 uppercase tracking-widest pointer-events-none z-10">
+                  🌊 SAMUDERA INDONESIA (Pesisir Pantai Selatan Garut)
+                </div>
 
-            {/* Grid & Map Texture Lines */}
-            <div className="absolute inset-0 bg-[linear-gradient(to_right,#1e293b_1px,transparent_1px),linear-gradient(to_bottom,#1e293b_1px,transparent_1px)] bg-[size:1.5rem_1.5rem] opacity-20"></div>
+                {/* Grid & Map Texture Lines */}
+                <div className="absolute inset-0 bg-[linear-gradient(to_right,#1e293b_1px,transparent_1px),linear-gradient(to_bottom,#1e293b_1px,transparent_1px)] bg-[size:1.5rem_1.5rem] opacity-20"></div>
 
-            {/* SVG Roads & Rivers Representation */}
-            <svg className="absolute inset-0 w-full h-full pointer-events-none z-0">
-              {/* Batas Kabupaten (Red dash-dot border line) */}
-              <path d="M 120,40 Q 300,20 400,60 T 480,180 T 360,340 T 260,430 T 100,320 Z" fill="none" stroke="#ef4444" strokeWidth="2" strokeDasharray="6,4" opacity="0.6" />
-              
-              {/* Jalan Provinsi (Green lines) */}
-              <path d="M 350,50 L 320,120 L 330,200 L 260,280 L 220,380 L 210,420" fill="none" stroke="#10b981" strokeWidth="3.5" opacity="0.8" />
-              <path d="M 100,310 L 220,380 L 300,420" fill="none" stroke="#10b981" strokeWidth="3" opacity="0.8" />
+                {/* SVG Roads & Rivers Representation */}
+                <svg className="absolute inset-0 w-full h-full pointer-events-none z-0">
+                  {/* Batas Kabupaten (Red dash-dot border line) */}
+                  <path d="M 120,40 Q 300,20 400,60 T 480,180 T 360,340 T 260,430 T 100,320 Z" fill="none" stroke="#ef4444" strokeWidth="2" strokeDasharray="6,4" opacity="0.6" />
+                  
+                  {/* Jalan Provinsi (Green lines) */}
+                  <path d="M 350,50 L 320,120 L 330,200 L 260,280 L 220,380 L 210,420" fill="none" stroke="#10b981" strokeWidth="3.5" opacity="0.8" />
+                  <path d="M 100,310 L 220,380 L 300,420" fill="none" stroke="#10b981" strokeWidth="3" opacity="0.8" />
 
-              {/* Rel Kereta Api (Dashed railway line) */}
-              <path d="M 300,80 L 360,110 L 380,140 L 370,210" fill="none" stroke="#f59e0b" strokeWidth="2" strokeDasharray="4,4" opacity="0.9" />
+                  {/* Rel Kereta Api (Dashed railway line) */}
+                  <path d="M 300,80 L 360,110 L 380,140 L 370,210" fill="none" stroke="#f59e0b" strokeWidth="2" strokeDasharray="4,4" opacity="0.9" />
 
-              {/* Sungai (Blue rivers) */}
-              <path d="M 320,50 Q 280,180 240,260 T 210,430" fill="none" stroke="#38bdf8" strokeWidth="2" opacity="0.7" />
-              <path d="M 120,300 Q 180,330 220,420" fill="none" stroke="#38bdf8" strokeWidth="1.5" opacity="0.7" />
-            </svg>
+                  {/* Sungai (Blue rivers) */}
+                  <path d="M 320,50 Q 280,180 240,260 T 210,430" fill="none" stroke="#38bdf8" strokeWidth="2" opacity="0.7" />
+                  <path d="M 120,300 Q 180,330 220,420" fill="none" stroke="#38bdf8" strokeWidth="1.5" opacity="0.7" />
+                </svg>
+              </>
+            )}
 
             {/* Heatmap Layer Overlay */}
             {mapMode === 'heatmap' && (
