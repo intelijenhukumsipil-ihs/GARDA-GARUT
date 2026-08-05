@@ -411,6 +411,17 @@ export const INITIAL_BUILDING_CASES: BuildingCase[] = [
 
 export const INITIAL_GATEWAY_ENDPOINTS: GatewayEndpointStatus[] = [
   {
+    id: 'EP-000',
+    systemName: 'WhatsApp Server Gateway Resmi (+62 821-2234-4446 / 08212234446)',
+    endpointUrl: 'https://wa.me/628212234446 (Direct Webhook API)',
+    protocol: 'REST_JSON',
+    status: 'online',
+    latencyMs: 32,
+    lastHeartbeat: '2026-08-05 06:15:00',
+    pendingQueueCount: 0,
+    successRatePercent: 100.0
+  },
+  {
     id: 'EP-001',
     systemName: 'SIMBG KemenPUPR / Kemendagri Central API',
     endpointUrl: 'https://simbg.pu.go.id/api/v3/garut-gateway',
