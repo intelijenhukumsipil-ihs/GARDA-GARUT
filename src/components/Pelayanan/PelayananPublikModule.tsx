@@ -326,7 +326,7 @@ export const PelayananPublikModule: React.FC = () => {
               Butuh Penjelasan & Konsultasi Langsung?
             </h4>
             <p className="text-xs text-emerald-800 mt-0.5">
-              Tanyakan langsung kepada <strong>Maskot GAGA AI PUPR Garut</strong> via tombol floating melayang atau hubungi WhatsApp Server Gateway PUPR di <strong>+62 821-2234-4446</strong>.
+              Tanyakan langsung kepada <strong>Maskot GAGA AI PUPR Garut</strong> via tombol floating melayang atau hubungi WhatsApp Server Gateway PUPR di <strong>+62 813-1640-3160</strong>.
             </p>
           </div>
         </div>

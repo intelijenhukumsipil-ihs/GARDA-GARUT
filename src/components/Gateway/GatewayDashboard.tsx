@@ -36,6 +36,8 @@ export const GatewayDashboard: React.FC<GatewayDashboardProps> = ({
   const [isTranslating, setIsTranslating] = useState(false);
   const [waSending, setWaSending] = useState(false);
   const [waResponse, setWaResponse] = useState<any>(null);
+  const [customWaMsg, setCustomWaMsg] = useState('Uji Koneksi Gateway Server WhatsApp GARDA GARUT Berhasil Aktif TERINTEGRASI ONLINE.');
+  const [customRecipient, setCustomRecipient] = useState('+62 813-1640-3160');
 
   const handleRunTranslatorDemo = async () => {
     setIsTranslating(true);
@@ -56,17 +58,18 @@ export const GatewayDashboard: React.FC<GatewayDashboardProps> = ({
     }
   };
 
-  const handleTestWhatsAppGateway = async () => {
+  const handleTestWhatsAppGateway = async (overrideMsg?: string) => {
     setWaSending(true);
+    const msgToSend = overrideMsg || customWaMsg;
     try {
       const res = await fetch('/api/gateway/whatsapp-send', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          recipientPhone: '+62 821-2234-4446',
+          recipientPhone: customRecipient || '+62 813-1640-3160',
           messageType: 'SYSTEM_ALERT',
           data: {
-            message: 'Uji Koneksi Gateway Server WhatsApp GARDA GARUT Berhasil Aktif TERINTEGRASI ONLINE.'
+            message: msgToSend
           }
         })
       });
@@ -93,7 +96,7 @@ export const GatewayDashboard: React.FC<GatewayDashboardProps> = ({
             </span>
           </div>
           <p className="text-xs text-slate-300 max-w-2xl font-medium">
-            Arsitektur penghubung antara perangkat lapangan/pengguna, Pusat Data Garut, Gateway WhatsApp (+62 821-2234-4446 / 08212234446), dan sistem resmi KemenPUPR (SIMBG). Pemilik & Pengembang Inovasi: <strong>Ir. Risa Kristalia N., ST., MT.</strong>
+            Arsitektur penghubung antara perangkat lapangan/pengguna, Pusat Data Garut, Gateway WhatsApp (+62 813-1640-3160 / 081316403160), dan sistem resmi KemenPUPR (SIMBG). Pemilik & Pengembang Inovasi: <strong>Ir. Risa Kristalia N., ST., MT.</strong>
           </p>
         </div>
 
@@ -101,7 +104,7 @@ export const GatewayDashboard: React.FC<GatewayDashboardProps> = ({
           <Activity className="w-5 h-5 text-emerald-400 animate-pulse shrink-0" />
           <div>
             <div className="text-slate-400 text-[10px] font-black uppercase tracking-widest">Gateway WhatsApp Server</div>
-            <div className="font-black text-emerald-400 text-sm">08212234446 (ONLINE)</div>
+            <div className="font-black text-emerald-400 text-sm">081316403160 (ONLINE)</div>
           </div>
         </div>
       </div>
@@ -110,7 +113,7 @@ export const GatewayDashboard: React.FC<GatewayDashboardProps> = ({
       <div className="flex bg-white p-1.5 sm:p-2 rounded-2xl border border-slate-200 gap-1.5 overflow-x-auto shadow-sm scrollbar-none">
         {[
           { id: 'status', label: 'Status Server & Endpoint', icon: Server },
-          { id: 'whatsapp', label: 'WhatsApp Gateway (08212234446)', icon: MessageSquare },
+          { id: 'whatsapp', label: 'WhatsApp Gateway (081316403160)', icon: MessageSquare },
           { id: 'translator', label: 'Penerjemah SIMBG v3', icon: FileCode },
           { id: 'queue', label: 'Antrean Cadangan Data', icon: Database },
           { id: 'security', label: 'Keamanan & Cyber Log', icon: Lock }
@@ -185,30 +188,30 @@ export const GatewayDashboard: React.FC<GatewayDashboardProps> = ({
                 <MessageSquare className="w-3.5 h-3.5 text-emerald-600" />
                 <span className="flex items-center gap-1.5">
                   <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                  MODE ONLINE & TERINTEGRASI LANGSUNG: +62 821-2234-4446
+                  MODE ONLINE & TERINTEGRASI LANGSUNG: +62 813-1640-3160
                 </span>
               </div>
               <h2 className="text-lg font-black text-slate-800 uppercase italic">
                 Pusat Kendali Gateway WhatsApp GARDA GARUT
               </h2>
               <p className="text-xs text-slate-500 font-medium">
-                Sistem WhatsApp Server berada dalam <strong>Mode Online Direct Integrated</strong>. Notifikasi otomatis laporan kerusakan infrastruktur, peringatan SLA, dan bukti terbit rekomendasi perizinan SIMBG dikirimkan secara otomatis via WhatsApp (+62 821-2234-4446).
+                Sistem WhatsApp Server berada dalam <strong>Mode Online Direct Integrated</strong>. Notifikasi otomatis laporan kerusakan infrastruktur, peringatan SLA, dan bukti terbit rekomendasi perizinan SIMBG dikirimkan secara otomatis via WhatsApp (+62 813-1640-3160).
               </p>
             </div>
 
             <div className="flex flex-wrap items-center gap-2 shrink-0">
               <a
-                href="https://wa.me/628212234446?text=Halo%20Server%20WA%20Gateway%20GARDA%20GARUT"
+                href="https://wa.me/6281316403160?text=Halo%20Server%20WA%20Gateway%20GARDA%20GARUT"
                 target="_blank"
                 rel="noreferrer"
                 className="bg-slate-900 hover:bg-slate-800 text-emerald-400 font-black text-xs uppercase tracking-wider px-4 py-3 rounded-2xl border border-slate-800 shadow transition flex items-center space-x-2 cursor-pointer"
               >
                 <ExternalLink className="w-4 h-4 text-emerald-400" />
-                <span>Akses Chat WA Server (08212234446)</span>
+                <span>Akses Chat WA Server (081316403160)</span>
               </a>
 
               <button
-                onClick={handleTestWhatsAppGateway}
+                onClick={() => handleTestWhatsAppGateway()}
                 disabled={waSending}
                 className="bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-black text-xs uppercase tracking-wider px-5 py-3 rounded-2xl shadow transition flex items-center space-x-2 cursor-pointer"
               >
@@ -222,7 +225,7 @@ export const GatewayDashboard: React.FC<GatewayDashboardProps> = ({
             
             <div className="bg-slate-50 p-5 rounded-2xl border border-slate-200 space-y-2">
               <span className="font-black text-slate-400 text-[10px] uppercase tracking-widest block">Nomor Gateway Utama</span>
-              <div className="text-lg font-black text-slate-900 font-mono">08212234446 (+62 821-2234-4446)</div>
+              <div className="text-lg font-black text-slate-900 font-mono">081316403160 (+62 813-1640-3160)</div>
               <span className="text-[10px] font-black uppercase text-emerald-800 bg-emerald-100 border border-emerald-300 px-3 py-1 rounded-full inline-flex items-center gap-1.5">
                 <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
                 Status: ONLINE & LIVE INTEGRATED
@@ -241,6 +244,90 @@ export const GatewayDashboard: React.FC<GatewayDashboardProps> = ({
               <p className="text-[10px] text-slate-500 font-bold">Dinas PUPR Kabupaten Garut</p>
             </div>
 
+          </div>
+
+          {/* Interactive Test Console Form */}
+          <div className="bg-slate-50 p-5 rounded-2xl border border-slate-200 space-y-4">
+            <h3 className="font-black text-xs uppercase tracking-wider text-slate-800 flex items-center gap-2">
+              <Send className="w-4 h-4 text-emerald-600" />
+              <span>Simulasi Kirim Notifikasi Langsung ke WhatsApp Gateway</span>
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label className="text-[10px] font-black uppercase tracking-wider text-slate-500 block mb-1">
+                  Nomor Gateway / Penerima:
+                </label>
+                <input
+                  type="text"
+                  value={customRecipient}
+                  onChange={(e) => setCustomRecipient(e.target.value)}
+                  className="w-full bg-white border border-slate-300 px-3 py-2 rounded-xl text-xs font-mono font-bold text-slate-800 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                  placeholder="+62 813-1640-3160"
+                />
+              </div>
+              <div>
+                <label className="text-[10px] font-black uppercase tracking-wider text-slate-500 block mb-1">
+                  Template Cepat Uji Sinyal:
+                </label>
+                <div className="flex gap-2">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setCustomWaMsg('Uji Status Gateway WA Server Aktif 100% OK.');
+                      handleTestWhatsAppGateway('Uji Status Gateway WA Server Aktif 100% OK.');
+                    }}
+                    className="text-[10px] font-bold bg-white hover:bg-slate-100 text-slate-700 px-2.5 py-1.5 rounded-lg border border-slate-200 cursor-pointer"
+                  >
+                    Heartbeat
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setCustomWaMsg('Notifikasi Laporan Kerusakan Jalan Cimanuk Garut Terverifikasi.');
+                      handleTestWhatsAppGateway('Notifikasi Laporan Kerusakan Jalan Cimanuk Garut Terverifikasi.');
+                    }}
+                    className="text-[10px] font-bold bg-white hover:bg-slate-100 text-slate-700 px-2.5 py-1.5 rounded-lg border border-slate-200 cursor-pointer"
+                  >
+                    Laporan Kerusakan
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setCustomWaMsg('Rekomendasi Terpadu PBG SIMBG-PBG-GRT-2026-9901 Terbit.');
+                      handleTestWhatsAppGateway('Rekomendasi Terpadu PBG SIMBG-PBG-GRT-2026-9901 Terbit.');
+                    }}
+                    className="text-[10px] font-bold bg-white hover:bg-slate-100 text-slate-700 px-2.5 py-1.5 rounded-lg border border-slate-200 cursor-pointer"
+                  >
+                    Rekomendasi PBG
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <label className="text-[10px] font-black uppercase tracking-wider text-slate-500 block mb-1">
+                Isi Pesan Notifikasi:
+              </label>
+              <textarea
+                value={customWaMsg}
+                onChange={(e) => setCustomWaMsg(e.target.value)}
+                rows={2}
+                className="w-full bg-white border border-slate-300 p-3 rounded-xl text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                placeholder="Tulis pesan pengujian sinyal..."
+              />
+            </div>
+
+            <div className="flex justify-end gap-2">
+              <button
+                type="button"
+                onClick={() => handleTestWhatsAppGateway()}
+                disabled={waSending}
+                className="bg-emerald-600 hover:bg-emerald-700 text-white font-black text-xs uppercase px-4 py-2 rounded-xl transition shadow flex items-center gap-2 cursor-pointer"
+              >
+                <Send className="w-3.5 h-3.5" />
+                <span>{waSending ? 'Mengirim...' : 'Kirim Uji Gateway'}</span>
+              </button>
+            </div>
           </div>
 
           {/* Test Result Display */}
@@ -263,7 +350,7 @@ export const GatewayDashboard: React.FC<GatewayDashboardProps> = ({
                   rel="noreferrer"
                   className="inline-flex items-center space-x-2 bg-emerald-500 text-slate-950 font-black px-4 py-2 rounded-xl hover:bg-emerald-400 transition"
                 >
-                  <span>Buka Live Chat Langsung di WhatsApp (+62 821-2234-4446)</span>
+                  <span>Buka Live Chat Langsung di WhatsApp (+62 813-1640-3160)</span>
                   <ExternalLink className="w-3.5 h-3.5" />
                 </a>
               </div>

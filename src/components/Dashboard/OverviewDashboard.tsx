@@ -13,7 +13,9 @@ import {
   Zap,
   Sparkles,
   MessageSquare,
-  Bot
+  Bot,
+  Image as ImageIcon,
+  Edit3
 } from 'lucide-react';
 import { 
   InfraAsset, 
@@ -33,6 +35,8 @@ interface OverviewDashboardProps {
   buildingCases: BuildingCase[];
   endpoints: GatewayEndpointStatus[];
   setActiveTab: (tab: TabType) => void;
+  appLogo?: string;
+  onOpenEditLogo?: () => void;
 }
 
 export const OverviewDashboard: React.FC<OverviewDashboardProps> = ({
@@ -42,8 +46,11 @@ export const OverviewDashboard: React.FC<OverviewDashboardProps> = ({
   workOrders,
   buildingCases,
   endpoints,
-  setActiveTab
+  setActiveTab,
+  appLogo = GARDA_LOGO_IMAGE,
+  onOpenEditLogo
 }) => {
+  const isAdmin = currentUser.role === 'admin_layanan' || currentUser.role === 'pimpinan';
   const damagedAssetsCount = assets.filter(a => a.condition !== 'baik').length;
   const activeSpkCount = workOrders.filter(w => w.status === 'dalam_pengerjaan' || w.status === 'diterbitkan').length;
   const activeSimbgCases = buildingCases.filter(c => c.status !== 'sinkron_simbg').length;
@@ -63,13 +70,13 @@ export const OverviewDashboard: React.FC<OverviewDashboardProps> = ({
             <span>⚡ <strong>MASKOT GAGA 🤖</strong> SIAP MELAYANI PENJELASAN SPBE & SIMBG 24/7</span>
             <span>📍 <strong>42 KECAMATAN</strong> TERHUBUNG DENGAN PENGAWAS LAPANGAN PUPR & REKOMENDASI PBG</span>
             <span>💡 INOVASI RESMI: <strong>Ir. RISA KRISTALIA N., ST., MT.</strong></span>
-            <span>📲 WA GATEWAY SERVER: <strong>08212234446 (+62 821-2234-4446)</strong></span>
+            <span>📲 WA GATEWAY SERVER: <strong>081316403160 (+62 813-1640-3160)</strong></span>
             {/* Repeat for continuous marquee smooth scroll */}
             <span>🏛️ <strong>GARDA GARUT</strong> — SISTEM KOORDINASI & PENGAWASAN TERPADU DINAS PUPR KABUPATEN GARUT</span>
             <span>⚡ <strong>MASKOT GAGA 🤖</strong> SIAP MELAYANI PENJELASAN SPBE & SIMBG 24/7</span>
             <span>📍 <strong>42 KECAMATAN</strong> TERHUBUNG DENGAN PENGAWAS LAPANGAN PUPR & REKOMENDASI PBG</span>
             <span>💡 INOVASI RESMI: <strong>Ir. RISA KRISTALIA N., ST., MT.</strong></span>
-            <span>📲 WA GATEWAY SERVER: <strong>08212234446 (+62 821-2234-4446)</strong></span>
+            <span>📲 WA GATEWAY SERVER: <strong>081316403160 (+62 813-1640-3160)</strong></span>
           </div>
         </div>
       </div>
@@ -78,13 +85,25 @@ export const OverviewDashboard: React.FC<OverviewDashboardProps> = ({
       <div className="bg-slate-900 text-white p-6 sm:p-8 rounded-3xl border border-slate-800 shadow-xl relative overflow-hidden">
         <div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
           <div className="flex items-start sm:items-center space-x-4">
-            <div className="w-16 h-16 sm:w-20 sm:h-20 bg-white p-1.5 rounded-2xl border border-slate-700 shadow-lg shrink-0 overflow-hidden flex items-center justify-center transform hover:scale-105 transition duration-300">
+            <div 
+              onClick={onOpenEditLogo}
+              className={`group relative w-16 h-16 sm:w-20 sm:h-20 bg-white p-1.5 rounded-2xl border border-slate-700 shadow-lg shrink-0 overflow-hidden flex items-center justify-center transform hover:scale-105 transition duration-300 ${
+                onOpenEditLogo ? 'cursor-pointer hover:border-amber-400' : ''
+              }`}
+              title={onOpenEditLogo ? 'Klik untuk Mengubah Logo Resmi Sistem (Admin)' : 'Official Logo GARDA GARUT'}
+            >
               <img 
-                src={GARDA_LOGO_IMAGE} 
+                src={appLogo} 
                 alt="Official Logo GARDA GARUT" 
                 className="w-full h-full object-contain" 
                 referrerPolicy="no-referrer"
               />
+              {onOpenEditLogo && (
+                <div className="absolute inset-0 bg-slate-950/75 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center text-amber-300 text-center p-1">
+                  <Edit3 className="w-4 h-4" />
+                  <span className="text-[9px] font-black uppercase mt-1 leading-tight">Ubah Logo</span>
+                </div>
+              )}
             </div>
             <div className="space-y-1.5">
               <div className="inline-flex items-center space-x-2 bg-emerald-500/10 text-emerald-400 text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full border border-emerald-500/20">
@@ -106,6 +125,16 @@ export const OverviewDashboard: React.FC<OverviewDashboardProps> = ({
           </div>
 
           <div className="flex flex-wrap gap-3">
+            {onOpenEditLogo && (
+              <button
+                onClick={onOpenEditLogo}
+                className="bg-amber-400 hover:bg-amber-300 text-slate-950 font-black text-xs uppercase tracking-widest px-4 py-3 rounded-2xl shadow-lg transition-all cursor-pointer transform hover:-translate-y-0.5 flex items-center space-x-1.5"
+                title="Edit dan ubah logo resmi sistem GARDA GARUT"
+              >
+                <ImageIcon className="w-4 h-4" />
+                <span>Ubah Logo {isAdmin ? '(Admin)' : ''}</span>
+              </button>
+            )}
             <button
               onClick={() => setActiveTab('pelayanan')}
               className="bg-emerald-400 hover:bg-emerald-300 text-slate-950 font-black text-xs uppercase tracking-widest px-5 py-3 rounded-2xl shadow-lg transition-all cursor-pointer transform hover:-translate-y-0.5"
@@ -180,13 +209,13 @@ export const OverviewDashboard: React.FC<OverviewDashboardProps> = ({
             <span>Tanya GAGA Sekarang 🔊</span>
           </button>
           <a
-            href="https://wa.me/628212234446"
+            href="https://wa.me/6281316403160"
             target="_blank"
             rel="noopener noreferrer"
             className="flex-1 md:flex-none text-center bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black px-5 py-3 rounded-2xl text-xs uppercase tracking-wider transition shadow-lg cursor-pointer flex items-center justify-center space-x-2 transform hover:scale-105"
           >
             <MessageSquare className="w-4 h-4" />
-            <span>WA Server (08212234446)</span>
+            <span>WA Server (081316403160)</span>
           </a>
         </div>
 

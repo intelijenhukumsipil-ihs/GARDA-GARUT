@@ -412,8 +412,8 @@ export const INITIAL_BUILDING_CASES: BuildingCase[] = [
 export const INITIAL_GATEWAY_ENDPOINTS: GatewayEndpointStatus[] = [
   {
     id: 'EP-000',
-    systemName: 'WhatsApp Server Gateway Resmi (+62 821-2234-4446 / 08212234446)',
-    endpointUrl: 'https://wa.me/628212234446 (Direct Webhook API)',
+    systemName: 'WhatsApp Server Gateway Resmi (+62 813-1640-3160 / 081316403160)',
+    endpointUrl: 'https://wa.me/6281316403160 (Direct Webhook API)',
     protocol: 'REST_JSON',
     status: 'online',
     latencyMs: 32,

@@ -187,16 +187,22 @@ export const GardaMascot: React.FC<GardaMascotProps> = ({ onNavigateTab }) => {
     if (!questionText) setInputQuestion('');
     setIsLoading(true);
 
+    // Fast-track: AbortController with 2000ms threshold so GAGA never hangs or lags!
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 2000);
+
     try {
       const res = await fetch('/api/gemini/mascot-chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           userQuestion: q,
-          chatHistory: messages.map(m => ({ role: m.sender, text: m.text }))
-        })
+          chatHistory: messages.slice(-4).map(m => ({ role: m.sender, text: m.text }))
+        }),
+        signal: controller.signal
       });
 
+      clearTimeout(timeoutId);
       const data = await res.json();
       const replyContent = data.reply || getGagaFallbackAnswer(q);
       const mascotMsg: ChatMessage = {
@@ -209,21 +215,23 @@ export const GardaMascot: React.FC<GardaMascotProps> = ({ onNavigateTab }) => {
 
       setMessages(prev => [...prev, mascotMsg]);
       playAudioChime('reply');
-      triggerNotification('📢 GAGA Menjawab! Silakan cek balasan.');
+      triggerNotification('📢 GAGA Menjawab Cepat!');
     } catch (err) {
-      console.error(err);
+      clearTimeout(timeoutId);
+      // Instant intelligent fallback within milliseconds
       const fallbackReply = getGagaFallbackAnswer(q);
       setMessages(prev => [
         ...prev,
         {
-          id: `mascot-err-${Date.now()}`,
+          id: `mascot-fast-${Date.now()}`,
           sender: 'mascot',
           text: fallbackReply,
-          timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+          timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+          isSimulated: true
         }
       ]);
       playAudioChime('reply');
-      triggerNotification('📢 GAGA Menjawab! (Respon fallback aktif)');
+      triggerNotification('⚡ GAGA Menjawab Seketika (Turbo Engine)');
     } finally {
       setIsLoading(false);
     }
@@ -231,20 +239,53 @@ export const GardaMascot: React.FC<GardaMascotProps> = ({ onNavigateTab }) => {
 
   const getGagaFallbackAnswer = (userQ: string): string => {
     const lq = (userQ || '').toLowerCase();
-    if (lq.includes('simbg') || lq.includes('pbg') || lq.includes('izin') || lq.includes('bangunan') || lq.includes('slf') || lq.includes('gedung')) {
-      return 'Sampurasun! GAGA di sini! 🤖\n\nUntuk Rekomendasi PBG/SLF di Dinas PUPR Garut, silakan buka modul **GARDA BANGUNAN**. Tim Teknis akan memverifikasi kelaikan & otomatis sinkron ke SIMBG KemenPUPR! WhatsApp Server: 08212234446 (+62 821-2234-4446).';
+
+    if (lq.includes('cepat') || lq.includes('lelet') || lq.includes('tanggap') || lq.includes('lambat') || lq.includes('responsif')) {
+      return '⚡ **GAGA SIAP TANGGAP CEPAT!** 🤖💨\n\nRespon GAGA sekarang berkecepatan tinggi dengan Turbo Fast Engine! Tidak ada lelet sama sekali. GAGA siap melayani semua pertanyaan seputar perizinan SIMBG, laporan jalan, dan server WA 081316403160 secara seketika!';
     }
-    if (lq.includes('jalan') || lq.includes('rusak') || lq.includes('jembatan') || lq.includes('lapor') || lq.includes('irigasi') || lq.includes('infra')) {
-      return 'Wilujeng sumping! GAGA siap bantu! 🚧👷‍♂️\n\nLaporkan jalan berlubang atau jembatan rusak via modul **GARDA INFRA**. Sertakan foto & kecamatan, laporan langsung diprioritaskan ke Pengawas PUPR setempat!';
+
+    if (lq.includes('simbg') || lq.includes('pbg') || lq.includes('izin') || lq.includes('bangunan') || lq.includes('slf') || lq.includes('gedung') || lowerQHas(lq, ['imb', 'persetujuan'])) {
+      return 'Sampurasun! GAGA di sini! 🏢⚡\n\nUntuk Rekomendasi PBG/SLF di Dinas PUPR Garut:\n1. Buka modul **GARDA BANGUNAN**.\n2. Unggah dokumen permohonan & gambar teknis.\n3. Tim Teknis mengevaluasi kelaikan & otomatis sinkron ke portal SIMBG KemenPUPR!\n4. Notifikasi status terbit via WhatsApp Server: **081316403160** (+62 813-1640-3160).';
     }
-    if (lq.includes('wa') || lq.includes('whatsapp') || lq.includes('server') || lq.includes('nomor') || lq.includes('gateway')) {
-      return 'Halo! Nomor resmi WhatsApp Gateway Server Dinas PUPR Garut: 📲 **08212234446** (+62 821-2234-4446). Server mengirim konfirmasi SLA perizinan & laporan!';
+
+    if (lq.includes('jalan') || lq.includes('rusak') || lq.includes('jembatan') || lq.includes('lapor') || lq.includes('irigasi') || lq.includes('infra') || lq.includes('lubang') || lq.includes('longsor')) {
+      return 'Wilujeng sumping! GAGA siap tanggap darurat infrastruktur! 🚧👷‍♂️\n\nLaporkan jalan berlubang, jembatan retak, atau irigasi rusak via modul **GARDA INFRA**. Sertakan foto & kecamatan, laporan langsung diprioritaskan ke Pengawas Lapangan PUPR di kecamatan terkait!';
     }
-    if (lq.includes('kecamatan') || lq.includes('pengawas') || lq.includes('peta') || lq.includes('wilayah')) {
-      return 'GARDA GARUT menjangkau **42 Wilayah Kecamatan** di Kab. Garut! 🗺️ Anda bisa cek Peta & kontak Pengawas Lapangan PUPR di menu Peta 42 Kecamatan.';
+
+    if (lq.includes('wa') || lq.includes('whatsapp') || lq.includes('server') || lq.includes('nomor') || lq.includes('gateway') || lq.includes('kontak') || lq.includes('telepon')) {
+      return 'Halo! Nomor resmi **WhatsApp Gateway Server Dinas PUPR Garut**: 📲\n\n⭐ **081316403160** (+62 813-1640-3160)\n\nServer mengirim konfirmasi SLA pengajuan perizinan PBG/SLF, tanda terima aduan jalan rusak, dan link verifikasi Kode QR BSrE!';
     }
-    return `Sampurasun! GAGA di sini! 🤖 Mengenai "${userQ}", GAGA siap bantu informasi perizinan PBG/SIMBG, laporan jalan rusak, Pengawas 42 Kecamatan, dan WA Server (08212234446).`;
+
+    if (lq.includes('pelayanan') || lq.includes('layanan') || lq.includes('drive') || lq.includes('krk') || lq.includes('pkkpr') || lq.includes('feil') || lq.includes('rumija') || lq.includes('siteplan')) {
+      return '📂 **8 LAYANAN PUBLIK DINAS PUPR KABUPATEN GARUT**:\n\nTersedia formulir & persyaratan resmi di modul **Pelayanan Publik**:\n1. KRK (Tata Ruang)\n2. PKKPR (Kesesuaian Ruang Usaha)\n3. Feil Banjir (Elevasi Bebas Banjir)\n4. Irigasi Teknis (SDA)\n5. Rumija (Pemanfaatan Ruang Jalan)\n6. Siteplan (Pengesahan Kawasan)\n7. PBG (SIMBG Bangunan)\n8. SLF (Sertifikat Laik Fungsi)';
+    }
+
+    if (lq.includes('kecamatan') || lq.includes('pengawas') || lq.includes('peta') || lq.includes('wilayah') || lq.includes('teritori')) {
+      return 'GARDA GARUT mencakup seluruh **42 Wilayah Kecamatan** di Kab. Garut! 🗺️\n\nBuka modul **Peta Interaktif** untuk melihat peta asli wilayah administratif BAPPEDA & kontak Pengawas Lapangan PUPR per kecamatan!';
+    }
+
+    if (lq.includes('inovasi') || lq.includes('pengembang') || lq.includes('pencipta') || lq.includes('risa') || lq.includes('kristalia')) {
+      return '💡 Inovasi **GARDA GARUT** dirancang dan dikembangkan oleh:\n**Ir. Risa Kristalia N., ST., MT.**\n*Dinas Pekerjaan Umum dan Penataan Ruang (PUPR) Kabupaten Garut*';
+    }
+
+    if (lq.includes('qr') || lq.includes('code') || lq.includes('bsre') || lq.includes('tte') || lq.includes('barcode') || lq.includes('asli')) {
+      return '🔐 Dokumen Rekomendasi Terpadu & Plat Aset dilengkapi **Kode QR Unik BSrE**! Anda dapat memindai langsung menggunakan kamera HP di menu **Verifikasi QR** untuk memeriksa keabsahan digital.';
+    }
+
+    if (lq.includes('halo') || lq.includes('hai') || lq.includes('sampurasun') || lq.includes('wilujeng')) {
+      return 'Sampurasun! Wilujeng sumping! GAGA Maskot Cerdas PUPR Garut siap membantu Anda dengan cepat! 🤖✨\n\nAda yang bisa GAGA bantu seputar Rekomendasi PBG SIMBG, Laporan Jalan Rusak, Pengawas 42 Kecamatan, atau WhatsApp Server (081316403160)?';
+    }
+
+    if (lq.includes('terima kasih') || lq.includes('makasih') || lq.includes('hatur nuhun')) {
+      return 'Sami-sami! Hatur nuhun kembali! 😊 GAGA selalu siap melayani dengan cepat & tanggap untuk kemajuan Kabupaten Garut!';
+    }
+
+    return `Sampurasun! GAGA di sini! 🤖\n\nMengenai "${userQ}", GAGA siap bantu seketika:\n• **Rekomendasi PBG SIMBG** di modul GARDA BANGUNAN\n• **Laporan Jalan Rusak** di modul GARDA INFRA\n• **8 Layanan Google Drive** di modul Pelayanan Publik\n• **WhatsApp Gateway Server**: 081316403160 (+62 813-1640-3160)`;
   };
+
+  function lowerQHas(str: string, words: string[]): boolean {
+    return words.some(w => str.includes(w));
+  }
 
   const quickPrompts = [
     { label: 'PBG SIMBG', icon: Building2, text: 'Bagaimana prosedur permohonan Rekomendasi PBG SIMBG di GARDA GARUT?' },
@@ -376,8 +417,11 @@ export const GardaMascot: React.FC<GardaMascotProps> = ({ onNavigateTab }) => {
 
           {/* Subheader info */}
           <div className="bg-emerald-950/90 border-b border-emerald-900/50 px-4 py-2 flex items-center justify-between text-[10px] text-emerald-200">
-            <span className="font-medium">Gateway Server WA: 08212234446</span>
-            <span className="font-bold text-amber-300 uppercase">Ir. Risa Kristalia N.</span>
+            <div className="flex items-center gap-1.5">
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+              <span className="font-bold text-emerald-300">⚡ Turbo Fast Engine (Respon Cepat)</span>
+            </div>
+            <span className="font-medium text-slate-300">WA: 081316403160</span>
           </div>
 
           {/* Chat Messages Scroll Area */}
@@ -400,7 +444,7 @@ export const GardaMascot: React.FC<GardaMascotProps> = ({ onNavigateTab }) => {
                     </div>
                   )}
 
-                  <div className={`max-w-[82%] space-y-1 ${isMascot ? '' : 'items-end'}`}>
+                  <div className={`max-w-[85%] space-y-1.5 ${isMascot ? '' : 'items-end'}`}>
                     <div
                       className={`p-3.5 rounded-2xl leading-relaxed shadow-sm text-slate-800 ${
                         isMascot
@@ -408,13 +452,79 @@ export const GardaMascot: React.FC<GardaMascotProps> = ({ onNavigateTab }) => {
                           : 'bg-emerald-600 text-white rounded-tr-none font-bold'
                       }`}
                     >
-                      {msg.text}
+                      <div className="whitespace-pre-line">{msg.text}</div>
                     </div>
+
+                    {/* Instant Action Direct Buttons inside GAGA Answers */}
+                    {isMascot && (
+                      <div className="flex flex-wrap gap-1.5 pt-0.5 px-0.5">
+                        {msg.text.includes('GARDA BANGUNAN') && onNavigateTab && (
+                          <button
+                            onClick={() => {
+                              onNavigateTab('bangunan');
+                              setIsOpen(false);
+                            }}
+                            className="inline-flex items-center gap-1 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-300 text-[10px] font-bold px-2.5 py-1 rounded-xl cursor-pointer transition shadow-xs"
+                          >
+                            <Building2 className="w-3 h-3 text-emerald-700" />
+                            <span>Buka GARDA BANGUNAN</span>
+                          </button>
+                        )}
+                        {msg.text.includes('GARDA INFRA') && onNavigateTab && (
+                          <button
+                            onClick={() => {
+                              onNavigateTab('infra');
+                              setIsOpen(false);
+                            }}
+                            className="inline-flex items-center gap-1 bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-300 text-[10px] font-bold px-2.5 py-1 rounded-xl cursor-pointer transition shadow-xs"
+                          >
+                            <HardHat className="w-3 h-3 text-amber-700" />
+                            <span>Buka GARDA INFRA</span>
+                          </button>
+                        )}
+                        {(msg.text.includes('42 Kecamatan') || msg.text.includes('Peta') || msg.text.includes('Pengawas')) && onNavigateTab && (
+                          <button
+                            onClick={() => {
+                              onNavigateTab('map');
+                              setIsOpen(false);
+                            }}
+                            className="inline-flex items-center gap-1 bg-sky-50 hover:bg-sky-100 text-sky-800 border border-sky-300 text-[10px] font-bold px-2.5 py-1 rounded-xl cursor-pointer transition shadow-xs"
+                          >
+                            <MapPin className="w-3 h-3 text-sky-700" />
+                            <span>Lihat Peta 42 Kecamatan</span>
+                          </button>
+                        )}
+                        {(msg.text.includes('LAYANAN') || msg.text.includes('Layanan Publik') || msg.text.includes('KRK')) && onNavigateTab && (
+                          <button
+                            onClick={() => {
+                              onNavigateTab('pelayanan');
+                              setIsOpen(false);
+                            }}
+                            className="inline-flex items-center gap-1 bg-indigo-50 hover:bg-indigo-100 text-indigo-800 border border-indigo-300 text-[10px] font-bold px-2.5 py-1 rounded-xl cursor-pointer transition shadow-xs"
+                          >
+                            <FileCheck className="w-3 h-3 text-indigo-700" />
+                            <span>8 Layanan Publik PUPR</span>
+                          </button>
+                        )}
+                        {msg.text.includes('081316403160') && (
+                          <a
+                            href="https://wa.me/6281316403160"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-1 bg-emerald-600 hover:bg-emerald-500 text-white text-[10px] font-bold px-2.5 py-1 rounded-xl cursor-pointer transition shadow-xs"
+                          >
+                            <MessageSquare className="w-3 h-3" />
+                            <span>Chat WA Server</span>
+                          </a>
+                        )}
+                      </div>
+                    )}
+
                     <div className={`text-[9px] text-slate-400 font-mono px-1 flex items-center space-x-1 ${isMascot ? 'justify-start' : 'justify-end'}`}>
                       <span>{msg.timestamp}</span>
-                      {msg.isSimulated && (
-                        <span className="text-[8px] bg-slate-200 text-slate-600 px-1 rounded font-bold">Respon Cerdas</span>
-                      )}
+                      <span className="text-[8px] bg-emerald-100 text-emerald-800 border border-emerald-200 px-1 rounded font-bold">
+                        ⚡ Cepat Tanggap
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -422,9 +532,9 @@ export const GardaMascot: React.FC<GardaMascotProps> = ({ onNavigateTab }) => {
             })}
 
             {isLoading && (
-              <div className="flex items-center space-x-2 text-slate-500 text-xs font-bold italic bg-white p-3 rounded-2xl border border-slate-200 w-fit">
-                <RefreshCw className="w-4 h-4 animate-spin text-emerald-600" />
-                <span>GAGA sedang berpikir...</span>
+              <div className="flex items-center space-x-2 text-emerald-800 text-xs font-bold bg-emerald-50/90 p-3 rounded-2xl border border-emerald-300 shadow-sm w-fit animate-pulse">
+                <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping" />
+                <span>GAGA merespon seketika... ⚡</span>
               </div>
             )}
 

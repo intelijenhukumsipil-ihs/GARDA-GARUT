@@ -11,7 +11,8 @@ import {
   ShieldAlert, 
   BookOpen,
   FolderKanban,
-  X
+  X,
+  Edit3
 } from 'lucide-react';
 
 export type TabType = 
@@ -34,6 +35,8 @@ interface SidebarProps {
   queueCount: number;
   isMobileOpen?: boolean;
   setIsMobileOpen?: (open: boolean) => void;
+  appLogo?: string;
+  onOpenEditLogo?: () => void;
 }
 
 export const Sidebar: React.FC<SidebarProps> = ({
@@ -43,7 +46,9 @@ export const Sidebar: React.FC<SidebarProps> = ({
   caseCount,
   queueCount,
   isMobileOpen = false,
-  setIsMobileOpen
+  setIsMobileOpen,
+  appLogo = GARDA_LOGO_IMAGE,
+  onOpenEditLogo
 }) => {
   const navItems = [
     {
@@ -142,13 +147,25 @@ export const Sidebar: React.FC<SidebarProps> = ({
         <div className="p-5 sm:p-6 border-b border-slate-800/80 flex items-center justify-between">
           <div className="flex items-center space-x-3.5">
             {/* Official Logo Image */}
-            <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-white p-1 shadow-lg shrink-0 border border-slate-700 overflow-hidden flex items-center justify-center">
+            <div 
+              onClick={onOpenEditLogo}
+              className={`group relative w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-white p-1 shadow-lg shrink-0 border border-slate-700 overflow-hidden flex items-center justify-center ${
+                onOpenEditLogo ? 'cursor-pointer hover:border-amber-400 hover:scale-105 transition duration-200' : ''
+              }`}
+              title={onOpenEditLogo ? 'Ubah Logo Sistem (Khusus Admin)' : 'Logo GARDA GARUT'}
+            >
               <img 
-                src={GARDA_LOGO_IMAGE} 
+                src={appLogo} 
                 alt="Logo Official GARDA GARUT" 
                 className="w-full h-full object-contain" 
                 referrerPolicy="no-referrer"
               />
+              {onOpenEditLogo && (
+                <div className="absolute inset-0 bg-slate-950/70 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center text-amber-300">
+                  <Edit3 className="w-4 h-4" />
+                  <span className="text-[8px] font-black uppercase mt-0.5">Ubah</span>
+                </div>
+              )}
             </div>
             <div>
               <div className="flex items-center space-x-1">

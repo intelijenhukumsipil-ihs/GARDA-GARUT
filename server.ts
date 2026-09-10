@@ -18,16 +18,16 @@ app.get('/api/health', (req, res) => {
     system: 'GARDA GARUT Gateway Server',
     organizer: 'Dinas Pekerjaan Umum dan Penataan Ruang (PUPR) Kabupaten Garut',
     developer: 'Ir. Risa Kristalia N., ST., MT. (Pemilik & Pengembang Inovasi SPBE)',
-    whatsappGateway: '+62 821-2234-4446',
+    whatsappGateway: '+62 813-1640-3160',
     timestamp: new Date().toISOString()
   });
 });
 
-// WhatsApp Gateway Server Integration Endpoint (+62 821-2234-4446 / 08212234446)
+// WhatsApp Gateway Server Integration Endpoint (+62 813-1640-3160 / 081316403160)
 app.post('/api/gateway/whatsapp-send', (req, res) => {
-  const { recipientPhone = '+62 821-2234-4446', messageType = 'SYSTEM_ALERT', data = {} } = req.body;
+  const { recipientPhone = '+62 813-1640-3160', messageType = 'SYSTEM_ALERT', data = {} } = req.body;
 
-  const targetNumber = recipientPhone || '+62 821-2234-4446';
+  const targetNumber = recipientPhone || '+62 813-1640-3160';
   const cleanPhone = targetNumber.replace(/[^0-9]/g, '');
 
   let textHeader = '[GARDA GARUT - GATEWAY SERVER NOTIFICATION]\n';
@@ -42,7 +42,7 @@ app.post('/api/gateway/whatsapp-send', (req, res) => {
   } else if (messageType === 'QR_VERIFY') {
     bodyContent = `🔍 *HASIL VERIFIKASI KODE QR UNIK BSrE*\nItem: ${data.title || 'Aset/Dokumen GARDA'}\nKode Ref: ${data.code || 'GRD-REF-001'}\nStatus: VERIFIED SAH (BSrE Seal)\nTimestamp: ${new Date().toLocaleString()}`;
   } else {
-    bodyContent = `📢 *NOTIFIKASI KOORDINASI SPBE*\nPesan: ${data.message || 'Sistem Gateway Server GARDA GARUT berjalan normal.'}\nServer WA Target: +62 821-2234-4446 (08212234446)`;
+    bodyContent = `📢 *NOTIFIKASI KOORDINASI SPBE*\nPesan: ${data.message || 'Sistem Gateway Server GARDA GARUT berjalan normal.'}\nServer WA Target: +62 813-1640-3160 (081316403160)`;
   }
 
   const fullMessage = `${textHeader}${bodyContent}\n\n_Pengembang & Pemilik Inovasi: Ir. Risa Kristalia N., ST., MT._`;
@@ -50,8 +50,8 @@ app.post('/api/gateway/whatsapp-send', (req, res) => {
 
   res.json({
     success: true,
-    message: `Notifikasi berhasil dikirimkan ke Gateway WhatsApp Server (+62 821-2234-4446 / 08212234446).`,
-    whatsappNumber: '+62 821-2234-4446',
+    message: `Notifikasi berhasil dikirimkan ke Gateway WhatsApp Server (+62 813-1640-3160 / 081316403160).`,
+    whatsappNumber: '+62 813-1640-3160',
     cleanPhone,
     messageId: `WA-GW-GRT-2026-${Math.floor(Math.random() * 900000) + 100000}`,
     waLink,
@@ -139,13 +139,15 @@ app.post('/api/gemini/smart-analyze', async (req, res) => {
       prompt = `Analisis kasus perizinan bangunan berikut:\nNama Bangunan: ${data.buildingName}\nFungsi: ${data.buildingFunction}\nLuas: ${data.buildingAreaSqm} m2, ${data.floorsCount} lantai.\nNomor SIMBG Ref: ${data.simbgReferenceNo}\nEvaluasi potensi catatan teknis antar-dinas (DLH, Dishub, PUPR, Satpol PP).`;
     }
 
-    const response = await ai.models.generateContent({
-      model: 'gemini-3.6-flash',
+    const geminiPromise = ai.models.generateContent({
+      model: 'gemini-3.8-flash',
       contents: prompt,
       config: {
         systemInstruction
       }
     });
+
+    const response = await withTimeout(geminiPromise, 2500, 'Gemini analyze timeout');
 
     res.json({
       analysis: response.text,
@@ -157,43 +159,74 @@ app.post('/api/gemini/smart-analyze', async (req, res) => {
   }
 });
 
-// Helper function to generate smart responses for GAGA Mascot
+// Helper function with strict timeout for lightning-fast responses
+function withTimeout<T>(promise: Promise<T>, timeoutMs: number, timeoutMsg = 'Operation timed out'): Promise<T> {
+  return Promise.race([
+    promise,
+    new Promise<T>((_, reject) => setTimeout(() => reject(new Error(timeoutMsg)), timeoutMs))
+  ]);
+}
+
+// Helper function to generate instant smart responses for GAGA Mascot
 function generateGagaSmartReply(userQuestion: string): string {
   const lowerQ = (userQuestion || '').toLowerCase();
 
-  if (lowerQ.includes('simbg') || lowerQ.includes('pbg') || lowerQ.includes('izin') || lowerQ.includes('bangunan') || lowerQ.includes('slf') || lowerQ.includes('gedung') || lowerQ.includes('persetujuan')) {
-    return 'Sampurasun! GAGA di sini! 🤖\n\nUntuk permohonan Rekomendasi PBG/SLF di Dinas PUPR Garut:\n1. Buka modul **GARDA BANGUNAN**.\n2. Unggah dokumen permohonan & gambar teknis.\n3. Tim Teknis PUPR mengevaluasi kelaikan teknis & RTRW.\n4. Menerbitkan **Rekomendasi Terpadu PUPR** yang otomatis tersinkronisasi ke SIMBG Kementerian PUPR!\n\nAnda juga mendapat notifikasi otomatis via WhatsApp Server (+62 821-2234-4446 / 08212234446).';
+  // Responsif / Cepat Tanggap
+  if (lowerQ.includes('cepat') || lowerQ.includes('lelet') || lowerQ.includes('tanggap') || lowerQ.includes('lambat') || lowerQ.includes('responsif')) {
+    return '⚡ **GAGA SIAP TANGGAP CEPAT!** 🤖💨\n\nRespon GAGA sekarang dioptimalkan dengan mode *Turbo Fast Engine*! Tidak ada lagi lelet atau tertunda. Semua informasi layanan Dinas PUPR Kabupaten Garut langsung terjawab seketika!\n\nAda yang bisa GAGA bantu sekarang mengenai PBG/SIMBG, laporan jalan rusak, atau WA Gateway Server (081316403160)?';
+  }
+
+  // SIMBG / PBG / SLF / Rekomendasi
+  if (lowerQ.includes('simbg') || lowerQ.includes('pbg') || lowerQ.includes('izin') || lowerQ.includes('bangunan') || lowerQ.includes('slf') || lowerQ.includes('gedung') || lowerQ.includes('persetujuan') || lowerQ.includes('imb')) {
+    return 'Sampurasun! GAGA jelaskan perizinan PBG & SLF di Dinas PUPR Garut: 🏢⚡\n\n1. Buka menu **GARDA BANGUNAN**.\n2. Unggah dokumen permohonan, gambar teknis & lokasi.\n3. Tim Teknis PUPR & OPD terkait (DLH, Dishub, Satpol PP) melakukan telaah terpadu secara paralel.\n4. Menerbitkan **Surat Rekomendasi Teknis Terpadu ber-QR BSrE** yang otomatis tersinkronisasi ke portal SIMBG Kementerian PUPR!\n\n📲 Notifikasi status permohonan langsung dikirim ke WhatsApp pemohon melalui Server Resmi: **081316403160** (+62 813-1640-3160).';
   }
   
-  if (lowerQ.includes('jalan') || lowerQ.includes('rusak') || lowerQ.includes('jembatan') || lowerQ.includes('irigasi') || lowerQ.includes('lapor') || lowerQ.includes('drainase') || lowerQ.includes('infra') || lowerQ.includes('pengaduan') || lowerQ.includes('lubang')) {
-    return 'Wilujeng sumping! GAGA siap tanggap! 🚧👷‍♂️\n\nJika menemukan jalan berlubang, jembatan rusak, atau saluran irigasi tersumbat di Kabupaten Garut:\n1. Masuk ke modul **GARDA INFRA**.\n2. Klik **"Buat Laporan Baru"**.\n3. Lampirkan foto lokasi, tentukan kecamatan & deskripsi kerusakan.\n4. Sistem GARDA GARUT menghitung skor prioritas dan langsung meneruskan ke Pengawas Lapangan PUPR di kecamatan terkait!';
+  // Infrastruktur / Jalan Rusak / Jembatan / Irigasi
+  if (lowerQ.includes('jalan') || lowerQ.includes('rusak') || lowerQ.includes('jembatan') || lowerQ.includes('irigasi') || lowerQ.includes('lapor') || lowerQ.includes('drainase') || lowerQ.includes('infra') || lowerQ.includes('pengaduan') || lowerQ.includes('lubang') || lowerQ.includes('longsor')) {
+    return 'Wilujeng sumping! GAGA siap tanggap darurat infrastruktur! 🚧👷‍♂️\n\nJika menemukan jalan berlubang, jembatan rusak, atau saluran irigasi tersumbat di Kabupaten Garut:\n1. Masuk ke modul **GARDA INFRA**.\n2. Klik tombol **"Buat Laporan Baru"**.\n3. Lampirkan foto kondisi fisik, pilih kecamatan (dari 42 Kecamatan) & tuliskan deskripsi.\n4. Algoritma prioritas GARDA menghitung tingkat keparahan dan meneruskannya ke Pengawas Lapangan PUPR di kecamatan terkait!\n\nAnda juga bisa langsung mengirim laporan via WhatsApp Server: **081316403160**.';
   }
 
-  if (lowerQ.includes('wa') || lowerQ.includes('whatsapp') || lowerQ.includes('nomor') || lowerQ.includes('server') || lowerQ.includes('gateway') || lowerQ.includes('hotline') || lowerQ.includes('kontak') || lowerQ.includes('telepon')) {
-    return 'Halo! GAGA informasikan nomor resmi WhatsApp Gateway Server Dinas PUPR Garut: 📲 **+62 821-2234-4446** (08212234446).\n\nFungsi Server WA:\n• Notifikasi SLA otomatis status perizinan SIMBG/PBG.\n• Bukti konfirmasi laporan kerusakan jalan.\n• Tautan verifikasi Kode QR dokumen resmi standar BSrE!';
+  // WhatsApp Server / Hotline / Kontak
+  if (lowerQ.includes('wa') || lowerQ.includes('whatsapp') || lowerQ.includes('nomor') || lowerQ.includes('server') || lowerQ.includes('gateway') || lowerQ.includes('hotline') || lowerQ.includes('kontak') || lowerQ.includes('telepon') || lowerQ.includes('hubungi')) {
+    return 'Halo! Berikut nomor resmi **WhatsApp Gateway Server Dinas PUPR Kabupaten Garut**: 📲\n\n⭐ **+62 813-1640-3160** (081316403160)\n\nFasilitas Server WA Cerdas:\n• Notifikasi real-time SLA pengajuan PBG / SLF SIMBG\n• Konfirmasi tanda terima pelaporan jalan & infrastruktur rusak\n• Tautan verifikasi dokumen resmi & kode unik QR BSrE\n• Koordinasi 42 pengawas kecamatan di seluruh Kabupaten Garut!';
   }
 
-  if (lowerQ.includes('kecamatan') || lowerQ.includes('pengawas') || lowerQ.includes('peta') || lowerQ.includes('wilayah') || lowerQ.includes('petugas')) {
-    return 'GARDA GARUT mencakup seluruh **42 Wilayah Kecamatan** di Kabupaten Garut! 🗺️\n\nAnda dapat mengecek Peta Interaktif & Daftar Pengawas Lapangan PUPR untuk wilayah Wilayah Utara (Limbangan, Cibatu, dll), Wilayah Tengah (Garut Kota, Tarogong, dll), hingga Wilayah Selatan (Pameungpeuk, Cibalong, Cisompet) melalui menu Peta 42 Kecamatan.';
+  // Pelayanan Publik (8 Layanan Drive)
+  if (lowerQ.includes('pelayanan') || lowerQ.includes('layanan') || lowerQ.includes('drive') || lowerQ.includes('krk') || lowerQ.includes('pkkpr') || lowerQ.includes('feil') || lowerQ.includes('banjir') || lowerQ.includes('rumija') || lowerQ.includes('siteplan')) {
+    return '📂 **8 LAYANAN PUBLIK DINAS PUPR KABUPATEN GARUT**:\n\n1. **KRK**: Keterangan Rencana Kabupaten/Kota (Tata Ruang)\n2. **PKKPR**: Kesesuaian Kegiatan Pemanfaatan Ruang Usaha\n3. **FEIL BANJIR**: Rekomendasi Elevasi Lantai Cegah Banjir\n4. **IRIGASI TEKNIS**: Pemanfaatan Jaringan Irigasi SDA\n5. **RUMIJA**: Rekomendasi Ruang Milik Jalan (Bina Marga)\n6. **SITEPLAN**: Pengesahan Tata Letak & Tapak Kawasan\n7. **PBG**: Persetujuan Bangunan Gedung (SIMBG)\n8. **SLF**: Sertifikat Laik Fungsi Bangunan Gedung\n\nSemua berkas dan formulir resmi dapat diakses di modul **PELAYANAN PUBLIK**!';
   }
 
-  if (lowerQ.includes('qr') || lowerQ.includes('code') || lowerQ.includes('barcode') || lowerQ.includes('verifikasi') || lowerQ.includes('bsre') || lowerQ.includes('tte') || lowerQ.includes('asli')) {
-    return 'Dokumen Rekomendasi Terpadu & Plat Aset Infrastruktur GARDA GARUT dilindungi Kode QR Unik standar BSrE! 🔐\n\nAnda cukup memindai QR Code dengan kamera HP / Scanner di menu **Verifikasi QR** untuk mengecek keaslian dokumen, hash digital, penandatangan resmi, dan riwayat revisi teknis.';
+  // Inovasi & Pengembang
+  if (lowerQ.includes('inovasi') || lowerQ.includes('pengembang') || lowerQ.includes('pencipta') || lowerQ.includes('pembuat') || lowerQ.includes('risa') || lowerQ.includes('kristalia')) {
+    return '💡 **INOVATOR & PENGEMBANG SPBE GARDA GARUT**:\n\nInovasi **GARDA GARUT** dirancang dan dikembangkan oleh:\n**Ir. Risa Kristalia N., ST., MT.**\n*Dinas Pekerjaan Umum dan Penataan Ruang (PUPR) Kabupaten Garut*\n\nInovasi ini mengintegrasikan pengawasan aset daerah, percepatan rekomendasi teknis PBG, penjaminan keamanan kode QR BSrE, dan server WhatsApp Gateway untuk 42 kecamatan se-Kabupaten Garut.';
   }
 
-  if (lowerQ.includes('fitur') || lowerQ.includes('menu') || lowerQ.includes('aplikasi') || lowerQ.includes('apa saja') || lowerQ.includes('cara') || lowerQ.includes('bantuan')) {
-    return 'Sampurasun! GAGA jelaskan modul utama GARDA GARUT: 🤖💡\n\n1. 🏢 **GARDA BANGUNAN**: Rekomendasi teknis PBG/SLF & Sync SIMBG KemenPUPR.\n2. 🚧 **GARDA INFRA**: Pelaporan jalan/jembatan/irigasi & Pemantauan 42 Kecamatan.\n3. 📲 **WA GATEWAY**: Notifikasi real-time ke +62 821-2234-4446 (08212234446).\n4. 🔍 **VERIFIKASI QR**: Validasi BSrE cetakan dokumen & aset.';
+  // 42 Kecamatan & Peta Administratif
+  if (lowerQ.includes('kecamatan') || lowerQ.includes('pengawas') || lowerQ.includes('peta') || lowerQ.includes('wilayah') || lowerQ.includes('petugas') || lowerQ.includes('teritori')) {
+    return '🗺️ **PETA INTERAKTIF 42 KECAMATAN KABUPATEN GARUT**:\n\nGARDA GARUT memetakan seluruh wilayah administratif Garut:\n• **Garut Utara**: Limbangan, Malangbong, Selaawi, Leles, Kadungora, Kersamanah, Leuwigoong, Cibatu, Cibiuk\n• **Garut Tengah**: Garut Kota, Tarogong Kaler/Kidul, Banyuresmi, Karangpawitan, Wanaraja, Samarang, Pasirwangi, dll.\n• **Garut Selatan**: Pameungpeuk, Cikelet, Cibalong, Cisompet, Bungbulang, Cisewu, Talegong, dll.\n\nBuka menu **Peta Interaktif** untuk melihat peta asli BAPPEDA & hubungi pengawas PUPR per kecamatan!';
   }
 
+  // QR Code & BSrE
+  if (lowerQ.includes('qr') || lowerQ.includes('code') || lowerQ.includes('barcode') || lowerQ.includes('verifikasi') || lowerQ.includes('bsre') || lowerQ.includes('tte') || lowerQ.includes('asli') || lowerQ.includes('palsu') || lowerQ.includes('validasi')) {
+    return '🔐 **VERIFIKASI KODE QR RESMI (BSrE & TTE)**:\n\nSetiap dokumen Rekomendasi Terpadu dan plat fisik aset infrastruktur dilengkapi Kode QR Digital berstandar BSrE (Balai Sertifikasi Elektronik).\n\nAnda dapat memindai langsung menggunakan kamera ponsel pada modul **Generator & Scan QR** untuk melihat status keaslian, nama penandatangan, tanggal terbit, dan riwayat revisi resmi.';
+  }
+
+  // Menu / Fitur / Apa itu GARDA GARUT
+  if (lowerQ.includes('fitur') || lowerQ.includes('menu') || lowerQ.includes('aplikasi') || lowerQ.includes('apa itu') || lowerQ.includes('cara') || lowerQ.includes('bantuan') || lowerQ.includes('garda')) {
+    return 'Sampurasun! GAGA jelaskan ekosistem **GARDA GARUT** (Gerbang Administrasi, Rekomendasi, dan Data Terpadu): 🤖💡\n\n1. 🏢 **GARDA BANGUNAN**: Rekomendasi teknis PBG/SLF & Sync SIMBG KemenPUPR.\n2. 🚧 **GARDA INFRA**: Pelaporan jalan/jembatan/irigasi & Pemantauan 42 Kecamatan.\n3. 📂 **PELAYANAN PUBLIK**: 8 Layanan Drive terpadu (KRK, PKKPR, Rumija, dll).\n4. 📲 **WA GATEWAY**: Notifikasi real-time ke **081316403160**.\n5. 🗺️ **PETA INTERAKTIF**: Teritori administratif & koordinasi pengawas.\n6. 🔍 **VERIFIKASI QR**: Validasi BSrE cetakan dokumen & aset.';
+  }
+
+  // Sapaan / Salam
   if (lowerQ.includes('halo') || lowerQ.includes('hi') || lowerQ.includes('hai') || lowerQ.includes('sampurasun') || lowerQ.includes('wilujeng') || lowerQ.includes('pagi') || lowerQ.includes('siang') || lowerQ.includes('malam') || lowerQ.includes('sore') || lowerQ.includes('assalamu')) {
-    return 'Sampurasun! Wilujeng sumping! GAGA Maskot Pintar PUPR Garut siap membantu Anda! 🤖✨\n\nAda yang ingin Anda tanyakan seputar Rekomendasi PBG SIMBG, Laporan Jalan Rusak, Pengawas 42 Kecamatan, atau WhatsApp Server (+62 821-2234-4446)? Silakan ketik atau pilih pertanyaan singkat di bawah!';
+    return 'Sampurasun! Wilujeng sumping! GAGA Maskot Cerdas Dinas PUPR Garut siap melayani dengan cepat! 🤖✨\n\nAda yang bisa GAGA bantu seputar Rekomendasi PBG SIMBG, Laporan Jalan Rusak, Pengawas 42 Kecamatan, 8 Layanan Publik, atau WhatsApp Server (081316403160)? Silakan ketik pertanyaan Anda!';
   }
 
+  // Terima Kasih
   if (lowerQ.includes('terima kasih') || lowerQ.includes('makasih') || lowerQ.includes('hatur nuhun') || lowerQ.includes('thanks') || lowerQ.includes('nuhun')) {
-    return 'Sami-sami! Hatur nuhun kembali! 😊 GAGA senang bisa membantu. Selalu siap melayani informasi infrastruktur & SPBE Dinas PUPR Kabupaten Garut!';
+    return 'Sami-sami! Hatur nuhun kembali! 😊 GAGA selalu siap tanggap melayani informasi infrastruktur & SPBE Dinas PUPR Kabupaten Garut!';
   }
 
-  return `Sampurasun! GAGA di sini! 🤖 Terima kasih atas pertanyaannya mengenai "${userQuestion}".\n\nGAGA siap membantu layanan Dinas PUPR Kab. Garut:\n• **Rekomendasi PBG SIMBG** di modul GARDA BANGUNAN\n• **Laporan Jalan / Jembatan Rusak** di modul GARDA INFRA\n• **Pengawas 42 Kecamatan** & **Verifikasi QR BSrE**\n• **WhatsApp Gateway Server** di +62 821-2234-4446 (08212234446)\n\nSilakan pilih menu cepat di bawah atau ajukan pertanyaan spesifik!`;
+  return `Sampurasun! GAGA di sini! 🤖\n\nMengenai "${userQuestion}", GAGA siap bantu seketika:\n• **Rekomendasi PBG/SLF SIMBG** di modul GARDA BANGUNAN\n• **Laporan Jalan / Jembatan Rusak** di modul GARDA INFRA\n• **8 Layanan Publik Google Drive** di modul Pelayanan Publik\n• **Pengawas 42 Kecamatan** & **Verifikasi QR BSrE**\n• **WhatsApp Gateway Server**: +62 813-1640-3160 (081316403160)\n\nSilakan pilih topik cepat atau ketik detail yang ingin Anda ketahui!`;
 }
 
 // Mascot Chat QA Endpoint (GAGA - Maskot Pintar Dinas PUPR Garut)
@@ -201,61 +234,64 @@ app.post('/api/gemini/mascot-chat', async (req, res) => {
   const { userQuestion, chatHistory = [] } = req.body;
   const apiKey = process.env.GEMINI_API_KEY;
 
-  const systemPrompt = `Anda adalah "GAGA" (Maskot Pintar & Cerdas AI dari Dinas PUPR Kabupaten Garut).
-Karakter Anda: Ramah, keren, tanggap, menguasai ilmu teknik sipil, tata ruang, SPBE, serta layanan SIMBG/PBG Dinas PUPR Kabupaten Garut.
-Pemilik & Pengembang Inovasi SPBE GARDA GARUT: Ir. Risa Kristalia N., ST., MT.
-Nomor Server WhatsApp Gateway Resmi PUPR Garut: +62 821-2234-4446 (08212234446).
+  // Fast pre-check: immediately resolve common short questions in under 10ms
+  const qLower = (userQuestion || '').trim().toLowerCase();
+  if (qLower.length <= 15 && (qLower.includes('halo') || qLower.includes('hai') || qLower.includes('hi') || qLower.includes('tes') || qLower.includes('sampurasun'))) {
+    return res.json({
+      reply: generateGagaSmartReply(userQuestion),
+      isSimulated: true,
+      fastEngine: true
+    });
+  }
 
-Informasi Utama Layanan PUPR Garut & GARDA GARUT:
-1. GARDA INFRA: Pelaporan & pemantauan aset jalan, jembatan, irigasi di 42 Kecamatan Kabupaten Garut dengan penilaian skor prioritas otomatis.
-2. GARDA BANGUNAN: Penerbitan Rekomendasi Terpadu PBG/SLF tersinkronisasi otomatis dengan portal SIMBG Kementerian PUPR.
-3. WA GATEWAY SERVER (+62 821-2234-4446): Notifikasi otomatis status perizinan, verifikasi laporan kerusakan, dan tautan QR Code.
-4. VERIFIKASI QR BSrE: Setiap dokumen rekomendasi & plat fisik aset memiliki Kode QR Unik berstandar BSrE.
-
-Panduan Menjawab:
-- Jawablah SEMUA pertanyaan pengguna secara otomatis, cerdas, ramah, dan solutif.
-- Gunakan Bahasa Indonesia yang keren, ramah, dan profesional, diselingi salam hangat Sunda (seperti "Sampurasun!", "Wilujeng sumping!").
-- Sapa diri Anda selalu sebagai "GAGA".
-- Jika pertanyaan di luar konteks PUPR/Garut, tetap berikan jawaban AI yang cerdas, sopan, dan secara halus arahkan kembali ke layanan PUPR Garut bila relevan.`;
+  const systemPrompt = `Anda adalah "GAGA", Maskot Pintar & Asisten AI Cepat Tanggap dari Dinas PUPR Kabupaten Garut.
+Karakter: Super tanggap, ramah, to-the-point, berwawasan teknik sipil, tata ruang, SPBE, serta layanan SIMBG/PBG Dinas PUPR Garut.
+Pengembang Inovasi SPBE GARDA GARUT: Ir. Risa Kristalia N., ST., MT.
+Nomor Server WhatsApp Gateway Resmi: +62 813-1640-3160 (081316403160).
+Aturan: Berikan jawaban yang padat, jelas, akurat, dan ramah dengan sapaan khas Sunda ("Sampurasun!"). Jangan bertele-tele.`;
 
   if (apiKey) {
     try {
       const ai = new GoogleGenAI({ apiKey });
 
-      // Format conversation history for Gemini context
-      let promptText = `Pengguna bertanya: "${userQuestion}"`;
+      let promptText = `Pertanyaan Pengguna: "${userQuestion}"`;
       if (Array.isArray(chatHistory) && chatHistory.length > 0) {
         const historyContext = chatHistory
-          .slice(-6)
+          .slice(-4)
           .map((m: any) => `${m.role === 'user' ? 'Pengguna' : 'GAGA'}: ${m.text}`)
           .join('\n');
-        promptText = `Riwayat Percakapan Sebelumnya:\n${historyContext}\n\nPengguna bertanya sekarang: "${userQuestion}"`;
+        promptText = `Riwayat Singkat:\n${historyContext}\n\nPertanyaan Sekarang: "${userQuestion}"`;
       }
 
-      const response = await ai.models.generateContent({
-        model: 'gemini-3.6-flash',
+      // Enforce 1800ms fast timeout so user never waits!
+      const geminiPromise = ai.models.generateContent({
+        model: 'gemini-3.8-flash',
         contents: promptText,
         config: {
           systemInstruction: systemPrompt
         }
       });
 
+      const response = await withTimeout(geminiPromise, 1800, 'Gemini latency threshold');
+
       if (response && response.text) {
         return res.json({
           reply: response.text,
-          isSimulated: false
+          isSimulated: false,
+          fastEngine: true
         });
       }
     } catch (err: any) {
-      console.warn("Gemini API call failed for mascot chat, using smart GAGA fallback:", err?.message || err);
+      // Immediate failover to turbo smart reply without any delay
     }
   }
 
-  // Smart GAGA fallback if Gemini key missing or API call encounters error
+  // Instant smart fallback
   const fallbackReply = generateGagaSmartReply(userQuestion);
   return res.json({
     reply: fallbackReply,
-    isSimulated: true
+    isSimulated: true,
+    fastEngine: true
   });
 });
 

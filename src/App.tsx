@@ -27,9 +27,11 @@ import {
   getGatewayQueue, 
   getSecurityLogs, 
   getAuditLogs, 
-  updateGatewayQueueItemStatus 
+  updateGatewayQueueItemStatus,
+  getAppLogo 
 } from './services/storage';
 
+import { INITIAL_USERS } from './data/mockData';
 import { Navbar } from './components/Navbar';
 import { Sidebar, TabType } from './components/Sidebar';
 import { OverviewDashboard } from './components/Dashboard/OverviewDashboard';
@@ -44,12 +46,15 @@ import { TechnicalSpecDoc } from './components/Docs/TechnicalSpecDoc';
 import { PelayananPublikModule } from './components/Pelayanan/PelayananPublikModule';
 import { QuickSearchModal } from './components/Search/QuickSearchModal';
 import { GardaMascot } from './components/Mascot/GardaMascot';
+import { EditLogoModal } from './components/Logo/EditLogoModal';
 
 export default function App() {
   const [currentUser, setCurrentUserProfile] = useState<UserProfile>(getCurrentUser());
   const [activeTab, setActiveTab] = useState<TabType>('dashboard');
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
+  const [isEditLogoOpen, setIsEditLogoOpen] = useState(false);
+  const [appLogo, setAppLogo] = useState<string>(getAppLogo());
 
   // App States
   const [assets, setAssets] = useState<InfraAsset[]>([]);
@@ -69,6 +74,7 @@ export default function App() {
 
   const refreshAllData = () => {
     setCurrentUserProfile(getCurrentUser());
+    setAppLogo(getAppLogo());
     setAssets(getAssets());
     setReports(getReports());
     setWorkOrders(getWorkOrders());
@@ -84,6 +90,12 @@ export default function App() {
     setCurrentUser(newUser);
     setCurrentUserProfile(newUser);
     setAuditLogs(getAuditLogs());
+  };
+
+  // Admin switch shortcut for logo modal
+  const handleSwitchToAdmin = () => {
+    const adminUser = INITIAL_USERS.find(u => u.role === 'admin_layanan') || INITIAL_USERS[0];
+    handleRoleChange(adminUser);
   };
 
   // Infra Handlers
@@ -124,9 +136,11 @@ export default function App() {
       {/* Top Navigation */}
       <Navbar
         currentUser={currentUser}
+        appLogo={appLogo}
         onRoleChange={handleRoleChange}
         onOpenQuickSearch={() => setIsSearchOpen(true)}
         onToggleMobileMenu={() => setIsMobileOpen(!isMobileOpen)}
+        onOpenEditLogo={() => setIsEditLogoOpen(true)}
       />
 
       {/* Main Layout */}
@@ -141,6 +155,8 @@ export default function App() {
           queueCount={queue.filter(q => q.status !== 'completed').length}
           isMobileOpen={isMobileOpen}
           setIsMobileOpen={setIsMobileOpen}
+          appLogo={appLogo}
+          onOpenEditLogo={() => setIsEditLogoOpen(true)}
         />
 
         {/* Content View Container */}
@@ -155,6 +171,8 @@ export default function App() {
               buildingCases={buildingCases}
               endpoints={endpoints}
               setActiveTab={setActiveTab}
+              appLogo={appLogo}
+              onOpenEditLogo={() => setIsEditLogoOpen(true)}
             />
           )}
 
@@ -236,7 +254,7 @@ export default function App() {
           <span className="hidden md:inline text-slate-300 font-semibold">Pemilik & Pengembang Inovasi: Ir. Risa Kristalia N., ST., MT.</span>
         </div>
         <div className="text-slate-400 font-bold uppercase flex items-center space-x-3">
-          <span className="text-emerald-400 font-mono">WhatsApp Server: 08212234446 (+62 821-2234-4446)</span>
+          <span className="text-emerald-400 font-mono">WhatsApp Server: 081316403160 (+62 813-1640-3160)</span>
           <span>|</span>
           <span>© 2026 Dinas PUPR Kab. Garut</span>
         </div>
@@ -253,6 +271,18 @@ export default function App() {
         buildingCases={buildingCases}
         workOrders={workOrders}
         onSelectTab={(tab) => setActiveTab(tab)}
+      />
+
+      {/* Admin Logo Customization Modal */}
+      <EditLogoModal
+        isOpen={isEditLogoOpen}
+        onClose={() => setIsEditLogoOpen(false)}
+        currentLogo={appLogo}
+        currentUser={currentUser}
+        onLogoUpdated={(newLogo) => {
+          setAppLogo(newLogo);
+        }}
+        onSwitchToAdmin={handleSwitchToAdmin}
       />
 
     </div>

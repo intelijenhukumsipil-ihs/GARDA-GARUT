@@ -1,3 +1,4 @@
+import { GARDA_LOGO_IMAGE } from '../assets/imagesData';
 import { 
   InfraAsset, 
   DamageReport, 
@@ -31,7 +32,8 @@ const STORAGE_KEYS = {
   GATEWAY_ENDPOINTS: 'garda_garut_gateway_endpoints',
   GATEWAY_QUEUE: 'garda_garut_gateway_queue',
   SECURITY_LOGS: 'garda_garut_security_logs',
-  AUDIT_LOGS: 'garda_garut_audit_logs'
+  AUDIT_LOGS: 'garda_garut_audit_logs',
+  APP_LOGO: 'garda_garut_app_logo'
 };
 
 // Initialize default storage if empty
@@ -163,7 +165,27 @@ export function saveBuildingCase(buildingCase: BuildingCase): void {
 // Gateway Endpoints & Queue
 export function getGatewayEndpoints(): GatewayEndpointStatus[] {
   initStorage();
-  return JSON.parse(localStorage.getItem(STORAGE_KEYS.GATEWAY_ENDPOINTS) || '[]');
+  const endpoints: GatewayEndpointStatus[] = JSON.parse(localStorage.getItem(STORAGE_KEYS.GATEWAY_ENDPOINTS) || '[]');
+  let hasUpdate = false;
+  const migrated = endpoints.map(ep => {
+    if (ep.id === 'EP-000' || ep.systemName.includes('WhatsApp')) {
+      if (ep.systemName.includes('0821') || ep.endpointUrl.includes('821')) {
+        hasUpdate = true;
+        return {
+          ...ep,
+          systemName: 'WhatsApp Server Gateway Resmi (+62 813-1640-3160 / 081316403160)',
+          endpointUrl: 'https://wa.me/6281316403160 (Direct Webhook API)'
+        };
+      }
+    }
+    return ep;
+  });
+
+  if (hasUpdate) {
+    localStorage.setItem(STORAGE_KEYS.GATEWAY_ENDPOINTS, JSON.stringify(migrated));
+  }
+
+  return migrated;
 }
 
 export function getGatewayQueue(): GatewayQueueItem[] {
@@ -235,4 +257,50 @@ export function resetDataToDefault(): void {
   localStorage.setItem(STORAGE_KEYS.GATEWAY_QUEUE, JSON.stringify(INITIAL_GATEWAY_QUEUE));
   localStorage.setItem(STORAGE_KEYS.SECURITY_LOGS, JSON.stringify(INITIAL_SECURITY_LOGS));
   localStorage.setItem(STORAGE_KEYS.AUDIT_LOGS, JSON.stringify(INITIAL_AUDIT_LOGS));
+  localStorage.removeItem(STORAGE_KEYS.APP_LOGO);
 }
+
+// Logo Management
+export function getAppLogo(): string {
+  try {
+    const customLogo = localStorage.getItem(STORAGE_KEYS.APP_LOGO);
+    return customLogo && customLogo.trim().length > 0 ? customLogo : GARDA_LOGO_IMAGE;
+  } catch (e) {
+    return GARDA_LOGO_IMAGE;
+  }
+}
+
+export function saveAppLogo(logoUrl: string, actorName?: string, actorRole?: string): void {
+  try {
+    localStorage.setItem(STORAGE_KEYS.APP_LOGO, logoUrl);
+    const user = getCurrentUser();
+    addAuditLog(
+      actorName || user.name,
+      actorRole || user.role,
+      'SYSTEM',
+      'UPDATE_LOGO_SISTEM',
+      'APP_LOGO',
+      'Logo resmi sistem GARDA GARUT berhasil diperbarui oleh Administrator'
+    );
+  } catch (e) {
+    console.error('Gagal menyimpan logo ke localStorage:', e);
+  }
+}
+
+export function resetAppLogo(actorName?: string, actorRole?: string): void {
+  try {
+    localStorage.removeItem(STORAGE_KEYS.APP_LOGO);
+    const user = getCurrentUser();
+    addAuditLog(
+      actorName || user.name,
+      actorRole || user.role,
+      'SYSTEM',
+      'RESET_LOGO_SISTEM',
+      'APP_LOGO',
+      'Logo sistem GARDA GARUT dikembalikan ke logo default resmi'
+    );
+  } catch (e) {
+    console.error('Gagal reset logo:', e);
+  }
+}
+
